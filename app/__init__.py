@@ -1,0 +1,1 @@
+"""Future Skills Compass API."""
