@@ -1,0 +1,37 @@
+# secrets
+.env
+.env.*
+!.env.example
+
+# python
+.venv/
+venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# data: raw downloads are large and re-fetchable; keep only the manifest + readme
+data/raw/**
+!data/raw/
+!data/raw/MANIFEST.json
+!data/raw/README.md
+*.part
+*.db
+*.sqlite
+*.sqlite3
+
+# models / caches
+.cache/
+models_cache/
+
+# frontend
+node_modules/
+frontend/dist/
+
+# os / editors
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
