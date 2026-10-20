@@ -1,0 +1,20 @@
+{
+  "runs": 50,
+  "unverified_ids_passed": 0,
+  "blocked_adversarial_values": 150,
+  "verified_skill_ids": [
+    "skill-customer-service",
+    "skill-data-analysis",
+    "skill-digital-marketing",
+    "skill-project-management",
+    "skill-spreadsheets",
+    "skill-sustainability-reporting"
+  ],
+  "verified_role_ids": [
+    "role-business-analyst",
+    "role-data-analyst",
+    "role-digital-marketing",
+    "role-project-support",
+    "role-sustainability"
+  ]
+}
