@@ -1,0 +1,43 @@
+occ_id,title,esco_uri,esco_code,isco_code,masco_major,onet_soc,role_type,family,mapping_note
+accounts_clerk,Accounts clerk,http://data.europa.eu/esco/occupation/bfe142b9-a049-4d41-89c4-fd2f34ac56b6,3313.1,4311,4,43-3031.00,clerical,finance,ESCO has no accounts-clerk concept under ISCO 4311; skills proxied by ESCO 'accounting assistant' (3313.1). MASCO group from ISCO 4311.
+billing_clerk,Billing clerk,http://data.europa.eu/esco/occupation/bafbc672-0ad9-41af-9de8-db0c91a24f9b,4311.1,4311,4,43-3021.00,clerical,finance,
+payroll_clerk,Payroll clerk,http://data.europa.eu/esco/occupation/ade351da-7bda-424e-8682-bbdcab2a25be,4313.1,4313,4,43-3051.00,clerical,finance,
+insurance_clerk,Insurance clerk,http://data.europa.eu/esco/occupation/9a39a143-d93c-4093-ba3b-47fb67ade318,4312.4,4312,4,43-9041.00,clerical,finance,
+office_clerk,Office clerk,http://data.europa.eu/esco/occupation/6c999fc7-c6b7-4ef3-a4b9-af124a1783a2,4110.1,4110,4,43-9061.00,clerical,admin,
+secretary,Secretary,http://data.europa.eu/esco/occupation/5ac377d2-e1d0-4911-a299-b4ef2782a0ba,4120.1,4120,4,43-6014.00,clerical,admin,
+data_entry_clerk,Data entry clerk,http://data.europa.eu/esco/occupation/6353b3e8-e8f2-4ecb-b230-186927139892,4132.1,4132,4,43-9021.00,clerical,data,
+customer_service_rep,Customer service representative,http://data.europa.eu/esco/occupation/13d1b2b4-99dd-44da-9734-c9f74bae18f7,4225.1,4225,4,43-4051.00,clerical,customer,
+receptionist,Receptionist,http://data.europa.eu/esco/occupation/f7b04542-d8c7-42db-8475-e63b507cce82,4226.1,4226,4,43-4171.00,clerical,customer,
+bank_teller,Bank teller,http://data.europa.eu/esco/occupation/2ff9e53c-6e7f-42af-8d71-b5dd7f283089,4211.1,4211,4,43-3071.00,clerical,finance,
+debt_collector,Debt collector,http://data.europa.eu/esco/occupation/50a66df6-c141-4b4a-937a-d3bc55737ae3,4214.1,4214,4,43-3011.00,clerical,finance,
+inventory_clerk,Inventory coordinator,http://data.europa.eu/esco/occupation/d7a9f9e0-e2f5-4804-a0e0-b21ebb1403ee,4321.1,4321,4,43-5071.00,clerical,operations,
+hr_assistant,Human resources assistant,http://data.europa.eu/esco/occupation/d8ed1703-9c03-4ea0-83cc-b6169bc54ffd,4416.1,4416,4,43-4161.00,clerical,hr,
+file_clerk,File clerk,http://data.europa.eu/esco/occupation/9ab0f0db-1128-4050-becd-b09db5eabdaa,4415.1,4415,4,43-4071.00,clerical,admin,
+bookkeeper,Bookkeeper,http://data.europa.eu/esco/occupation/c3aae59e-1441-4b3e-bdd1-6da50dc7cf42,3313.2,3313,3,43-3031.00;13-2011.00,target,finance,Blend of two O*NET occupations (crosswalk lists both); tasks pooled before weighting.
+accountant,Accountant,http://data.europa.eu/esco/occupation/eda0d957-3c3c-4139-b89a-a18bc9e18897,2411.1,2411,2,13-2011.00,target,finance,
+budget_analyst,Budget analyst,http://data.europa.eu/esco/occupation/4e4a291d-1d38-4c5a-812a-5827d0691b11,2411.1.4,2411,2,13-2031.00,target,finance,
+financial_analyst,Financial analyst,http://data.europa.eu/esco/occupation/8d586ee9-0ab1-4155-a3b0-2ca786c8e48c,2413.1,2413,2,13-2051.00,target,finance,O*NET 31.0 has no importance ratings for 13-2051.00: tasks weighted equally.
+credit_analyst,Credit analyst,http://data.europa.eu/esco/occupation/075e4d25-74b3-46fb-9b6e-6b53cdb196e7,3312.2.1,3312,3,13-2041.00,target,finance,
+loan_officer,Loan officer,http://data.europa.eu/esco/occupation/8e185c49-704e-49c0-8584-a7e0b618f628,3312.5,3312,3,13-2072.00,target,finance,
+tax_advisor,Tax advisor,http://data.europa.eu/esco/occupation/59c22779-4d89-4bc9-ba8b-d64bea236723,2411.1.12,2411,2,13-2082.00,target,finance,
+data_analyst,Data analyst,http://data.europa.eu/esco/occupation/d3edb8f8-3a06-47a0-8fb9-9b212c006aa2,2511.3,2511,2,15-2051.01,target,data,
+business_analyst,Business analyst,http://data.europa.eu/esco/occupation/60082a99-d8ef-4e84-9290-78902681b6ed,2421.1,2421,2,13-1111.00,target,data,
+statistical_assistant,Statistical assistant,http://data.europa.eu/esco/occupation/d2e63d7e-2605-4af1-bb7d-b1ed9ad08825,3314.2,3314,3,43-9111.00,target,data,
+database_administrator,Database administrator,http://data.europa.eu/esco/occupation/8c57af09-719c-42b3-be40-6ed4946236cc,2521.1,2521,2,15-1242.00,target,data,
+market_research_analyst,Market research analyst,http://data.europa.eu/esco/occupation/66fb9704-0d56-4673-8e69-7823816b73e1,2431.11,2431,2,13-1161.00,target,customer,
+ict_help_desk_agent,ICT help desk agent,http://data.europa.eu/esco/occupation/aaeec9a7-dc57-4485-890c-86b3eef735f9,3512.1,3512,3,15-1232.00,target,customer,
+call_centre_supervisor,Call centre supervisor,http://data.europa.eu/esco/occupation/6aa78e46-ce22-421f-8a75-e915ac63c9d0,3341.3,3341,3,43-1011.00,target,customer,
+client_relations_manager,Client relations (customer success) manager,http://data.europa.eu/esco/occupation/725090a7-9943-4dae-8079-a6999d21ddba,2431.6,2431,2,41-3091.00,target,customer,O*NET has no customer-success occupation; crosswalk's closest is Sales Representatives of Services.
+office_manager,Office manager,http://data.europa.eu/esco/occupation/6e6839b6-099c-4802-906e-7f2c8203ee69,3341.7,3341,3,43-1011.00;11-3012.00,target,operations,Blend of two O*NET occupations; 11-3012.00 has IM ratings for 8 of 18 tasks.
+executive_assistant,Executive assistant,http://data.europa.eu/esco/occupation/2a04a1df-a3b9-403e-a245-e7f93fdddd44,3343.3,3343,3,43-6011.00,target,admin,
+project_support_officer,Project support officer,http://data.europa.eu/esco/occupation/5ccb2c34-e860-43a5-9869-342487518115,3343.1.6,3343,3,13-1082.00,target,operations,
+supply_chain_assistant,Supply chain assistant,http://data.europa.eu/esco/occupation/c8b296be-54ae-48cf-be21-031fa8457937,3343.1.7,3343,3,43-5061.00,target,operations,
+logistics_analyst,Logistics analyst,http://data.europa.eu/esco/occupation/51cd3a7a-eae6-4dc6-9f24-179d7ec6d230,2421.5,2421,2,13-1081.02,target,operations,
+purchaser,Purchaser,http://data.europa.eu/esco/occupation/29fa406d-de89-4515-be8d-0fe7bda993f1,3323.2,3323,3,13-1023.00,target,operations,
+procurement_support_officer,Procurement support officer,http://data.europa.eu/esco/occupation/c9b2b0a7-0adc-4ca7-bf7c-dc95e18aeac7,3343.1.5,3343,3,43-3061.00,target,operations,
+hr_officer,Human resources officer,http://data.europa.eu/esco/occupation/d3e32e5e-7f24-48e3-b939-e4f800eb62fb,2423.3,2423,2,13-1071.00,target,hr,
+corporate_trainer,Corporate trainer,http://data.europa.eu/esco/occupation/0ba06640-e0ac-4911-9e43-289a8e41651e,2424.2,2424,2,13-1151.00,target,hr,
+sustainability_manager,Sustainability manager (ESG reporting),http://data.europa.eu/esco/occupation/2cf2b905-3308-4b5d-8e8d-633fc7a3f3ce,1213.8,1213,1,13-1199.05,target,sustainability,
+environmental_policy_officer,Environmental policy officer,http://data.europa.eu/esco/occupation/b5d2db88-9e2b-4efa-8f2f-0e62a494791e,2422.12.5,2422,2,19-2041.01,target,sustainability,
+digital_marketing_manager,Digital marketing manager,http://data.europa.eu/esco/occupation/dc97adbe-f807-4ad8-8f3c-c24b3416cdef,1221.5,1221,1,13-1161.01,target,digital,O*NET proxy: Search Marketing Strategists.
+online_community_manager,Online community (social media) manager,http://data.europa.eu/esco/occupation/137b1d11-c4bc-4016-89ba-45345d4c71f0,2432.5,2432,2,27-3031.00,target,digital,O*NET proxy: Public Relations Specialists.
