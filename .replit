@@ -1,0 +1,5 @@
+run = "bash start.sh"
+
+[env]
+DEV_MODE = "true"
+CORS_ORIGIN = "http://localhost:5173"
