@@ -3,13 +3,13 @@ from pathlib import Path
 
 from fastapi.testclient import TestClient
 
-from app.main import app
-from app.services.guardrails import validate_db_ids
-from app.services.repository import verified_role_ids, verified_skill_ids
+from backend.app.main import app
+from backend.app.services.guardrails import validate_db_ids
+from backend.app.services.repository import verified_role_ids, verified_skill_ids
 
 
 def test_guardrails_block_unverified_ids_across_50_runs(monkeypatch):
-    from app import config
+    from backend.app import config
 
     monkeypatch.setattr(config.settings, "dev_mode", True)
     client = TestClient(app)

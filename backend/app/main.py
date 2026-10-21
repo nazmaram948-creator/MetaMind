@@ -20,11 +20,16 @@ from .schemas import (
     SnapshotDiffResponse,
     SnapshotLoadRequest,
     SnapshotLoadResponse,
+    SdgMappingResponse,
+    PersonasResponse,
+    IndividualPersonaResponse,
+    HrPersonaResponse,
 )
 from .services.extraction import extract_skills
 from .services.guardrails import validate_db_ids
 from .services.repository import ROLES, courses_for_skill, get_role, get_skill, occupation_ids
 from .services.simulation import simulate_role_robustness
+from .services.curated_data import load_demand_signals, load_personas, load_sdg_mappings
 
 app = FastAPI(title="Future Skills Compass API", version="0.1.0")
 app.add_middleware(
@@ -73,10 +78,44 @@ def parse_profile(request: ProfileParseRequest) -> ProfileParseResponse:
 def signals() -> list[Signal]:
     ensure_dev_mode()
     return [
-        Signal(id="skill-data-analysis", name="Data analysis", value=0.74, status="rising", source=BADGE),
-        Signal(id="skill-spreadsheets", name="Spreadsheet software", value=0.51, status="stable", source=BADGE),
-        Signal(id="skill-customer-service", name="Customer service", value=0.38, status="declining", source=BADGE),
+        Signal(
+            id=f"demand-{signal.occupation.lower().replace(' ', '-')}",
+            name=signal.occupation,
+            value=signal.growth_rate_pct,
+            status=signal.category.lower().split("/")[0],
+            base_vacancies_2025=signal.base_vacancies_2025,
+            projected_vacancies_2026=signal.projected_vacancies_2026,
+            growth_rate_pct=signal.growth_rate_pct,
+            source=SignalBadge(source=signal.source, date=signal.date_published),
+        )
+        for signal in load_demand_signals()
     ]
+
+
+@app.get("/api/sdg", response_model=list[SdgMappingResponse])
+def sdg_mappings() -> list[SdgMappingResponse]:
+    ensure_dev_mode()
+    return [SdgMappingResponse(**mapping.__dict__) for mapping in load_sdg_mappings()]
+
+
+@app.get("/api/personas", response_model=PersonasResponse)
+def personas() -> PersonasResponse:
+    ensure_dev_mode()
+    individuals, hr_cohort = load_personas()
+    return PersonasResponse(
+        individual_users=[
+            IndividualPersonaResponse(
+                **{**persona.__dict__, "current_skills": list(persona.current_skills)}
+            )
+            for persona in individuals
+        ],
+        hr_team_cohort=[
+            HrPersonaResponse(
+                **{**persona.__dict__, "current_skills": list(persona.current_skills)}
+            )
+            for persona in hr_cohort
+        ],
+    )
 
 
 @app.post("/api/match", response_model=MatchResponse)
