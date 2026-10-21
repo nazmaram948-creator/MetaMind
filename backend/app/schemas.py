@@ -30,6 +30,7 @@ class SignalBadge(BaseModel):
     date: str
     url: str | None = None
     period: str | None = None
+    date_kind: Literal["published", "retrieved"] | None = None
 
 
 class Signal(BaseModel):

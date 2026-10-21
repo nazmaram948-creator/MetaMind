@@ -82,10 +82,12 @@ class Store:
     def badge(self, snapshot_id: str) -> dict:
         s = self.snapshots[snapshot_id]
         return {"source": f"{s['source']}, {s['label']}", "date": s["source_date"],
-                "url": s["source_url"], "period": s["period"]}
+                "url": s["source_url"], "period": s["period"], "date_kind": "published"}
 
     def static_badges(self) -> list[dict]:
         esco = json.loads(self.meta["esco"])
         onet = json.loads(self.meta["onet"])
-        return [{"source": esco["source"], "date": (esco.get("fetched_at") or "")[:10], "url": esco["source_url"]},
-                {"source": onet["source"], "date": (onet.get("fetched_at") or "")[:10], "url": onet["source_url"]}]
+        return [{"source": esco["source"], "date": (esco.get("fetched_at") or "")[:10], "url": esco["source_url"],
+                 "date_kind": "retrieved"},
+                {"source": onet["source"], "date": (onet.get("fetched_at") or "")[:10], "url": onet["source_url"],
+                 "date_kind": "retrieved"}]
