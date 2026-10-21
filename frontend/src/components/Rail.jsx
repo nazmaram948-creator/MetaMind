@@ -20,7 +20,7 @@ export default function Rail({ hasResults }) {
     if (el) setY(el.offsetTop + el.offsetHeight / 2);
   }, [active]);
 
-  useLayoutEffect(() => { place(); }, [place]);
+  useLayoutEffect(() => { place(); }, [place, hasResults]);
 
   useEffect(() => {
     window.addEventListener("resize", place);
@@ -53,7 +53,6 @@ export default function Rail({ hasResults }) {
 
   const go = (e, item) => {
     e.preventDefault();
-    if (item.needsResults && !hasResults) return;
     setActive(item.id);
     clearTimeout(locked.current);
     locked.current = setTimeout(() => { locked.current = null; }, 800);
@@ -66,18 +65,14 @@ export default function Rail({ hasResults }) {
     <nav className="rail" aria-label="Sections">
       <Icon name="logo" size={36} className="logo" />
       <span className="rail-ind" style={{ transform: `translateY(${y - 26}px)` }} aria-hidden="true" />
-      {ITEMS.map((item) => {
-        const off = item.needsResults && !hasResults;
-        return (
-          <a key={item.id} href={`#${item.id}`} ref={(el) => { refs.current[item.id] = el; }}
-            className={`${active === item.id ? "on" : ""}${off ? " off" : ""}${item.bottom ? " bottom" : ""}`}
-            title={off ? `${item.title} appear after your skills are read` : item.title}
-            aria-current={active === item.id ? "location" : undefined} aria-disabled={off || undefined}
-            onClick={(e) => go(e, item)}>
-            <Icon name={item.icon} />
-          </a>
-        );
-      })}
+      {ITEMS.filter((item) => !item.needsResults || hasResults).map((item) => (
+        <a key={item.id} href={`#${item.id}`} ref={(el) => { refs.current[item.id] = el; }}
+          className={`${active === item.id ? "on" : ""}${item.needsResults ? " appear" : ""}${item.bottom ? " bottom" : ""}`}
+          title={item.title} aria-current={active === item.id ? "location" : undefined}
+          onClick={(e) => go(e, item)}>
+          <Icon name={item.icon} />
+        </a>
+      ))}
     </nav>
   );
 }
