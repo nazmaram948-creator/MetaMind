@@ -1,0 +1,61 @@
+course_id,course_title,provider,skill_ids,hours,hours_verified,cost,url
+CRS-001,AI for Everyone,Coursera,ESCO-AI-01,10,TRUE,0,https://www.coursera.org/learn/ai-for-everyone
+CRS-002,Google Data Analytics Professional Certificate,Coursera,ESCO-DA-01;ESCO-DA-02,180,TRUE,0,https://www.coursera.org/professional-certificates/google-data-analytics
+CRS-003,Applied Machine Learning in Python,Coursera,ESCO-ML-01;ESCO-PY-01,34,TRUE,0,https://www.coursera.org/learn/python-machine-learning
+CRS-004,Introduction to ESG and Sustainable Finance,HRD Corp,ESCO-ESG-01;ESCO-FIN-01,14,FALSE,500,https://hrdcorp.gov.my/
+CRS-005,Digital Marketing Strategy and Automation,HRD Corp,ESCO-DM-01;ESCO-AI-02,24,TRUE,1200,https://hrdcorp.gov.my/
+CRS-006,Prompt Engineering for Developers,DeepLearning.AI,ESCO-AI-02,6,TRUE,0,https://www.deeplearning.ai/short-courses/chatgpt-prompt-engineering-for-developers/
+CRS-007,Sustainable Agriculture Tech Fundamentals,edX,ESCO-AG-01;ESCO-SUS-01,15,FALSE,0,https://www.edx.org/
+CRS-008,Green Energy Systems and AI Optimization,Coursera,ESCO-GE-01;ESCO-AI-03,20,TRUE,0,https://www.coursera.org/
+CRS-009,Cybersecurity for SMEs,HRD Corp,ESCO-CYB-01,16,TRUE,800,https://hrdcorp.gov.my/
+CRS-010,Cloud Computing Basics (AWS),AWS Training,ESCO-CLD-01,8,TRUE,0,https://aws.amazon.com/training/
+CRS-011,Data Privacy and AI Ethics,edX,ESCO-ETH-01;ESCO-AI-01,12,FALSE,0,https://www.edx.org/
+CRS-012,Robotic Process Automation (RPA) Fundamentals,UiPath Academy,ESCO-RPA-01,25,TRUE,0,https://academy.uipath.com/
+CRS-013,Smart Manufacturing and IoT,HRD Corp,ESCO-IOT-01;ESCO-MFG-01,40,FALSE,1500,https://hrdcorp.gov.my/
+CRS-014,Generative AI for HR Professionals,LinkedIn Learning,ESCO-HR-01;ESCO-AI-01,4,TRUE,0,https://www.linkedin.com/learning/
+CRS-015,Circular Economy and Sustainable Strategies,Coursera,ESCO-SUS-02;ESCO-BM-01,18,TRUE,0,https://www.coursera.org/
+CRS-016,Google IT Support Professional Certificate,Coursera,ESCO-IT-01,110,TRUE,0,https://www.coursera.org/professional-certificates/google-it-support
+CRS-017,IBM Data Science Professional Certificate,Coursera,ESCO-DA-03;ESCO-PY-01,150,TRUE,0,https://www.coursera.org/professional-certificates/ibm-data-science
+CRS-018,Meta Front-End Developer Professional Certificate,Coursera,ESCO-FE-01;ESCO-FE-02,140,TRUE,0,https://www.coursera.org/professional-certificates/meta-front-end-developer
+CRS-019,Meta Back-End Developer Professional Certificate,Coursera,ESCO-BE-01;ESCO-BE-02,140,TRUE,0,https://www.coursera.org/professional-certificates/meta-back-end-developer
+CRS-020,Google UX Design Professional Certificate,Coursera,ESCO-UX-01,120,TRUE,0,https://www.coursera.org/professional-certificates/google-ux-design
+CRS-021,Machine Learning Specialization,Coursera,ESCO-ML-02;ESCO-ML-03,70,TRUE,0,https://www.coursera.org/specializations/machine-learning-introduction
+CRS-022,Deep Learning Specialization,Coursera,ESCO-DL-01,90,TRUE,0,https://www.coursera.org/specializations/deep-learning
+CRS-023,IBM Applied AI Professional Certificate,Coursera,ESCO-AI-04,80,TRUE,0,https://www.coursera.org/professional-certificates/applied-artifical-intelligence-ibm-watson-ai
+CRS-024,Cybersecurity for Everyone,Coursera,ESCO-CYB-02,15,TRUE,0,https://www.coursera.org/learn/cybersecurity-for-everyone
+CRS-025,AWS Cloud Practitioner Essentials,AWS Training,ESCO-CLD-02,6,TRUE,0,https://aws.amazon.com/training/digital/aws-cloud-practitioner-essentials/
+CRS-026,Introduction to Cloud Computing,Coursera,ESCO-CLD-03,12,TRUE,0,https://www.coursera.org/learn/introduction-to-cloud
+CRS-027,Agile with Atlassian Jira,Coursera,ESCO-AG-02,10,TRUE,0,https://www.coursera.org/learn/agile-atlassian-jira
+CRS-028,Introduction to Git and GitHub,Coursera,ESCO-VCS-01,10,TRUE,0,https://www.coursera.org/learn/introduction-git-github
+CRS-029,Python for Everybody Specialization,Coursera,ESCO-PY-02,100,TRUE,0,https://www.coursera.org/specializations/python
+CRS-030,Excel Skills for Business Specialization,Coursera,ESCO-EX-01,100,TRUE,0,https://www.coursera.org/specializations/excel
+CRS-031,Financial Markets,Coursera,ESCO-FIN-02,30,TRUE,0,https://www.coursera.org/learn/financial-markets-global
+CRS-032,Introduction to Project Management,Coursera,ESCO-PM-01,20,TRUE,0,https://www.coursera.org/learn/project-management-basics
+CRS-033,Digital Marketing Specialization,Coursera,ESCO-DM-02,160,TRUE,0,https://www.coursera.org/specializations/digital-marketing
+CRS-034,Blockchain Basics,Coursera,ESCO-BC-01,15,TRUE,0,https://www.coursera.org/learn/blockchain-basics
+CRS-035,Introduction to Artificial Intelligence (AI),Coursera,ESCO-AI-05,12,TRUE,0,https://www.coursera.org/learn/introduction-to-ai
+CRS-036,Data Science: R Basics,edX,ESCO-DA-04;ESCO-R-01,16,TRUE,0,https://www.edx.org/course/data-science-r-basics
+CRS-037,CS50: Introduction to Computer Science,edX,ESCO-CS-01,120,TRUE,0,https://www.edx.org/course/introduction-computer-science-harvardx-cs50x
+CRS-038,Supervised Machine Learning: Regression and Classification,Coursera,ESCO-ML-04,33,TRUE,0,https://www.coursera.org/learn/machine-learning
+CRS-039,Advanced Learning Algorithms,Coursera,ESCO-ML-05,34,TRUE,0,https://www.coursera.org/learn/advanced-learning-algorithms
+CRS-040,"Unsupervised Learning, Recommenders, Reinforcement Learning",Coursera,ESCO-ML-06,27,TRUE,0,https://www.coursera.org/learn/unsupervised-learning-recommenders-reinforcement-learning
+CRS-041,Neural Networks and Deep Learning,Coursera,ESCO-DL-02,24,TRUE,0,https://www.coursera.org/learn/neural-networks-deep-learning
+CRS-042,Improving Deep Neural Networks,Coursera,ESCO-DL-03,18,TRUE,0,https://www.coursera.org/learn/deep-neural-network
+CRS-043,Structuring Machine Learning Projects,Coursera,ESCO-ML-07,12,TRUE,0,https://www.coursera.org/learn/machine-learning-projects
+CRS-044,Convolutional Neural Networks,Coursera,ESCO-DL-04,30,TRUE,0,https://www.coursera.org/learn/convolutional-neural-networks
+CRS-045,Sequence Models,Coursera,ESCO-DL-05,32,TRUE,0,https://www.coursera.org/learn/nlp-sequence-models
+CRS-046,Natural Language Processing with Classification and Vector Spaces,Coursera,ESCO-NLP-01,28,TRUE,0,https://www.coursera.org/learn/classification-vector-spaces-in-nlp
+CRS-047,Natural Language Processing with Probabilistic Models,Coursera,ESCO-NLP-02,28,TRUE,0,https://www.coursera.org/learn/probabilistic-models-in-nlp
+CRS-048,Natural Language Processing with Sequence Models,Coursera,ESCO-NLP-03,28,TRUE,0,https://www.coursera.org/learn/sequence-models-in-nlp
+CRS-049,Natural Language Processing with Attention Models,Coursera,ESCO-NLP-04,28,TRUE,0,https://www.coursera.org/learn/attention-models-in-nlp
+CRS-050,"Introduction to TensorFlow for Artificial Intelligence, Machine Learning, and Deep Learning",Coursera,ESCO-TF-01,20,TRUE,0,https://www.coursera.org/learn/introduction-tensorflow
+CRS-051,Convolutional Neural Networks in TensorFlow,Coursera,ESCO-TF-02,24,TRUE,0,https://www.coursera.org/learn/convolutional-neural-networks-tensorflow
+CRS-052,Natural Language Processing in TensorFlow,Coursera,ESCO-TF-03,24,TRUE,0,https://www.coursera.org/learn/natural-language-processing-tensorflow
+CRS-053,"Sequences, Time Series and Prediction",Coursera,ESCO-TS-01,20,TRUE,0,https://www.coursera.org/learn/tensorflow-sequences-time-series-and-prediction
+CRS-054,"Data Engineering, Big Data, and Machine Learning on GCP Specialization",Coursera,ESCO-DE-01;ESCO-GCP-01,120,TRUE,0,https://www.coursera.org/specializations/gcp-data-machine-learning
+CRS-055,Cloud Architecture with Google Cloud Professional Certificate,Coursera,ESCO-CLD-04;ESCO-GCP-02,160,TRUE,0,https://www.coursera.org/professional-certificates/gcp-cloud-architect
+CRS-056,IBM AI Engineering Professional Certificate,Coursera,ESCO-AI-06,120,TRUE,0,https://www.coursera.org/professional-certificates/ai-engineer
+CRS-057,Applied Data Science with Python Specialization,Coursera,ESCO-DA-05;ESCO-PY-03,100,TRUE,0,https://www.coursera.org/specializations/data-science-python
+CRS-058,Mathematics for Machine Learning Specialization,Coursera,ESCO-MATH-01,80,TRUE,0,https://www.coursera.org/specializations/mathematics-machine-learning
+CRS-059,Fundamentals of Graphic Design,Coursera,ESCO-GD-01,15,TRUE,0,https://www.coursera.org/learn/fundamentals-of-graphic-design
+CRS-060,Introduction to Typography,Coursera,ESCO-GD-02,10,TRUE,0,https://www.coursera.org/learn/typography

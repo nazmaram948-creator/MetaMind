@@ -1,0 +1,104 @@
+{
+    "individual_users": [
+        {
+            "id": "USR-001",
+            "name": "Aina",
+            "persona_type": "Worker at Risk",
+            "current_role": "SME Administrative Assistant",
+            "industry": "Retail & Administration",
+            "experience_years": 8,
+            "current_skills": [
+                "Data Entry",
+                "Basic Excel",
+                "Scheduling",
+                "Customer Service",
+                "Invoicing"
+            ],
+            "cv_text": "Experienced administrative assistant with 8 years of working in a small retail enterprise. Highly organized, managing schedules, basic bookkeeping, and customer inquiries. Looking to upgrade my skills as my company recently introduced automated AI invoicing and scheduling tools."
+        },
+        {
+            "id": "USR-002",
+            "name": "Danial",
+            "persona_type": "Fresh Graduate",
+            "current_role": null,
+            "industry": "Information Technology",
+            "experience_years": 0,
+            "current_skills": [
+                "Python",
+                "Basic SQL",
+                "Communication",
+                "Teamwork",
+                "Research"
+            ],
+            "cv_text": "Recent IT graduate with a passion for data and sustainability. Completed university projects in basic data analysis using Python and SQL. Eager to start a career where I can apply my foundational tech skills to meaningful, future-ready challenges."
+        },
+        {
+            "id": "USR-003",
+            "name": "Sarah",
+            "persona_type": "Career Switcher",
+            "current_role": "Retail Store Manager",
+            "industry": "Retail",
+            "experience_years": 5,
+            "current_skills": [
+                "Team Leadership",
+                "Inventory Management",
+                "Sales",
+                "Conflict Resolution"
+            ],
+            "cv_text": "Dedicated Retail Store Manager with 5 years of experience leading teams and managing inventory. I am looking to transition out of traditional retail into the tech or digital marketing sector. I bring strong soft skills, leadership, and a willingness to learn digital tools."
+        }
+    ],
+    "hr_team_cohort": [
+        {
+            "id": "HR-001",
+            "name": "Khairul",
+            "current_role": "Junior Marketing Executive",
+            "current_skills": [
+                "Social Media",
+                "Copywriting",
+                "Basic SEO"
+            ]
+        },
+        {
+            "id": "HR-002",
+            "name": "Mei Ling",
+            "current_role": "Customer Support Agent",
+            "current_skills": [
+                "Call Handling",
+                "CRM Software",
+                "Empathy",
+                "Troubleshooting"
+            ]
+        },
+        {
+            "id": "HR-003",
+            "name": "Raj",
+            "current_role": "Logistics Coordinator",
+            "current_skills": [
+                "Supply Chain Tracking",
+                "Vendor Management",
+                "Excel"
+            ]
+        },
+        {
+            "id": "HR-004",
+            "name": "Siti",
+            "current_role": "Operations Analyst",
+            "current_skills": [
+                "Process Mapping",
+                "Report Generation",
+                "Time Management"
+            ]
+        },
+        {
+            "id": "HR-005",
+            "name": "Arif",
+            "current_role": "Sales Representative",
+            "current_skills": [
+                "Lead Generation",
+                "Negotiation",
+                "B2B Sales"
+            ]
+        }
+    ]
+}

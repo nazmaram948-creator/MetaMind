@@ -1,0 +1,21 @@
+occupation,base_vacancies_2025,projected_vacancies_2026,growth_rate_pct,category,source,date_published
+Data Engineer,4500,4905,9.0,Rising,MDEC Digital Talent Snapshot,2024-09-30
+Full Stack Engineer,5200,5564,7.0,Rising,MDEC Digital Talent Snapshot,2024-09-30
+Back End Developer,4800,5088,6.0,Rising,MDEC Digital Talent Snapshot,2024-09-30
+Senior Business Analyst,3100,3255,5.0,Rising,MDEC Digital Talent Snapshot,2024-09-30
+Data Specialist,2800,2940,5.0,Rising,MDEC Digital Talent Snapshot,2024-09-30
+Java Software Engineer,6000,6300,5.0,Rising,MDEC Digital Talent Snapshot,2024-09-30
+Junior Software Engineer,4100,4264,4.0,Rising,MDEC Digital Talent Snapshot,2024-09-30
+Data Scientist,1900,1976,4.0,Rising,MDEC Digital Talent Snapshot,2024-09-30
+Solution Architect,1500,1515,1.0,Rising,MDEC Digital Talent Snapshot,2024-09-30
+IT System Operations & Maintenance,8500,8800,3.5,Rising,MDEC Digital Talent Snapshot,2024-09-30
+Manufacturing Automation Technician,15000,15600,4.0,Rising,DOSM Employment Statistics Q2,2026-08-13
+General Data Entry Clerk,12000,8500,-29.1,Declining,DOSM AI Displacement Estimate,2025-04-23
+Basic Administrative Assistant,18000,14000,-22.2,Declining,DOSM AI Displacement Estimate,2025-04-23
+Routine Assembly Line Worker,38000,35000,-7.8,Declining,DOSM Employment Statistics Q2,2026-08-13
+Telemarketing Sales Agent,6500,4200,-35.3,Declining,DOSM AI Displacement Estimate,2025-04-23
+Low-Skilled Manual Labourer,45000,41000,-8.8,Declining,DOSM Employment Statistics Q2,2026-08-13
+Payroll & Bookkeeping Clerk,7200,5800,-19.4,Declining,DOSM AI Displacement Estimate,2025-04-23
+Customer Service Representative,14000,12500,-10.7,Stable/Declining,DOSM AI Displacement Estimate,2025-04-23
+Electrical & Electronic Products Technician,32000,35100,9.6,Rising,DOSM Employment Statistics Q2,2026-08-13
+Wholesale & Retail Trade Assistant,25000,26000,4.0,Stable,DOSM Employment Statistics Q2,2026-08-13
