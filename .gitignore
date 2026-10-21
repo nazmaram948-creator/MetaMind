@@ -35,3 +35,6 @@ frontend/dist/
 Thumbs.db
 .vscode/
 .idea/
+
+# engine caches (embeddings, built DBs)
+data/cache/

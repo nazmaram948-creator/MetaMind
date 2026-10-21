@@ -1,0 +1,16 @@
+snapshot_id,geo_id,metric,value
+aei_2025_11,GLOBAL,collaboration_bucket_automation_pct,46.7394
+aei_2025_11,MYS,usage_pct,0.4447
+aei_2025_11,MYS,collaboration_bucket_automation_pct,45.6532
+aei_2026_04,GLOBAL,usage_pct,100.0
+aei_2026_04,GLOBAL,usage_per_capita_index,1.0
+aei_2026_04,GLOBAL,collaboration_bucket_automation_pct,48.98
+aei_2026_04,MYS,usage_per_capita_index,0.8
+aei_2026_04,MYS,usage_pct,0.45
+aei_2026_04,MYS,collaboration_bucket_automation_pct,48.42
+aei_2026_05,GLOBAL,usage_pct,100.0
+aei_2026_05,GLOBAL,collaboration_bucket_automation_pct,48.62
+aei_2026_05,GLOBAL,usage_per_capita_index,1.0
+aei_2026_05,MYS,collaboration_bucket_automation_pct,47.2
+aei_2026_05,MYS,usage_per_capita_index,0.87
+aei_2026_05,MYS,usage_pct,0.51

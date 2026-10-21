@@ -31,7 +31,7 @@ from pathlib import Path
 import pandas as pd
 import requests
 
-from _common import CURATED, RAW, ROOT, load_manifest, manual_notice, now_iso, save_manifest
+from _common import CURATED, RAW, load_manifest, manual_notice, now_iso, rel, save_manifest
 
 API = "https://ec.europa.eu/esco/api"
 VERSION = "v1.2.0"
@@ -64,7 +64,7 @@ def try_zip() -> bool:
     if missing:
         print(f"  (not in zip: {missing})")
     m = load_manifest()
-    m[z.relative_to(ROOT).as_posix()] = {"source": SOURCE, "status": "ok (manual download)",
+    m[rel(z)] = {"source": SOURCE, "status": "ok (manual download)",
                                          "fetched_at": now_iso(), "bytes": z.stat().st_size}
     save_manifest(m)
     return True
@@ -156,7 +156,7 @@ def crawl_api(force: bool) -> None:
     occ_out = API_DIR / "occupations.jsonl"
     skill_out = API_DIR / "skills.jsonl"
     if occ_out.exists() and skill_out.exists() and not force:
-        print(f"  [skip] {occ_out.relative_to(ROOT).as_posix()} present (use --force-api)")
+        print(f"  [skip] {rel(occ_out)} present (use --force-api)")
         return
     API_DIR.mkdir(parents=True, exist_ok=True)
     targets = pd.read_csv(CURATED / "target_occupations.csv")
@@ -194,7 +194,7 @@ def crawl_api(force: bool) -> None:
 
     m = load_manifest()
     for p in (occ_out, skill_out):
-        m[p.relative_to(ROOT).as_posix()] = {
+        m[rel(p)] = {
             "url": f"{API}/resource/{{occupation,skill}}?selectedVersion={VERSION}",
             "source": SOURCE + " via ESCO Web Service API", "status": "ok",
             "bytes": p.stat().st_size, "fetched_at": now_iso(), "api_calls": esco.calls,
