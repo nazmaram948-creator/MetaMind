@@ -1,0 +1,9 @@
+persona_id,name,current_role_text,occ_id,match_quality,note
+USR-001,Aina,SME Administrative Assistant,secretary,approx,catalogue 'secretary' uses O*NET 43-6014 Secretaries and Administrative Assistants
+USR-002,Danial,,,none,fresh graduate: no current occupation
+USR-003,Sarah,Retail Store Manager,,none,outside target catalogue: treated as a switcher with no current occupation
+HR-001,Khairul,Junior Marketing Executive,digital_marketing_manager,approx,junior level; skills (social media, SEO) fit the catalogue's digital marketing role
+HR-002,Mei Ling,Customer Support Agent,customer_service_rep,exact,
+HR-003,Raj,Logistics Coordinator,supply_chain_assistant,approx,
+HR-004,Siti,Operations Analyst,business_analyst,approx,
+HR-005,Arif,Sales Representative,client_relations_manager,approx,catalogue role uses O*NET 41-3091 Sales Representatives of Services
