@@ -1,0 +1,67 @@
+# SkillShift MY engine settings. Every weight and threshold the engine uses is here.
+# All rankings and forecasts built from these numbers are labelled "Estimate".
+
+snapshots:
+  baseline: aei_2025_11      # shown by default
+  latest: aei_2026_05        # "Load newer data"
+
+# Which curated files to build the DB from (see data/curated/README.md):
+#   v2 = ESCO-keyed files (courses_v2.csv, sdg_map_v2.csv, demand_masco_v2.csv, personas_v2.json)
+#   v1 = the team's original files
+curated_version: v2
+
+tasks:
+  # O*NET importance (IM, 1-5) is the task weight. Unrated tasks of a partly rated
+  # occupation get that occupation's mean rating; an occupation with no ratings
+  # weights its tasks equally. Blended occupations give each O*NET code an equal share.
+  impute_missing_importance: soc_mean
+
+outlook:
+  # O = alpha*D + beta*z(G) - gamma*z(A); D = demand trend of the MASCO group (z-scored)
+  alpha: 1.0
+  beta: 1.0
+  presets:
+    moderate: {gamma: 1.0}
+    fast: {gamma: 2.0}
+  # Demand without a checked source never moves rankings: D = 0 until real DOSM
+  # figures with source URLs are entered (v2 placeholders; v1 rows have no URL).
+  use_unverified_demand: false
+
+momentum:
+  # M_k = sum_o r_ok * O_o / sum_o r_ok
+  essential_weight: 1.0
+  optional_weight: 0.5
+  # Skills Radar: M_k above +threshold is "rising", below -threshold "declining".
+  radar_threshold: 0.25
+
+match:
+  # S = 100 * (wc*C + wo*O_hat + wt*T) + lambda * SDG
+  weights: {coverage: 0.5, outlook: 0.3, transferability: 0.2}
+  # coverage counts each essential skill with weight exp(kappa * M_k)
+  momentum_kappa: 0.5
+  # O_hat is min-max scaled across roles; scale C and T the same way so that no
+  # part dominates just because of its range (raw C rarely exceeds 0.3 because
+  # roles list 10-25 essential skills). false = use raw C and T in the formula.
+  # Raw coverage ("you have 5 of 18") is always reported as well.
+  normalise_components: true
+  sdg_lambda: 0.0            # SDG slider (P3); 0 = off
+  exclude_current: true      # do not recommend the user's current occupation
+
+parse:
+  model: sentence-transformers/all-MiniLM-L6-v2
+  similarity_backend: minilm # minilm | lexical (lexical needs no model; used in tests)
+  auto_suggest: 0.60         # cosine >= this: suggested; otherwise "needs confirmation"
+  min_candidate: 0.45        # below this a match is not shown
+  max_per_phrase: 2
+  max_results: 30
+
+futures:
+  runs: 1000
+  momentum_noise_r: 0.2
+  seed: 20261025
+  top_n: 5
+  assumption: >-
+    Each skill's momentum is multiplied by (1 + U(-r, r)) with r = 0.2, independently,
+    in each of 1,000 simulated runs; roles are re-ranked every run and we count how
+    often each role stays in your top 5. This tests how sensitive the ranking is to
+    our own assumptions. It is an estimate, not a forecast of jobs.
