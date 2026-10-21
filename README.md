@@ -87,6 +87,58 @@ verified data sources once the real tables are ready:
 After integrating real sources, run the focused tests and full suite before
 switching demos or deployments away from `DEV_MODE=true`.
 
+### Engine mode (real data)
+
+`ENGINE_MODE=true` serves the same routes from the real engine in `engine/` instead
+of the fixtures. Response models are unchanged; they only gain optional fields (see
+[backend/API_CONTRACT.md](backend/API_CONTRACT.md#engine-mode-engine_modetrue)).
+Without it, nothing changes: fixtures with `DEV_MODE=true`, `503` otherwise.
+
+```bash
+export ENGINE_MODE=true
+uvicorn backend.app.main:app --reload --port 8000
+```
+
+On Windows PowerShell use `$env:ENGINE_MODE="true"` instead of `export`.
+
+On first start the SQLite database is built from `data/extracts/` and `data/curated/`
+in a few seconds (no network). The embedding model (all-MiniLM-L6-v2, about 90 MB)
+downloads once and the skill embeddings are cached in `data/cache/`.
+
+| Setting | Default | Meaning |
+|---|---|---|
+| `ENGINE_MODE` | `false` | `true` = real engine |
+| `CURATED_VERSION` | `v2` | `v1` = team curated files, `v2` = ESCO-keyed files ([data/curated/README.md](data/curated/README.md)) |
+| `SIMILARITY_BACKEND` | `minilm` | `lexical` = word overlap, no model download |
+| `SKILLSHIFT_DB` | `data/skillshift_<version>.db` | database path |
+
+All weights and thresholds are in [engine/config.yaml](engine/config.yaml). The model:
+
+- **Exposure** per occupation from O*NET task importance and the Anthropic Economic
+  Index task-level usage and automation/augmentation split.
+- **Outlook** `O = alpha·D + beta·z(augmentation) − gamma·z(automation)`, with
+  `gamma` = 1 (moderate) or 2 (fast). Demand `D` stays neutral until DOSM figures
+  with source URLs are entered.
+- **Skill momentum** = outlook of the occupations that need the skill (Skills Radar).
+- **Match** = coverage of essential skills, outlook and transferability, plus 1,000
+  simulated futures for robustness.
+- **Snapshots**: `baseline_snapshot` = AEI Nov 2025, `latest_snapshot` = AEI May 2026.
+
+Rebuild the database after changing curated files with `python -m engine.build`.
+
+Replit / Linux: plain `pip install sentence-transformers` pulls the CUDA build of
+PyTorch (several GB). Install the CPU build first:
+
+```bash
+pip install torch --index-url https://download.pytorch.org/whl/cpu
+```
+
+Or run with `SIMILARITY_BACKEND=lexical`. The engine also falls back to lexical
+matching on its own when sentence-transformers is not installed.
+
+`pytest -c backend/pytest.ini -q` runs the engine tests (`engine/tests/`) too; they
+use lexical matching, so no model download is needed.
+
 ### Backend layout
 
 ```text
