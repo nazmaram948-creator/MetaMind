@@ -3,6 +3,10 @@ import { Estimate, Source } from "./Badge";
 
 const COLOR = { rising: "#e3ec6c", stable: "rgba(246,242,239,0.45)", declining: "#ff7066" };
 const MAX_ROWS = 10;
+const HINT = {
+  moderate: "Automation counts once against a role's outlook (gamma = 1). Changes the chart and the role ranking.",
+  fast: "Automation counts twice as hard against a role's outlook (gamma = 2): roles where AI mostly does the work fall further.",
+};
 
 function pick(signals) {
   const sorted = [...signals].sort((a, b) => b.value - a.value);
@@ -30,13 +34,16 @@ export default function Momentum({ signals, scenario, setScenario, mine }) {
     <section className="card" id="momentum">
       <div className="chart-head">
         <p className="label" style={{ margin: 0 }}>{mine ? "Your skills, momentum" : "Skill momentum"}</p>
-        <div className="seg" role="group" aria-label="AI adoption speed">
-          {["moderate", "fast"].map((s) => (
-            <button key={s} className={scenario === s ? "on" : ""} onClick={() => setScenario(s)}>
-              {s === "moderate" ? "Moderate" : "Fast"}
-            </button>
-          ))}
-        </div>
+        <span className="adopt">
+          <span className="faint">AI adoption</span>
+          <div className="seg" role="group" aria-label="AI adoption speed">
+            {["moderate", "fast"].map((s) => (
+              <button key={s} className={scenario === s ? "on" : ""} onClick={() => setScenario(s)} title={HINT[s]}>
+                {s === "moderate" ? "Moderate" : "Fast"}
+              </button>
+            ))}
+          </div>
+        </span>
       </div>
       {rows.length === 0 ? <p className="skeleton">Loading…</p> : (
         <ResponsiveContainer width="100%" height={rows.length * 30 + 20}>
