@@ -1,0 +1,51 @@
+course_id,esco_skill_label,confidence,note
+CRS-002,perform data analysis,high,
+CRS-002,use spreadsheets software,high,course covers spreadsheets
+CRS-002,data visualisation software,medium,course covers dashboards/visualisation
+CRS-002,use databases,medium,course covers SQL queries
+CRS-003,use scripting programming,medium,ESCO skill covers Python scripting
+CRS-004,sustainable finance,high,
+CRS-004,corporate social responsibility,medium,ESG overlaps CSR
+CRS-005,digital marketing techniques,high,
+CRS-005,plan digital marketing,medium,
+CRS-007,sustainable agricultural production principles,medium,
+CRS-008,energy efficiency,medium,
+CRS-008,renewable energy,medium,
+CRS-009,implement ICT security policies,medium,
+CRS-010,cloud technologies,high,
+CRS-011,data protection,high,
+CRS-011,respect data protection principles,medium,
+CRS-014,human resource management,medium,course is AI tools for HR staff
+CRS-015,circular economy,high,
+CRS-015,promote sustainability,medium,
+CRS-016,provide ICT support,high,
+CRS-016,perform ICT troubleshooting,high,
+CRS-016,support ICT system users,high,
+CRS-017,perform data analysis,high,
+CRS-017,data mining,medium,
+CRS-017,use scripting programming,medium,ESCO skill covers Python scripting
+CRS-020,research website users,low,UX research overlaps website-user research
+CRS-024,implement ICT security policies,low,introductory course
+CRS-025,cloud technologies,high,
+CRS-026,cloud technologies,high,
+CRS-027,Agile project management,high,
+CRS-029,use scripting programming,medium,ESCO skill covers Python scripting
+CRS-030,use spreadsheets software,high,
+CRS-030,use microsoft office,medium,
+CRS-031,analyse market financial trends,medium,
+CRS-031,financial products,medium,
+CRS-032,project management,high,
+CRS-032,project management principles,high,
+CRS-033,digital marketing techniques,high,
+CRS-033,social media marketing techniques,high,
+CRS-033,conduct search engine optimisation,medium,
+CRS-033,web analytics,medium,
+CRS-036,perform data analysis,low,R-based introduction
+CRS-054,design database in the cloud,medium,
+CRS-054,manage cloud data and storage,medium,
+CRS-054,analyse big data,low,
+CRS-055,cloud technologies,high,
+CRS-057,perform data analysis,high,
+CRS-057,use scripting programming,medium,ESCO skill covers Python scripting
+CRS-057,data visualisation software,medium,
+CRS-058,execute analytical mathematical calculations,medium,
