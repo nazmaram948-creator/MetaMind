@@ -1,0 +1,21 @@
+demand_occupation,occ_id,masco_major,match_quality,note
+Data Engineer,,2,none,not in target catalogue
+Full Stack Engineer,,2,none,not in target catalogue
+Back End Developer,,2,none,not in target catalogue
+Senior Business Analyst,business_analyst,2,approx,senior level of catalogue role
+Data Specialist,data_analyst,2,approx,
+Java Software Engineer,,2,none,not in target catalogue
+Junior Software Engineer,,2,none,not in target catalogue
+Data Scientist,,2,none,not in target catalogue (nearest: data_analyst)
+Solution Architect,,2,none,not in target catalogue
+IT System Operations & Maintenance,,3,none,not in target catalogue (nearest: ict_help_desk_agent)
+Manufacturing Automation Technician,,3,none,not in target catalogue
+General Data Entry Clerk,data_entry_clerk,4,exact,
+Basic Administrative Assistant,secretary,4,approx,catalogue 'secretary' uses O*NET 43-6014 Secretaries and Administrative Assistants
+Routine Assembly Line Worker,,8,none,not in target catalogue
+Telemarketing Sales Agent,,5,none,not in target catalogue
+Low-Skilled Manual Labourer,,9,none,not in target catalogue
+Payroll & Bookkeeping Clerk,payroll_clerk,4,approx,row combines payroll and bookkeeping clerks (also relevant: accounts_clerk)
+Customer Service Representative,customer_service_rep,4,exact,
+Electrical & Electronic Products Technician,,3,none,not in target catalogue
+Wholesale & Retail Trade Assistant,,5,none,not in target catalogue
