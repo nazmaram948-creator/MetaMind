@@ -5,7 +5,9 @@ ranking or forecast with label "Estimate". All responses pass validate_ids.
 """
 from __future__ import annotations
 
+import importlib.util
 import json
+import logging
 from functools import lru_cache
 
 import pandas as pd
@@ -17,6 +19,7 @@ from .parse import parse as parse_text
 from .similarity import Similarity
 from .store import Store
 
+log = logging.getLogger("skillshift.engine")
 ESTIMATE = "Estimate"
 ALIASES = {"baseline_snapshot": "baseline", "latest_snapshot": "latest"}
 
@@ -26,10 +29,15 @@ class Engine:
         self.cfg = cfg or load_config()
         self.store = store or Store.open()
         self.active_snapshot = self.cfg["snapshots"]["baseline"]
+        backend = self.cfg["parse"]["similarity_backend"]
+        if backend == "minilm" and importlib.util.find_spec("sentence_transformers") is None:
+            log.warning("sentence-transformers not installed: using lexical skill matching")
+            backend = "lexical"
+        self.similarity_backend = backend
         sk = self.store["skills"]
         alts = {u: [a for a in (s or "").split("|") if a] for u, s in zip(sk.skill_uri, sk.alt_labels)}
         self.sim = Similarity(dict(zip(sk.skill_uri, sk.label)), alts,
-                              backend=self.cfg["parse"]["similarity_backend"], model_name=self.cfg["parse"]["model"])
+                              backend=backend, model_name=self.cfg["parse"]["model"])
         os_ = self.store["occ_skill"]
         ess = os_[os_.relation == "essential"]
         self.essentials = {o: sorted(g.skill_uri) for o, g in ess.groupby("occ_id")}
