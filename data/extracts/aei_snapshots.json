@@ -1,0 +1,35 @@
+{
+  "aei_2025_11": {
+    "label": "AEI Nov 2025",
+    "release": "2026-01-15",
+    "period": "2025-11-13 to 2025-11-20",
+    "source_date": "2026-01-15",
+    "file": "release_2026_01_15/data/intermediate/aei_raw_claude_ai_2025-11-13_to_2025-11-20.csv",
+    "source": "Anthropic Economic Index (Claude.ai, global)",
+    "source_url": "https://huggingface.co/datasets/Anthropic/EconomicIndex/blob/main/release_2026_01_15/data/intermediate/aei_raw_claude_ai_2025-11-13_to_2025-11-20.csv",
+    "licence": "CC-BY",
+    "fetched_at": null
+  },
+  "aei_2026_04": {
+    "label": "AEI Apr 2026",
+    "release": "2026-06-26",
+    "period": "2026-04-01 to 2026-05-01",
+    "source_date": "2026-06-26",
+    "file": "release_2026_06_26/data/aei_claude_ai_2026-06-26.csv",
+    "source": "Anthropic Economic Index (Claude.ai, global)",
+    "source_url": "https://huggingface.co/datasets/Anthropic/EconomicIndex/blob/main/release_2026_06_26/data/aei_claude_ai_2026-06-26.csv",
+    "licence": "CC-BY",
+    "fetched_at": null
+  },
+  "aei_2026_05": {
+    "label": "AEI May 2026",
+    "release": "2026-06-26",
+    "period": "2026-05-01 to 2026-06-01",
+    "source_date": "2026-06-26",
+    "file": "release_2026_06_26/data/aei_claude_ai_2026-06-26.csv",
+    "source": "Anthropic Economic Index (Claude.ai, global)",
+    "source_url": "https://huggingface.co/datasets/Anthropic/EconomicIndex/blob/main/release_2026_06_26/data/aei_claude_ai_2026-06-26.csv",
+    "licence": "CC-BY",
+    "fetched_at": null
+  }
+}
