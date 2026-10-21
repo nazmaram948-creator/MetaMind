@@ -1,0 +1,814 @@
+onet_soc,onet_title,task_id,task,task_type,importance,importance_n,importance_suppressed
+11-3012.00,Administrative Services Managers,19,"Direct or coordinate the supportive services department of a business, agency, or organization.",Supplemental,3.92,94.0,0
+11-3012.00,Administrative Services Managers,20,Set goals and deadlines for the department.,Core,3.7,122.0,0
+11-3012.00,Administrative Services Managers,21,Prepare and review operational reports and schedules to ensure accuracy and efficiency.,Core,3.71,103.0,0
+11-3012.00,Administrative Services Managers,22,"Analyze internal processes and recommend and implement procedural or policy changes to improve operations, such as supply changes or the disposal of records.",Core,3.33,122.0,0
+11-3012.00,Administrative Services Managers,23,"Acquire, distribute and store supplies.",Core,3.38,91.0,0
+11-3012.00,Administrative Services Managers,24,"Plan, administer, and control budgets for contracts, equipment, and supplies.",Supplemental,4.06,99.0,0
+11-3012.00,Administrative Services Managers,26,Hire and terminate clerical and administrative personnel.,Supplemental,3.95,74.0,0
+11-3012.00,Administrative Services Managers,30,Conduct classes to teach procedures to staff.,Core,3.19,96.0,0
+11-3012.00,Administrative Services Managers,21262,"Communicate with and provide guidance for external vendors and service providers to ensure the organization, department, or work unit's business needs are met.",,,,0
+11-3012.00,Administrative Services Managers,21263,Develop operational standards and procedures for the work unit or department.,,,,0
+11-3012.00,Administrative Services Managers,21264,Establish work procedures or schedules to organize the daily work of administrative staff.,,,,0
+11-3012.00,Administrative Services Managers,21265,Learn to operate new office technologies as they are developed and implemented.,,,,0
+11-3012.00,Administrative Services Managers,21266,"Manage paper or electronic filing systems by recording information, updating paperwork, or maintaining documents, such as attendance records or correspondence.",,,,0
+11-3012.00,Administrative Services Managers,21267,"Meet with other departmental leaders to establish organizational goals, strategic plans, and objectives, as well as make decisions about personnel, resources, and space or equipment needs.",,,,0
+11-3012.00,Administrative Services Managers,21268,"Oversee payroll functions, such as maintaining timekeeping information and processing and submitting payroll.",,,,0
+11-3012.00,Administrative Services Managers,21269,"Read through contracts, regulations, and procedural guidelines to ensure comprehension and compliance.",,,,0
+11-3012.00,Administrative Services Managers,21270,Represent work unit at meetings or conferences and serve as liaison for requests or complaints.,,,,0
+11-3012.00,Administrative Services Managers,21271,Supervise administrative staff and provide training and orientation to new staff.,,,,0
+13-1023.00,"Purchasing Agents, Except Wholesale, Retail, and Farm Products",1142,Purchase the highest quality merchandise at the lowest possible price and in correct amounts.,Core,4.55,20.0,0
+13-1023.00,"Purchasing Agents, Except Wholesale, Retail, and Farm Products",1143,"Prepare purchase orders, solicit bid proposals, and review requisitions for goods and services.",Core,4.4,20.0,0
+13-1023.00,"Purchasing Agents, Except Wholesale, Retail, and Farm Products",1144,"Research and evaluate suppliers, based on price, quality, selection, service, support, availability, reliability, production and distribution capabilities, and the supplier's reputation and history.",Core,4.16,19.0,0
+13-1023.00,"Purchasing Agents, Except Wholesale, Retail, and Farm Products",1145,"Analyze price proposals, financial reports, and other data and information to determine reasonable prices.",Core,4.2,20.0,0
+13-1023.00,"Purchasing Agents, Except Wholesale, Retail, and Farm Products",1146,Monitor and follow applicable laws and regulations.,Core,4.85,20.0,0
+13-1023.00,"Purchasing Agents, Except Wholesale, Retail, and Farm Products",1147,"Negotiate, renegotiate, and administer contracts with suppliers, vendors, and other representatives.",Core,4.05,20.0,0
+13-1023.00,"Purchasing Agents, Except Wholesale, Retail, and Farm Products",1148,"Monitor shipments to ensure that goods come in on time, and resolve problems related to undelivered goods.",Core,3.59,17.0,0
+13-1023.00,"Purchasing Agents, Except Wholesale, Retail, and Farm Products",1149,"Confer with staff, users, and vendors to discuss defective or unacceptable goods or services and determine corrective action.",Core,3.74,19.0,0
+13-1023.00,"Purchasing Agents, Except Wholesale, Retail, and Farm Products",1150,Evaluate and monitor contract performance to ensure compliance with contractual obligations and to determine need for changes.,Core,4.05,19.0,0
+13-1023.00,"Purchasing Agents, Except Wholesale, Retail, and Farm Products",1151,"Maintain and review computerized or manual records of purchased items, costs, deliveries, product performance, and inventories.",Core,3.74,19.0,0
+13-1023.00,"Purchasing Agents, Except Wholesale, Retail, and Farm Products",1152,"Review catalogs, industry periodicals, directories, trade journals, and Internet sites and consult with other department personnel to locate necessary goods and services.",Core,3.45,20.0,0
+13-1023.00,"Purchasing Agents, Except Wholesale, Retail, and Farm Products",1153,Study sales records and inventory levels of current stock to develop strategic purchasing programs that facilitate employee access to supplies.,Core,3.83,18.0,0
+13-1023.00,"Purchasing Agents, Except Wholesale, Retail, and Farm Products",1154,"Interview vendors and visit suppliers' plants and distribution centers to examine and learn about products, services, and prices.",Supplemental,2.94,18.0,0
+13-1023.00,"Purchasing Agents, Except Wholesale, Retail, and Farm Products",1155,Arrange the payment of duty and freight charges.,Supplemental,3.0,13.0,0
+13-1023.00,"Purchasing Agents, Except Wholesale, Retail, and Farm Products",1156,"Hire, train, or supervise purchasing clerks, buyers, and expediters.",Core,4.16,19.0,0
+13-1023.00,"Purchasing Agents, Except Wholesale, Retail, and Farm Products",1157,"Write and review product specifications, maintaining a working technical knowledge of the goods or services to be purchased.",Core,4.25,20.0,0
+13-1023.00,"Purchasing Agents, Except Wholesale, Retail, and Farm Products",1158,"Monitor changes affecting supply and demand, tracking market conditions, price trends, or futures markets.",Core,3.68,19.0,0
+13-1023.00,"Purchasing Agents, Except Wholesale, Retail, and Farm Products",1159,Formulate policies and procedures for bid proposals and procurement of goods and services.,Core,4.4,20.0,0
+13-1023.00,"Purchasing Agents, Except Wholesale, Retail, and Farm Products",1160,"Attend meetings, trade shows, conferences, conventions, and seminars to network with people in other purchasing departments.",Core,3.45,20.0,0
+13-1071.00,Human Resources Specialists,18852,"Address employee relations issues, such as harassment allegations, work complaints, or other employee concerns.",Core,4.31,90.0,0
+13-1071.00,Human Resources Specialists,18853,Analyze employment-related data and prepare required reports.,Core,3.81,84.0,0
+13-1071.00,Human Resources Specialists,18854,Conduct exit interviews and ensure that necessary employment termination paperwork is completed.,Core,3.9,76.0,0
+13-1071.00,Human Resources Specialists,18855,Conduct reference or background checks on job applicants.,Supplemental,4.28,80.0,0
+13-1071.00,Human Resources Specialists,18856,Confer with management to develop or implement personnel policies or procedures.,Core,3.99,94.0,0
+13-1071.00,Human Resources Specialists,18857,Contact job applicants to inform them of the status of their applications.,Core,3.91,93.0,0
+13-1071.00,Human Resources Specialists,18858,Develop or implement recruiting strategies to meet current or anticipated staffing needs.,Core,3.71,86.0,0
+13-1071.00,Human Resources Specialists,18859,Hire employees and process hiring-related paperwork.,Core,4.5,104.0,0
+13-1071.00,Human Resources Specialists,18860,"Inform job applicants of details such as duties and responsibilities, compensation, benefits, schedules, working conditions, or promotion opportunities.",Core,4.18,105.0,0
+13-1071.00,Human Resources Specialists,18861,"Interpret and explain human resources policies, procedures, laws, standards, or regulations.",Core,4.66,114.0,0
+13-1071.00,Human Resources Specialists,18862,"Interview job applicants to obtain information on work history, training, education, or job skills.",Core,3.89,81.0,0
+13-1071.00,Human Resources Specialists,18863,"Maintain and update human resources documents, such as organizational charts, employee handbooks or directories, or performance evaluation forms.",Core,4.0,97.0,0
+13-1071.00,Human Resources Specialists,18864,"Maintain current knowledge of Equal Employment Opportunity (EEO) and affirmative action guidelines and laws, such as the Americans with Disabilities Act (ADA).",Core,4.44,108.0,0
+13-1071.00,Human Resources Specialists,18865,"Perform searches for qualified job candidates, using sources such as computer databases, networking, Internet recruiting resources, media advertisements, job fairs, recruiting firms, or employee referrals.",Core,3.86,88.0,0
+13-1071.00,Human Resources Specialists,18866,"Prepare or maintain employment records related to events, such as hiring, termination, leaves, transfers, or promotions, using human resources management system software.",Core,4.33,103.0,0
+13-1071.00,Human Resources Specialists,18867,"Provide management with information or training related to interviewing, performance appraisals, counseling techniques, or documentation of performance issues.",Core,3.86,88.0,0
+13-1071.00,Human Resources Specialists,18868,Review employment applications and job orders to match applicants with job requirements.,Core,4.18,106.0,0
+13-1071.00,Human Resources Specialists,18869,"Schedule or administer skill, intelligence, psychological, or drug tests for current or prospective employees.",Supplemental,4.34,67.0,0
+13-1071.00,Human Resources Specialists,18870,Schedule or conduct new employee orientations.,Core,4.14,93.0,0
+13-1071.00,Human Resources Specialists,18871,"Select qualified job applicants or refer them to managers, making hiring recommendations when appropriate.",Core,4.16,102.0,0
+13-1071.00,Human Resources Specialists,18872,"Advise management on organizing, preparing, or implementing recruiting or retention programs.",Core,3.73,97.0,0
+13-1071.00,Human Resources Specialists,18873,"Coordinate with outside staffing agencies to secure temporary employees, based on departmental needs.",Supplemental,3.57,58.0,0
+13-1071.00,Human Resources Specialists,18874,"Evaluate recruitment or selection criteria to ensure conformance to professional, statistical, or testing standards, recommending revisions, as needed.",Supplemental,3.95,75.0,0
+13-1071.00,Human Resources Specialists,18875,Evaluate selection or testing techniques by conducting research or follow-up activities and conferring with management or supervisory personnel.,Supplemental,3.5,58.0,0
+13-1071.00,Human Resources Specialists,18876,"Review and evaluate applicant qualifications or eligibility for specified licensing, according to established guidelines and designated licensing codes.",Supplemental,4.11,82.0,0
+13-1071.00,Human Resources Specialists,21097,Administer employee benefit plans.,Supplemental,4.45,62.0,0
+13-1081.02,Logistics Analysts,15881,Identify opportunities for inventory reductions.,Core,3.69,16.0,0
+13-1081.02,Logistics Analysts,15882,"Monitor industry standards, trends, or practices to identify developments in logistics planning or execution.",Core,3.38,21.0,0
+13-1081.02,Logistics Analysts,15883,Enter logistics-related data into databases.,Core,4.0,18.0,0
+13-1081.02,Logistics Analysts,15884,Develop or maintain payment systems to ensure accuracy of vendor payments.,Supplemental,3.83,12.0,0
+13-1081.02,Logistics Analysts,15885,Determine packaging requirements.,Supplemental,2.92,13.0,0
+13-1081.02,Logistics Analysts,15886,Develop or maintain freight rate databases for use by supply chain departments to determine the most economical modes of transportation.,Supplemental,3.69,13.0,0
+13-1081.02,Logistics Analysts,15887,Contact potential vendors to determine material availability.,Supplemental,4.07,14.0,0
+13-1081.02,Logistics Analysts,15888,Contact carriers for rates or schedules.,Core,3.89,18.0,0
+13-1081.02,Logistics Analysts,15889,"Communicate with or monitor service providers, such as ocean carriers, air freight forwarders, global consolidators, customs brokers, or trucking companies.",Core,4.38,16.0,0
+13-1081.02,Logistics Analysts,15890,Track product flow from origin to final delivery.,Core,4.35,20.0,0
+13-1081.02,Logistics Analysts,15891,Write or revise standard operating procedures for logistics processes.,Core,3.29,21.0,0
+13-1081.02,Logistics Analysts,15892,"Review procedures, such as distribution or inventory management, to ensure maximum efficiency or minimum cost.",Core,3.52,21.0,0
+13-1081.02,Logistics Analysts,15893,Recommend improvements to existing or planned logistics processes.,Core,4.14,22.0,0
+13-1081.02,Logistics Analysts,15894,"Provide ongoing analyses in areas such as transportation costs, parts procurement, back orders, or delivery processes.",Core,3.95,22.0,0
+13-1081.02,Logistics Analysts,15895,Prepare reports on logistics performance measures.,Core,4.05,22.0,0
+13-1081.02,Logistics Analysts,15896,Manage systems to ensure that pricing structures adequately reflect logistics costing.,Core,3.88,16.0,0
+13-1081.02,Logistics Analysts,15897,"Monitor inventory transactions at warehouse facilities to assess receiving, storage, shipping, or inventory integrity.",Core,3.93,15.0,0
+13-1081.02,Logistics Analysts,15898,Maintain databases of logistics information.,Core,4.48,21.0,0
+13-1081.02,Logistics Analysts,15899,Maintain logistics records in accordance with corporate policies.,Core,3.91,22.0,0
+13-1081.02,Logistics Analysts,15900,"Develop or maintain models for logistics uses, such as cost estimating or demand forecasting.",Core,3.42,19.0,0
+13-1081.02,Logistics Analysts,15901,"Confer with logistics management teams to determine ways to optimize service levels, maintain supply-chain efficiency, or minimize cost.",Core,3.86,22.0,0
+13-1081.02,Logistics Analysts,15902,"Compute reporting metrics, such as on-time delivery rates, order fulfillment rates, or inventory turns.",Core,3.8,20.0,0
+13-1081.02,Logistics Analysts,15903,"Interpret data on logistics elements, such as availability, maintainability, reliability, supply chain management, strategic sourcing or distribution, supplier management, or transportation.",Core,4.19,21.0,0
+13-1081.02,Logistics Analysts,15904,"Apply analytic methods or tools to understand, predict, or control logistics operations or processes.",Core,4.1,20.0,0
+13-1081.02,Logistics Analysts,15905,"Analyze logistics data, using methods such as data mining, data modeling, or cost or benefit analysis.",Core,3.95,21.0,0
+13-1081.02,Logistics Analysts,20009,"Remotely monitor the flow of vehicles or inventory, using Web-based logistics information systems to track vehicles or containers.",Core,4.39,18.0,0
+13-1081.02,Logistics Analysts,20010,"Reorganize shipping schedules to consolidate loads, maximize vehicle usage, or limit the movement of empty vehicles or containers.",Supplemental,4.36,14.0,0
+13-1081.02,Logistics Analysts,20011,"Route or reroute drivers in real time with remote route navigation software, satellite linkup systems, or global positioning systems (GPS) to improve operational efficiencies.",Supplemental,3.27,11.0,0
+13-1081.02,Logistics Analysts,20012,Arrange for sale or lease of excess storage or transport capacity to minimize losses or inefficiencies associated with empty space.,Supplemental,2.4,10.0,0
+13-1081.02,Logistics Analysts,20013,Compare locations or environmental policies of carriers or suppliers to make transportation decisions with lower environmental impact.,Supplemental,2.73,11.0,0
+13-1081.02,Logistics Analysts,20014,Enter carbon-output or environmental-impact data into spreadsheets or environmental management or auditing software programs.,Supplemental,2.86,7.0,0
+13-1082.00,Project Management Specialists,21462,Assign duties or responsibilities to project personnel.,Core,4.07,27.0,0
+13-1082.00,Project Management Specialists,21463,Communicate with key stakeholders to determine project requirements and objectives.,Core,4.54,28.0,0
+13-1082.00,Project Management Specialists,21464,Confer with project personnel to identify and resolve problems.,Core,4.33,27.0,0
+13-1082.00,Project Management Specialists,21465,Create project status presentations for delivery to customers or project personnel.,Core,3.89,27.0,0
+13-1082.00,Project Management Specialists,21466,"Develop or update project plans including information such as objectives, technologies, schedules, funding, and staffing.",Core,3.78,27.0,0
+13-1082.00,Project Management Specialists,21467,"Identify project needs such as resources, staff, or finances by reviewing project objectives and schedules.",Core,4.5,28.0,0
+13-1082.00,Project Management Specialists,21468,"Identify, review, or select vendors or consultants to meet project needs.",Core,3.62,26.0,0
+13-1082.00,Project Management Specialists,21469,Monitor costs incurred by project staff to identify budget issues.,Core,3.83,24.0,0
+13-1082.00,Project Management Specialists,21470,Monitor project milestones and deliverables.,Core,4.11,28.0,0
+13-1082.00,Project Management Specialists,21471,Monitor the performance of project team members to provide performance feedback.,Core,3.81,26.0,0
+13-1082.00,Project Management Specialists,21472,Negotiate with project stakeholders or suppliers to obtain resources or materials.,Core,3.88,24.0,0
+13-1082.00,Project Management Specialists,21473,"Plan, schedule, or coordinate project activities to meet deadlines.",Core,4.3,27.0,0
+13-1082.00,Project Management Specialists,21474,"Prepare and submit budget estimates, progress reports, or cost tracking reports.",Core,3.56,27.0,0
+13-1082.00,Project Management Specialists,21475,Produce and distribute project documents.,Core,3.89,27.0,0
+13-1082.00,Project Management Specialists,21476,"Propose, review, or approve modifications to project plans.",Core,3.62,26.0,0
+13-1082.00,Project Management Specialists,21477,Recruit or hire project personnel.,Core,3.82,22.0,0
+13-1082.00,Project Management Specialists,21478,"Report project status, such as budget, resources, technical issues, or customer satisfaction, to managers.",Core,3.75,28.0,0
+13-1082.00,Project Management Specialists,21479,Request and review project updates to ensure deadlines are met.,Core,4.29,28.0,0
+13-1082.00,Project Management Specialists,21480,Schedule or facilitate project meetings.,Core,3.62,26.0,0
+13-1082.00,Project Management Specialists,21481,"Submit project deliverables to clients, ensuring adherence to quality standards.",Core,4.36,28.0,0
+13-1111.00,Management Analysts,7276,Gather and organize information on problems or procedures.,Core,4.48,21.0,0
+13-1111.00,Management Analysts,7277,Analyze data gathered and develop solutions or alternative methods of proceeding.,Core,4.45,20.0,0
+13-1111.00,Management Analysts,7278,Confer with personnel concerned to ensure successful functioning of newly implemented systems or procedures.,Core,4.48,21.0,0
+13-1111.00,Management Analysts,7279,"Develop and implement records management program for filing, protection, and retrieval of records, and assure compliance with program.",Core,3.61,18.0,0
+13-1111.00,Management Analysts,7280,"Review forms and reports and confer with management and users about format, distribution, and purpose, identifying problems and improvements.",Core,3.74,19.0,0
+13-1111.00,Management Analysts,7281,"Interview personnel and conduct on-site observation to ascertain unit functions, work performed, and methods, equipment, and personnel used.",Core,4.1,20.0,0
+13-1111.00,Management Analysts,7282,"Document findings of study and prepare recommendations for implementation of new systems, procedures, or organizational changes.",Core,4.24,21.0,0
+13-1111.00,Management Analysts,7283,"Prepare manuals and train workers in use of new forms, reports, procedures or equipment, according to organizational policy.",Core,3.84,19.0,0
+13-1111.00,Management Analysts,7284,"Design, evaluate, recommend, and approve changes of forms and reports.",Core,3.21,19.0,0
+13-1111.00,Management Analysts,7285,"Plan study of work problems and procedures, such as organizational change, communications, information flow, integrated production methods, inventory control, or cost analysis.",Core,4.1,20.0,0
+13-1111.00,Management Analysts,7286,Recommend purchase of storage equipment and design area layout to locate equipment in space available.,Supplemental,3.21,14.0,0
+13-1151.00,Training and Development Specialists,93,"Keep up with developments in area of expertise by reading current journals, books, or magazine articles.",Core,3.73,22.0,0
+13-1151.00,Training and Development Specialists,94,"Present information with a variety of instructional techniques or formats, such as role playing, simulations, team exercises, group discussions, videos, or lectures.",Core,4.65,23.0,0
+13-1151.00,Training and Development Specialists,95,"Schedule classes based on availability of classrooms, equipment, or instructors.",Core,3.26,19.0,0
+13-1151.00,Training and Development Specialists,97,Offer specific training programs to help workers maintain or improve job skills.,Core,4.43,21.0,0
+13-1151.00,Training and Development Specialists,98,"Monitor, evaluate, or record training activities or program effectiveness.",Core,4.4,20.0,0
+13-1151.00,Training and Development Specialists,99,Attend meetings or seminars to obtain information for use in training programs or to inform management of training program status.,Core,3.68,22.0,0
+13-1151.00,Training and Development Specialists,100,Coordinate recruitment and placement of training program participants.,Core,3.57,21.0,0
+13-1151.00,Training and Development Specialists,101,"Evaluate training materials prepared by instructors, such as outlines, text, or handouts.",Core,4.0,20.0,0
+13-1151.00,Training and Development Specialists,102,Develop alternative training methods if expected improvements are not seen.,Core,4.1,21.0,0
+13-1151.00,Training and Development Specialists,103,"Assess training needs through surveys, interviews with employees, focus groups, or consultation with managers, instructors, or customer representatives.",Core,4.43,21.0,0
+13-1151.00,Training and Development Specialists,105,Select and assign instructors to conduct training.,Core,3.5,20.0,0
+13-1151.00,Training and Development Specialists,106,Devise programs to develop executive potential among employees in lower-level positions.,Core,3.79,19.0,0
+13-1151.00,Training and Development Specialists,108,"Negotiate contracts with clients for desired training outcomes, fees, or expenses.",Core,3.47,19.0,0
+13-1151.00,Training and Development Specialists,111,"Refer trainees to employer relations representatives, to locations offering job placement assistance, or to appropriate social services agencies, if warranted.",Supplemental,2.86,14.0,0
+13-1151.00,Training and Development Specialists,19558,"Develop or implement training programs related to efficiency, recycling, or other issues with environmental impacts.",Supplemental,2.59,17.0,0
+13-1151.00,Training and Development Specialists,19559,"Evaluate modes of training delivery, such as in-person or virtual, to optimize training effectiveness, training costs, or environmental impacts.",Core,4.45,22.0,0
+13-1151.00,Training and Development Specialists,20474,"Design, plan, organize, or direct orientation and training programs for employees or customers.",Core,4.33,21.0,0
+13-1151.00,Training and Development Specialists,20475,"Obtain, organize, or develop training procedure manuals, guides, or course materials, such as handouts or visual materials.",Core,4.62,21.0,0
+13-1151.00,Training and Development Specialists,20476,Monitor training costs and prepare budget reports to justify expenditures.,Core,3.82,17.0,0
+13-1151.00,Training and Development Specialists,20477,"Supervise, evaluate, or refer instructors to skill development classes.",Core,3.42,19.0,0
+13-1161.00,Market Research Analysts and Marketing Specialists,5433,"Collect and analyze data on customer demographics, preferences, needs, and buying habits to identify potential markets and factors affecting product demand.",Core,3.88,17.0,0
+13-1161.00,Market Research Analysts and Marketing Specialists,5434,"Prepare reports of findings, illustrating data graphically and translating complex findings into written text.",Core,4.06,17.0,0
+13-1161.00,Market Research Analysts and Marketing Specialists,5435,Measure and assess customer and employee satisfaction.,Core,3.62,16.0,0
+13-1161.00,Market Research Analysts and Marketing Specialists,5436,"Forecast and track marketing and sales trends, analyzing collected data.",Core,3.12,16.0,0
+13-1161.00,Market Research Analysts and Marketing Specialists,5437,Seek and provide information to help companies determine their position in the marketplace.,Core,4.06,18.0,0
+13-1161.00,Market Research Analysts and Marketing Specialists,5438,"Measure the effectiveness of marketing, advertising, and communications programs and strategies.",Core,3.36,14.0,0
+13-1161.00,Market Research Analysts and Marketing Specialists,5439,"Conduct research on consumer opinions and marketing strategies, collaborating with marketing professionals, statisticians, pollsters, and other professionals.",Core,3.94,16.0,0
+13-1161.00,Market Research Analysts and Marketing Specialists,5440,"Attend staff conferences to provide management with information and proposals concerning the promotion, distribution, design, and pricing of company products or services.",Supplemental,3.45,11.0,0
+13-1161.00,Market Research Analysts and Marketing Specialists,5441,"Gather data on competitors and analyze their prices, sales, and method of marketing and distribution.",Core,3.65,17.0,0
+13-1161.00,Market Research Analysts and Marketing Specialists,5442,Monitor industry statistics and follow trends in trade literature.,Core,3.53,17.0,0
+13-1161.00,Market Research Analysts and Marketing Specialists,5443,"Devise and evaluate methods and procedures for collecting data, such as surveys, opinion polls, or questionnaires, or arrange to obtain existing data.",Core,3.85,13.0,0
+13-1161.00,Market Research Analysts and Marketing Specialists,5444,Develop and implement procedures for identifying advertising needs.,Supplemental,2.86,14.0,0
+13-1161.00,Market Research Analysts and Marketing Specialists,5445,Direct trained survey interviewers.,Core,3.36,14.0,0
+13-1161.01,Search Marketing Strategists,16172,"Keep abreast of government regulations and emerging Web technology to ensure regulatory compliance by reviewing current literature, talking with colleagues, participating in educational programs, attending meetings or workshops, or participating in professional organizations or conferences.",Core,3.26,23.0,0
+13-1161.01,Search Marketing Strategists,16173,Resolve product availability problems in collaboration with customer service staff.,Supplemental,2.69,13.0,0
+13-1161.01,Search Marketing Strategists,16174,Implement online customer service processes to ensure positive and consistent user experiences.,Supplemental,3.42,12.0,0
+13-1161.01,Search Marketing Strategists,16175,"Identify, evaluate, or procure hardware or software for implementing online marketing campaigns.",Core,3.43,23.0,0
+13-1161.01,Search Marketing Strategists,16176,Identify methods for interfacing Web application technologies with enterprise resource planning or other system software.,Supplemental,2.33,15.0,0
+13-1161.01,Search Marketing Strategists,16177,"Define product requirements, based on market research analysis, in collaboration with user interface design and engineering staff.",Supplemental,2.94,18.0,0
+13-1161.01,Search Marketing Strategists,16178,Assist in the evaluation or negotiation of contracts with vendors or online partners.,Supplemental,2.85,20.0,0
+13-1161.01,Search Marketing Strategists,16179,Propose online or multiple-sales-channel campaigns to marketing executives.,Core,3.5,22.0,0
+13-1161.01,Search Marketing Strategists,16180,Assist in the development of online transaction or security policies.,Supplemental,2.77,13.0,0
+13-1161.01,Search Marketing Strategists,16181,"Prepare electronic commerce designs or prototypes, such as storyboards, mock-ups, or other content, using graphics design software.",Supplemental,2.85,13.0,0
+13-1161.01,Search Marketing Strategists,16182,Participate in the development or implementation of online marketing strategy.,Core,4.52,23.0,0
+13-1161.01,Search Marketing Strategists,16183,"Identify and develop commercial or technical specifications, such as usability, pricing, checkout, or data security, to promote transactional internet-enabled commerce functionality.",Supplemental,3.0,14.0,0
+13-1161.01,Search Marketing Strategists,16184,"Develop transactional Web applications, using Web programming software and knowledge of programming languages, such as hypertext markup language (HTML) and extensible markup language (XML).",Supplemental,3.1,10.0,0
+13-1161.01,Search Marketing Strategists,16185,"Coordinate sales or other promotional strategies with merchandising, operations, or inventory control staff to ensure product catalogs are current, accurate, and organized for best findability against user intent.",Core,3.1,20.0,0
+13-1161.01,Search Marketing Strategists,16186,"Conduct market research analysis to identify search query trends, real-time search and news media activity, popular social media topics, electronic commerce trends, market opportunities, or competitor performance.",Core,3.61,23.0,0
+13-1161.01,Search Marketing Strategists,16187,Conduct financial modeling for online marketing programs or Web site revenue forecasting.,Core,3.0,22.0,0
+13-1161.01,Search Marketing Strategists,16188,"Communicate and collaborate with merchants, Webmasters, bloggers, or online editors to strategically place hyperlinks.",Core,3.48,23.0,0
+13-1161.01,Search Marketing Strategists,16189,Collaborate with other marketing staff to integrate and complement marketing strategies across multiple sales channels.,Core,3.87,23.0,0
+13-1161.01,Search Marketing Strategists,16190,Optimize Web site exposure by analyzing search engine patterns to direct online placement of keywords or other content.,Core,4.27,22.0,0
+13-1161.01,Search Marketing Strategists,16191,"Conduct online marketing initiatives, such as paid ad placement, affiliate programs, sponsorship programs, email promotions, or viral marketing campaigns on social media Web sites.",Core,3.73,22.0,0
+13-1161.01,Search Marketing Strategists,16192,"Collect and analyze Web metrics, such as visits, time on site, page views per visit, transaction volume and revenue, traffic mix, click-through rates, conversion rates, cost per acquisition, or cost per click.",Core,4.52,23.0,0
+13-1161.01,Search Marketing Strategists,16193,"Collaborate with Web, multimedia, or art design staffs to create multimedia Web sites or other internet content that conforms to brand and company visual format.",Core,3.39,23.0,0
+13-1161.01,Search Marketing Strategists,20318,Assist in setting up or optimizing analytics tools for tracking visitors' behaviors.,Core,4.17,23.0,0
+13-1161.01,Search Marketing Strategists,20319,Combine secondary data sources with keyword research to more accurately profile and satisfy user intent.,Core,4.09,23.0,0
+13-1161.01,Search Marketing Strategists,20320,"Coordinate with developers to optimize Web site architecture, server configuration, or page construction for search engine consumption and optimal visibility.",Core,4.26,23.0,0
+13-1161.01,Search Marketing Strategists,20321,Create content strategies for digital media.,Core,4.14,22.0,0
+13-1161.01,Search Marketing Strategists,20322,Evaluate new emerging media or technologies and make recommendations for their application within Internet marketing or search marketing campaigns.,Core,3.48,23.0,0
+13-1161.01,Search Marketing Strategists,20323,Execute and manage communications with digital journalists or bloggers.,Supplemental,2.75,20.0,0
+13-1161.01,Search Marketing Strategists,20324,"Execute or manage banner, video, or other non-text link ad campaigns.",Supplemental,2.89,18.0,0
+13-1161.01,Search Marketing Strategists,20325,Execute or manage social media campaigns to inform search marketing tactics.,Core,3.05,22.0,0
+13-1161.01,Search Marketing Strategists,20326,Identify appropriate Key Performance Indicators (KPIs) and report key metrics from digital campaigns.,Core,4.17,23.0,0
+13-1161.01,Search Marketing Strategists,20327,"Improve search-related activities through ongoing analysis, experimentation, or optimization tests, using A/B or multivariate methods.",Core,3.83,23.0,0
+13-1161.01,Search Marketing Strategists,20328,Manage tracking and reporting of search-related activities and provide analyses to marketing executives.,Core,4.52,23.0,0
+13-1161.01,Search Marketing Strategists,20329,"Optimize digital assets, such as text, graphics, or multimedia assets, for search engine optimization (SEO) or for display and usability on internet-connected devices.",Core,4.52,23.0,0
+13-1161.01,Search Marketing Strategists,20330,Optimize shopping cart experience or Web site conversion rates against Key Performance Indicators (KPIs).,Core,3.86,22.0,0
+13-1161.01,Search Marketing Strategists,20331,"Purchase or negotiate placement of listings in local search engines, directories, or digital mapping technologies.",Core,3.22,23.0,0
+13-1199.05,Sustainability Specialists,15968,Review and revise sustainability proposals or policies.,Core,4.0,23.0,0
+13-1199.05,Sustainability Specialists,15969,"Research or review regulatory, technical, or market issues related to sustainability.",Core,3.74,23.0,0
+13-1199.05,Sustainability Specialists,15970,"Identify or investigate violations of natural resources, waste management, recycling, or other environmental policies.",Core,3.71,21.0,0
+13-1199.05,Sustainability Specialists,15971,Identify or create new sustainability indicators.,Core,3.61,23.0,0
+13-1199.05,Sustainability Specialists,15972,"Write grant applications, rebate applications, or project proposals to secure funding for sustainability projects.",Core,3.23,22.0,0
+13-1199.05,Sustainability Specialists,15973,Provide technical or administrative support for sustainability programs or issues.,Core,4.0,23.0,0
+13-1199.05,Sustainability Specialists,15974,Identify or procure needed resources to implement sustainability programs or projects.,Core,3.35,23.0,0
+13-1199.05,Sustainability Specialists,15975,Create or maintain plans or other documents related to sustainability projects.,Core,3.96,23.0,0
+13-1199.05,Sustainability Specialists,15976,Develop reports or presentations to communicate the effectiveness of sustainability initiatives.,Core,3.96,23.0,0
+13-1199.05,Sustainability Specialists,15977,"Create marketing or outreach media, such as brochures or Web sites, to communicate sustainability issues, procedures, or objectives.",Core,3.43,21.0,0
+13-1199.05,Sustainability Specialists,15978,Collect information about waste stream management or green building practices to inform decision makers.,Core,3.95,22.0,0
+13-1199.05,Sustainability Specialists,15979,"Assess or propose sustainability initiatives, considering factors such as cost effectiveness, technical feasibility, and acceptance.",Core,4.13,23.0,0
+13-1199.05,Sustainability Specialists,15980,"Monitor or track sustainability indicators, such as energy usage, natural resource usage, waste generation, and recycling.",Core,4.22,23.0,0
+13-1199.05,Sustainability Specialists,15981,"Develop sustainability project goals, objectives, initiatives, or strategies in collaboration with other sustainability professionals.",Core,4.39,23.0,0
+13-2011.00,Accountants and Auditors,21505,Prepare detailed reports on audit findings.,Core,4.07,14.0,0
+13-2011.00,Accountants and Auditors,21506,"Report to management about asset utilization and audit results, and recommend changes in operations and financial activities.",Core,3.14,14.0,0
+13-2011.00,Accountants and Auditors,21507,"Collect and analyze data to detect deficient controls, duplicated effort, extravagance, fraud, or non-compliance with laws, regulations, and management policies.",Core,4.0,15.0,0
+13-2011.00,Accountants and Auditors,21508,"Inspect account books and accounting systems for efficiency, effectiveness, and use of accepted accounting procedures to record transactions.",Core,4.18,17.0,0
+13-2011.00,Accountants and Auditors,21509,"Supervise auditing of establishments, and determine scope of investigation required.",Core,3.86,14.0,0
+13-2011.00,Accountants and Auditors,21510,Confer with company officials about financial and regulatory matters.,Core,3.81,16.0,0
+13-2011.00,Accountants and Auditors,21511,"Examine and evaluate financial and information systems, recommending controls to ensure system reliability and data integrity.",Core,3.69,16.0,0
+13-2011.00,Accountants and Auditors,21512,"Inspect cash on hand, notes receivable and payable, negotiable securities, and canceled checks to confirm records are accurate.",Core,3.71,14.0,0
+13-2011.00,Accountants and Auditors,21513,Examine records and interview workers to ensure recording of transactions and compliance with laws and regulations.,Core,3.64,14.0,0
+13-2011.00,Accountants and Auditors,21514,"Prepare, examine, or analyze accounting records, financial statements, or other financial reports to assess accuracy, completeness, and conformance to reporting and procedural standards.",Core,4.6,15.0,0
+13-2011.00,Accountants and Auditors,21515,Prepare adjusting journal entries.,Core,4.29,17.0,0
+13-2011.00,Accountants and Auditors,21516,Review accounts for discrepancies and reconcile differences.,Core,4.47,17.0,0
+13-2011.00,Accountants and Auditors,21517,Establish tables of accounts and assign entries to proper accounts.,Core,3.75,16.0,0
+13-2011.00,Accountants and Auditors,21518,Examine inventory to verify journal and ledger entries.,Core,3.2,15.0,0
+13-2011.00,Accountants and Auditors,21519,"Analyze business operations, trends, costs, revenues, financial commitments, and obligations to project future revenues and expenses or to provide advice.",Core,3.64,14.0,0
+13-2011.00,Accountants and Auditors,21520,Report to management regarding the finances of establishment.,Core,3.93,14.0,0
+13-2011.00,Accountants and Auditors,21521,"Develop, implement, modify, and document recordkeeping and accounting systems, making use of current computer technology.",Core,3.86,14.0,0
+13-2011.00,Accountants and Auditors,21522,"Evaluate taxpayer finances to determine tax liability, using knowledge of interest and discount rates, annuities, valuation of stocks and bonds, and amortization valuation of depletable assets.",Core,3.86,14.0,0
+13-2011.00,Accountants and Auditors,21523,"Examine whether the organization's objectives are reflected in its management activities, and whether employees understand the objectives.",Core,3.36,14.0,0
+13-2011.00,Accountants and Auditors,21524,"Audit payroll and personnel records to determine unemployment insurance premiums, workers' compensation coverage, liabilities, and compliance with tax laws.",Core,3.38,13.0,0
+13-2011.00,Accountants and Auditors,21525,"Review taxpayer accounts, and conduct audits on-site, by correspondence, or by summoning taxpayer to office.",Core,3.79,14.0,0
+13-2011.00,Accountants and Auditors,21526,"Compute taxes owed and prepare tax returns, ensuring compliance with payment, reporting, or other tax requirements.",Core,4.29,17.0,0
+13-2011.00,Accountants and Auditors,21527,"Advise clients in areas such as compensation, employee health care benefits, the design of accounting or data processing systems, or long-range tax or estate plans.",Core,3.2,15.0,0
+13-2011.00,Accountants and Auditors,21528,Represent clients before taxing authorities and provide support during litigation involving financial issues.,Core,3.62,16.0,0
+13-2011.00,Accountants and Auditors,21529,"Direct activities of personnel engaged in filing, recording, compiling, and transmitting financial records.",Core,3.47,15.0,0
+13-2011.00,Accountants and Auditors,21530,Conduct pre-implementation audits to determine if systems and programs under development will work as planned.,Core,3.21,14.0,0
+13-2011.00,Accountants and Auditors,21531,"Develop, maintain, or analyze budgets, preparing periodic reports that compare budgeted costs to actual costs.",Core,3.64,14.0,0
+13-2011.00,Accountants and Auditors,21532,"Prepare, analyze, or verify annual reports, financial statements, and other records, using accepted accounting and statistical procedures to assess financial condition and facilitate financial planning.",Core,4.07,15.0,0
+13-2011.00,Accountants and Auditors,21533,Process invoices for payment.,Core,4.54,13.0,0
+13-2011.00,Accountants and Auditors,21534,"Review data about material assets, net worth, liabilities, capital stock, surplus, income, or expenditures.",Core,3.94,17.0,0
+13-2031.00,Budget Analysts,3394,Analyze monthly department budgeting and accounting reports to maintain expenditure controls.,Core,4.37,53.0,0
+13-2031.00,Budget Analysts,3395,Direct the preparation of regular and special budget reports.,Core,4.02,50.0,0
+13-2031.00,Budget Analysts,3396,Consult with managers to ensure that budget adjustments are made in accordance with program changes.,Core,4.06,45.0,0
+13-2031.00,Budget Analysts,3397,"Match appropriations for specific programs with appropriations for broader programs, including items for emergency funds.",Core,3.49,38.0,0
+13-2031.00,Budget Analysts,3398,"Provide advice and technical assistance with cost analysis, fiscal allocation, and budget preparation.",Core,4.35,51.0,0
+13-2031.00,Budget Analysts,3399,Summarize budgets and submit recommendations for the approval or disapproval of funds requests.,Core,4.07,45.0,0
+13-2031.00,Budget Analysts,3400,Seek new ways to improve efficiency and increase profits.,Core,3.36,48.0,0
+13-2031.00,Budget Analysts,3401,Review operating budgets to analyze trends affecting budget needs.,Core,4.15,50.0,0
+13-2031.00,Budget Analysts,3402,"Examine budget estimates for completeness, accuracy, and conformance with procedures and regulations.",Core,4.08,54.0,0
+13-2031.00,Budget Analysts,3403,"Perform cost-benefit analyses to compare operating programs, review financial requests, or explore alternative financing methods.",Core,3.7,43.0,0
+13-2031.00,Budget Analysts,3404,Interpret budget directives and establish policies for carrying out directives.,Core,4.0,41.0,0
+13-2031.00,Budget Analysts,3405,Compile and analyze accounting records and other data to determine the financial resources required to implement a program.,Core,4.12,46.0,0
+13-2031.00,Budget Analysts,3406,"Testify before examining and fund-granting authorities, clarifying and promoting the proposed budgets.",Supplemental,3.81,28.0,0
+13-2041.00,Credit Analysts,1250,Analyze credit data and financial statements to determine the degree of risk involved in extending credit or lending money.,Core,4.9,20.0,0
+13-2041.00,Credit Analysts,1251,Prepare reports that include the degree of risk involved in extending credit or lending money.,Core,4.55,20.0,0
+13-2041.00,Credit Analysts,1252,"Evaluate customer records and recommend payment plans, based on earnings, savings data, payment history, and purchase activity.",Supplemental,3.69,13.0,0
+13-2041.00,Credit Analysts,1253,Confer with credit association and other business representatives to exchange credit information.,Supplemental,3.08,12.0,0
+13-2041.00,Credit Analysts,1254,"Complete loan applications, including credit analyses and summaries of loan requests, and submit to loan committees for approval.",Core,4.76,17.0,0
+13-2041.00,Credit Analysts,1255,"Generate financial ratios, using computer programs, to evaluate customers' financial status.",Core,4.55,20.0,0
+13-2041.00,Credit Analysts,1256,Review individual or commercial customer files to identify and select delinquent accounts for collection.,Supplemental,3.31,13.0,0
+13-2041.00,Credit Analysts,1257,"Compare liquidity, profitability, and credit histories of establishments being evaluated with those of similar establishments in the same industries and geographic locations.",Core,4.25,20.0,0
+13-2041.00,Credit Analysts,1258,Consult with customers to resolve complaints and verify financial and credit transactions.,Core,3.07,15.0,0
+13-2041.00,Credit Analysts,1259,"Analyze financial data, such as income growth, quality of management, and market share to determine expected profitability of loans.",Core,4.53,19.0,0
+13-2041.00,Credit Analysts,21164,Contact customers to collect payments on delinquent accounts.,Supplemental,4.0,7.0,0
+13-2051.00,Financial and Investment Analysts,21579,"Advise clients on aspects of capitalization, such as amounts, sources, or timing.",,,,0
+13-2051.00,Financial and Investment Analysts,21580,Analyze financial or operational performance of companies facing financial difficulties to identify or recommend remedies.,,,,0
+13-2051.00,Financial and Investment Analysts,21581,Assess companies as investments for clients by examining company facilities.,,,,0
+13-2051.00,Financial and Investment Analysts,21582,"Collaborate on projects with other professionals, such as lawyers, accountants, or public relations experts.",,,,0
+13-2051.00,Financial and Investment Analysts,21583,Collaborate with investment bankers to attract new corporate clients.,,,,0
+13-2051.00,Financial and Investment Analysts,21584,Conduct financial analyses related to investments in green construction or green retrofitting projects.,,,,0
+13-2051.00,Financial and Investment Analysts,21585,"Confer with clients to restructure debt, refinance debt, or raise new debt.",,,,0
+13-2051.00,Financial and Investment Analysts,21586,Create client presentations of plan details.,,,,0
+13-2051.00,Financial and Investment Analysts,21587,Determine the prices at which securities should be syndicated and offered to the public.,,,,0
+13-2051.00,Financial and Investment Analysts,21588,Develop and maintain client relationships.,,,,0
+13-2051.00,Financial and Investment Analysts,21589,"Draw charts and graphs, using computer spreadsheets, to illustrate technical reports.",,,,0
+13-2051.00,Financial and Investment Analysts,21590,Employ financial models to develop solutions to financial problems or to assess the financial or capital impact of transactions.,,,,0
+13-2051.00,Financial and Investment Analysts,21591,Evaluate and compare the relative quality of various securities in a given industry.,,,,0
+13-2051.00,Financial and Investment Analysts,21592,Evaluate capital needs of clients and assess market conditions to inform structuring of financial packages.,,,,0
+13-2051.00,Financial and Investment Analysts,21593,"Inform investment decisions by analyzing financial information to forecast business, industry, or economic conditions.",,,,0
+13-2051.00,Financial and Investment Analysts,21594,"Interpret data on price, yield, stability, future investment-risk trends, economic influences, and other factors affecting investment programs.",,,,0
+13-2051.00,Financial and Investment Analysts,21595,"Monitor developments in the fields of industrial technology, business, finance, and economic theory.",,,,0
+13-2051.00,Financial and Investment Analysts,21596,"Monitor fundamental economic, industrial, and corporate developments by analyzing information from financial publications and services, investment banking firms, government agencies, trade publications, company sources, or personal interviews.",,,,0
+13-2051.00,Financial and Investment Analysts,21597,Perform securities valuation or pricing.,,,,0
+13-2051.00,Financial and Investment Analysts,21598,Prepare all materials for transactions or execution of deals.,,,,0
+13-2051.00,Financial and Investment Analysts,21599,"Prepare plans of action for investment, using financial analyses.",,,,0
+13-2051.00,Financial and Investment Analysts,21600,"Present oral or written reports on general economic trends, individual corporations, and entire industries.",,,,0
+13-2051.00,Financial and Investment Analysts,21601,Purchase investments for companies in accordance with company policy.,,,,0
+13-2051.00,Financial and Investment Analysts,21602,"Recommend investments and investment timing to companies, investment firm staff, or the public.",,,,0
+13-2051.00,Financial and Investment Analysts,21603,"Specialize in green financial instruments, such as socially responsible mutual funds or exchange-traded funds (ETF) that are comprised of green companies.",,,,0
+13-2051.00,Financial and Investment Analysts,21604,"Supervise, train, or mentor junior team members.",,,,0
+13-2072.00,Loan Officers,3407,"Approve loans within specified limits, and refer loan applications outside those limits to management for approval.",Core,4.4,53.0,0
+13-2072.00,Loan Officers,3408,Meet with applicants to obtain information for loan applications and to answer questions about the process.,Core,4.61,58.0,0
+13-2072.00,Loan Officers,3409,"Analyze applicants' financial status, credit, and property evaluations to determine feasibility of granting loans.",Core,4.57,60.0,0
+13-2072.00,Loan Officers,3410,"Explain to customers the different types of loans and credit options that are available, as well as the terms of those services.",Core,4.33,62.0,0
+13-2072.00,Loan Officers,3411,"Obtain and compile copies of loan applicants' credit histories, corporate financial statements, and other financial information.",Core,4.13,58.0,0
+13-2072.00,Loan Officers,3412,Review and update credit and loan files.,Core,4.13,59.0,0
+13-2072.00,Loan Officers,3413,Review loan agreements to ensure that they are complete and accurate according to policy.,Core,4.14,54.0,0
+13-2072.00,Loan Officers,3414,Compute payment schedules.,Core,3.57,53.0,0
+13-2072.00,Loan Officers,3415,Stay abreast of new types of loans and other financial services and products to better meet customers' needs.,Core,3.87,57.0,0
+13-2072.00,Loan Officers,3416,Submit applications to credit analysts for verification and recommendation.,Core,4.19,46.0,0
+13-2072.00,Loan Officers,3417,Handle customer complaints and take appropriate action to resolve them.,Core,3.96,55.0,0
+13-2072.00,Loan Officers,3418,Work with clients to identify their financial goals and to find ways of reaching those goals.,Core,3.97,57.0,0
+13-2072.00,Loan Officers,3421,"Market bank products to individuals and firms, promoting bank services that may meet customers' needs.",Core,3.79,48.0,0
+13-2072.00,Loan Officers,3422,Supervise loan personnel.,Supplemental,3.92,22.0,0
+13-2072.00,Loan Officers,3423,"Set credit policies, credit lines, procedures and standards in conjunction with senior managers.",Supplemental,3.08,25.0,0
+13-2072.00,Loan Officers,3425,Analyze potential loan markets and develop referral networks to locate prospects for loans.,Core,3.75,47.0,0
+13-2072.00,Loan Officers,3426,"Prepare reports to send to customers whose accounts are delinquent, and forward irreconcilable accounts for collector action.",Supplemental,3.39,30.0,0
+13-2072.00,Loan Officers,21635,Assist in selection of financial award candidates using electronic databases to certify loan eligibility.,,,,0
+13-2072.00,Loan Officers,21636,Authorize or sign mail collection letters.,,,,0
+13-2072.00,Loan Officers,21637,Calculate amount of debt and funds available to plan methods of payoff and to estimate time for debt liquidation.,,,,0
+13-2072.00,Loan Officers,21638,Confer with underwriters to resolve mortgage application problems.,,,,0
+13-2072.00,Loan Officers,21639,Contact applicants or creditors to resolve questions about applications or to assist with completion of paperwork.,,,,0
+13-2072.00,Loan Officers,21640,Contact borrowers with delinquent accounts to obtain payment in full or to negotiate repayment plans.,,,,0
+13-2072.00,Loan Officers,21641,"Counsel clients on personal and family financial problems, such as excessive spending or borrowing of funds.",,,,0
+13-2072.00,Loan Officers,21642,Establish payment priorities according to credit terms and interest rates to reduce clients' overall costs.,,,,0
+13-2072.00,Loan Officers,21643,Inform individuals and groups about the financial assistance available to college or university students.,,,,0
+13-2072.00,Loan Officers,21644,"Maintain and review account records, updating and recategorizing them according to status changes.",,,,0
+13-2072.00,Loan Officers,21645,Match individuals' needs and eligibility with available financial aid programs to provide informed recommendations.,,,,0
+13-2072.00,Loan Officers,21646,Review accounts to determine write-offs for collection agencies.,,,,0
+13-2072.00,Loan Officers,21647,Review billing for accuracy.,,,,0
+13-2082.00,Tax Preparers,7358,"Compute taxes owed or overpaid, using adding machines or personal computers, and complete entries on forms, following tax form instructions and tax tables.",Core,4.75,20.0,0
+13-2082.00,Tax Preparers,7359,Prepare or assist in preparing simple to complex tax returns for individuals or small businesses.,Core,4.5,20.0,0
+13-2082.00,Tax Preparers,7360,"Use all appropriate adjustments, deductions, and credits to keep clients' taxes to a minimum.",Core,4.71,21.0,0
+13-2082.00,Tax Preparers,7361,Interview clients to obtain additional information on taxable income and deductible expenses and allowances.,Core,4.57,21.0,0
+13-2082.00,Tax Preparers,7362,"Review financial records, such as income statements and documentation of expenditures to determine forms needed to prepare tax returns.",Core,4.45,20.0,0
+13-2082.00,Tax Preparers,7363,Furnish taxpayers with sufficient information and advice to ensure correct tax form completion.,Core,4.57,21.0,0
+13-2082.00,Tax Preparers,7364,Consult tax law handbooks or bulletins to determine procedures for preparation of atypical returns.,Core,4.2,20.0,0
+13-2082.00,Tax Preparers,7365,Calculate form preparation fees according to return complexity and processing time required.,Core,4.05,19.0,0
+13-2082.00,Tax Preparers,7366,"Check data input or verify totals on forms prepared by others to detect errors in arithmetic, data entry, or procedures.",Core,4.37,19.0,0
+13-2082.00,Tax Preparers,20363,Answer questions and provide future tax planning to clients.,Core,4.2,20.0,0
+13-2082.00,Tax Preparers,20364,Explain federal and state tax laws to individuals and companies.,Core,4.21,19.0,0
+13-2082.00,Tax Preparers,21165,Schedule appointments with clients.,Core,3.75,20.0,0
+15-1232.00,Computer User Support Specialists,1282,Answer user inquiries regarding computer software or hardware operation to resolve problems.,Core,3.79,71.0,0
+15-1232.00,Computer User Support Specialists,1283,Enter commands and observe system functioning to verify correct operations and detect errors.,Core,3.57,66.0,0
+15-1232.00,Computer User Support Specialists,1284,"Install and perform minor repairs to hardware, software, or peripheral equipment, following design or installation specifications.",Core,3.77,72.0,0
+15-1232.00,Computer User Support Specialists,1285,Oversee the daily performance of computer systems.,Core,3.99,68.0,0
+15-1232.00,Computer User Support Specialists,1286,"Set up equipment for employee use, performing or ensuring proper installation of cables, operating systems, or appropriate software.",Core,3.94,69.0,0
+15-1232.00,Computer User Support Specialists,1287,"Maintain records of daily data communication transactions, problems and remedial actions taken, or installation activities.",Core,3.47,68.0,0
+15-1232.00,Computer User Support Specialists,1288,"Read technical manuals, confer with users, or conduct computer diagnostics to investigate and resolve problems or to provide technical assistance and support.",Core,3.94,71.0,0
+15-1232.00,Computer User Support Specialists,1289,"Confer with staff, users, and management to establish requirements for new systems or modifications.",Core,3.71,72.0,0
+15-1232.00,Computer User Support Specialists,1290,"Develop training materials and procedures, or train users in the proper use of hardware or software.",Core,3.3,72.0,0
+15-1232.00,Computer User Support Specialists,1291,Refer major hardware or software problems or defective products to vendors or technicians for service.,Core,3.4,72.0,0
+15-1232.00,Computer User Support Specialists,1292,"Prepare evaluations of software or hardware, and recommend improvements or upgrades.",Core,3.39,68.0,0
+15-1232.00,Computer User Support Specialists,1293,"Read trade magazines and technical manuals, or attend conferences and seminars to maintain knowledge of hardware and software.",Core,3.04,70.0,0
+15-1232.00,Computer User Support Specialists,1295,Inspect equipment and read order sheets to prepare for delivery to users.,Core,3.21,65.0,0
+15-1232.00,Computer User Support Specialists,1296,Modify and customize commercial programs for internal needs.,Supplemental,2.89,45.0,0
+15-1232.00,Computer User Support Specialists,1297,"Conduct office automation feasibility studies, including workflow analysis, space design, or cost comparison analysis.",Supplemental,3.17,42.0,0
+15-1232.00,Computer User Support Specialists,15204,"Hire, supervise, and direct workers engaged in special project work, problem-solving, monitoring, and installation of data communication equipment and software.",Supplemental,2.93,33.0,0
+15-1242.00,Database Administrators,1298,Develop standards and guidelines for the use and acquisition of software and to protect vulnerable information.,Core,3.43,57.0,0
+15-1242.00,Database Administrators,1299,Modify existing databases and database management systems or direct programmers and analysts to make changes.,Core,4.0,65.0,0
+15-1242.00,Database Administrators,1300,"Test programs or databases, correct errors, and make necessary modifications.",Core,3.68,62.0,0
+15-1242.00,Database Administrators,1301,"Plan, coordinate, and implement security measures to safeguard information in computer files against accidental or unauthorized damage, modification or disclosure.",Core,3.93,52.0,0
+15-1242.00,Database Administrators,1302,"Approve, schedule, plan, and supervise the installation and testing of new products and improvements to computer systems, such as the installation of new databases.",Core,3.45,58.0,0
+15-1242.00,Database Administrators,1303,Train users and answer questions.,Core,3.56,59.0,0
+15-1242.00,Database Administrators,1305,Specify users and user access levels for each segment of database.,Core,3.8,60.0,0
+15-1242.00,Database Administrators,1306,"Develop data models describing data elements and how they are used, following procedures and using pen, template, or computer software.",Core,3.14,55.0,0
+15-1242.00,Database Administrators,1309,Review procedures in database management system manuals to make changes to database.,Core,3.03,52.0,0
+15-1242.00,Database Administrators,1311,Select and enter codes to monitor database performance and to create production databases.,Core,3.13,48.0,0
+15-1242.00,Database Administrators,1312,Identify and evaluate industry trends in database systems to serve as a source of information and advice for upper management.,Supplemental,2.81,57.0,0
+15-1242.00,Database Administrators,1313,"Write and code logical and physical database descriptions and specify identifiers of database to management system, or direct others in coding descriptions.",Core,3.15,55.0,0
+15-1242.00,Database Administrators,1314,"Review workflow charts developed by programmer analyst to understand tasks computer will perform, such as updating records.",Supplemental,2.78,46.0,0
+15-1242.00,Database Administrators,1315,Revise company definition of data as defined in data dictionary.,Supplemental,2.7,52.0,0
+15-1242.00,Database Administrators,21648,"Identify, evaluate and recommend hardware or software technologies to achieve desired database performance.",Core,3.05,56.0,0
+15-1242.00,Database Administrators,21649,Plan and install upgrades of database management system software to enhance database performance.,Core,3.86,55.0,0
+15-1242.00,Database Administrators,21650,Provide technical support to junior staff or clients.,Core,3.46,62.0,0
+15-1242.00,Database Administrators,21651,Test changes to database applications or systems.,Core,3.76,65.0,0
+15-2051.01,Business Intelligence Analysts,16134,"Provide technical support for existing reports, dashboards, or other tools.",Core,3.95,20.0,0
+15-2051.01,Business Intelligence Analysts,16135,"Maintain library of model documents, templates, or other reusable knowledge assets.",Core,3.41,22.0,0
+15-2051.01,Business Intelligence Analysts,16136,"Identify or monitor current and potential customers, using business intelligence tools.",Core,3.47,19.0,0
+15-2051.01,Business Intelligence Analysts,16137,Create or review technical design documentation to ensure the accurate development of reporting solutions.,Core,3.36,22.0,0
+15-2051.01,Business Intelligence Analysts,16138,"Communicate with customers, competitors, suppliers, professional organizations, or others to stay abreast of industry or business trends.",Core,3.43,21.0,0
+15-2051.01,Business Intelligence Analysts,16139,"Maintain or update business intelligence tools, databases, dashboards, systems, or methods.",Core,4.36,22.0,0
+15-2051.01,Business Intelligence Analysts,16140,Manage timely flow of business intelligence information to users.,Core,4.19,21.0,0
+15-2051.01,Business Intelligence Analysts,16141,Identify and analyze industry or geographic trends with business strategy implications.,Core,3.86,22.0,0
+15-2051.01,Business Intelligence Analysts,16142,"Document specifications for business intelligence or information technology reports, dashboards, or other outputs.",Core,3.73,22.0,0
+15-2051.01,Business Intelligence Analysts,16143,"Disseminate information regarding tools, reports, or metadata enhancements.",Core,3.65,20.0,0
+15-2051.01,Business Intelligence Analysts,16144,"Create business intelligence tools or systems, including design of related databases, spreadsheets, or outputs.",Core,3.7,20.0,0
+15-2051.01,Business Intelligence Analysts,16145,Conduct or coordinate tests to ensure that intelligence is consistent with defined needs.,Core,3.64,22.0,0
+15-2051.01,Business Intelligence Analysts,16146,"Collect business intelligence data from available industry reports, public information, field reports, or purchased sources.",Core,3.68,22.0,0
+15-2051.01,Business Intelligence Analysts,16147,Analyze technology trends to identify markets for future product development or to improve sales of existing products.,Core,3.22,18.0,0
+15-2051.01,Business Intelligence Analysts,16148,"Analyze competitive market strategies through analysis of related product, market, or share trends.",Core,3.58,19.0,0
+15-2051.01,Business Intelligence Analysts,16149,Synthesize current business intelligence or trend data to support recommendations for action.,Core,3.59,22.0,0
+15-2051.01,Business Intelligence Analysts,16150,"Generate standard or custom reports summarizing business, financial, or economic data for review by executives, managers, clients, and other stakeholders.",Core,4.64,22.0,0
+19-2041.01,Climate Change Policy Analysts,16841,Write reports or academic papers to communicate findings of climate-related studies.,Core,3.83,23.0,0
+19-2041.01,Climate Change Policy Analysts,16842,Promote initiatives to mitigate climate change with government or environmental groups.,Core,4.09,23.0,0
+19-2041.01,Climate Change Policy Analysts,16843,"Present climate-related information at public interest, governmental, or other meetings.",Core,4.17,23.0,0
+19-2041.01,Climate Change Policy Analysts,16844,Present and defend proposals for climate change research projects.,Core,3.61,18.0,0
+19-2041.01,Climate Change Policy Analysts,16845,"Prepare grant applications to obtain funding for programs related to climate change, environmental management, or sustainability.",Core,3.55,22.0,0
+19-2041.01,Climate Change Policy Analysts,16846,"Gather and review climate-related studies from government agencies, research laboratories, and other organizations.",Core,4.09,23.0,0
+19-2041.01,Climate Change Policy Analysts,16847,"Develop, or contribute to the development of, educational or outreach programs on the environment or climate change.",Core,3.74,23.0,0
+19-2041.01,Climate Change Policy Analysts,16848,Review existing policies or legislation to identify environmental impacts.,Core,4.09,23.0,0
+19-2041.01,Climate Change Policy Analysts,16849,"Provide analytical support for policy briefs related to renewable energy, energy efficiency, or climate change.",Core,4.78,23.0,0
+19-2041.01,Climate Change Policy Analysts,16850,"Prepare study reports, memoranda, briefs, testimonies, or other written materials to inform government or environmental groups on environmental issues, such as climate change.",Core,4.3,23.0,0
+19-2041.01,Climate Change Policy Analysts,16851,"Make legislative recommendations related to climate change or environmental management, based on climate change policies, principles, programs, practices, and processes.",Core,4.27,22.0,0
+19-2041.01,Climate Change Policy Analysts,16852,"Research policies, practices, or procedures for climate or environmental management.",Core,4.0,23.0,0
+19-2041.01,Climate Change Policy Analysts,16853,"Propose new or modified policies involving use of traditional and alternative fuels, transportation of goods, and other factors relating to climate and climate change.",Core,4.45,22.0,0
+19-2041.01,Climate Change Policy Analysts,16854,"Analyze and distill climate-related research findings to inform legislators, regulatory agencies, or other stakeholders.",Core,4.3,23.0,0
+27-3031.00,Public Relations Specialists,1764,Respond to requests for information from the media or designate an appropriate spokesperson or information source.,Core,4.55,22.0,0
+27-3031.00,Public Relations Specialists,1765,"Establish or maintain cooperative relationships with representatives of community, consumer, employee, or public interest groups.",Core,4.23,22.0,0
+27-3031.00,Public Relations Specialists,1767,Confer with production or support personnel to produce or coordinate production of advertisements or promotions.,Core,3.52,21.0,0
+27-3031.00,Public Relations Specialists,1768,"Arrange public appearances, lectures, contests, or exhibits for clients to increase product or service awareness or to promote goodwill.",Core,3.86,22.0,0
+27-3031.00,Public Relations Specialists,1769,"Study the objectives, promotional policies, or needs of organizations to develop public relations strategies that will influence public opinion or promote ideas, products, or services.",Core,4.1,21.0,0
+27-3031.00,Public Relations Specialists,1770,Confer with other managers to identify trends or key group interests or concerns or to provide advice on business decisions.,Core,4.18,22.0,0
+27-3031.00,Public Relations Specialists,1771,"Consult with advertising agencies or staff to arrange promotional campaigns in all types of media for products, organizations, or individuals.",Core,3.4,20.0,0
+27-3031.00,Public Relations Specialists,1772,Coach client representatives in effective communication with the public or with employees.,Core,4.14,21.0,0
+27-3031.00,Public Relations Specialists,1773,Prepare or deliver speeches to further public relations objectives.,Core,3.36,22.0,0
+27-3031.00,Public Relations Specialists,1774,Purchase advertising space or time as required to promote client's product or agenda.,Supplemental,2.78,18.0,0
+27-3031.00,Public Relations Specialists,1775,"Plan or conduct market or public opinion research to test products or determine potential for product success, communicating results to client or management.",Core,3.76,17.0,0
+27-3031.00,Public Relations Specialists,19809,Coordinate public responses to environmental management incidents or conflicts.,Supplemental,3.64,14.0,0
+27-3031.00,Public Relations Specialists,19810,Develop marketing campaigns for environmental technologies or services.,Supplemental,2.83,12.0,0
+27-3031.00,Public Relations Specialists,19811,"Develop plans or materials to communicate organizational activities that are beneficial to the environment, public safety, or other important social issues.",Core,3.76,21.0,0
+27-3031.00,Public Relations Specialists,20554,Write press releases or other media communications to promote clients.,Core,4.38,21.0,0
+27-3031.00,Public Relations Specialists,20555,"Plan or direct development or communication of programs to maintain favorable public or stockholder perceptions of an organization's accomplishments, agenda, or environmental responsibility.",Core,4.41,22.0,0
+27-3031.00,Public Relations Specialists,20557,"Prepare or edit organizational publications, such as employee newsletters or stockholders' reports, for internal or external audiences.",Core,3.9,20.0,0
+27-3031.00,Public Relations Specialists,23951,Post and update content on the company's Web site and social media outlets.,Core,4.41,22.0,0
+41-3091.00,"Sales Representatives of Services, Except Advertising, Insurance, Financial Services, and Travel",23222,"Answer customers' questions about services, prices, availability, or credit terms.",Core,4.37,85.0,0
+41-3091.00,"Sales Representatives of Services, Except Advertising, Insurance, Financial Services, and Travel",23223,"Attend sales or trade meetings or read related publications to obtain information about market conditions, business trends, regulations, or industry developments.",Supplemental,3.72,63.0,0
+41-3091.00,"Sales Representatives of Services, Except Advertising, Insurance, Financial Services, and Travel",23224,Compute and compare costs of services.,Supplemental,3.9,69.0,0
+41-3091.00,"Sales Representatives of Services, Except Advertising, Insurance, Financial Services, and Travel",23225,Consult with clients after sales or contract signings to resolve problems and provide ongoing support.,Core,4.4,81.0,0
+41-3091.00,"Sales Representatives of Services, Except Advertising, Insurance, Financial Services, and Travel",23226,Contact prospective or existing customers to discuss how services can meet their needs.,Core,4.22,79.0,0
+41-3091.00,"Sales Representatives of Services, Except Advertising, Insurance, Financial Services, and Travel",23227,Create forms or agreements to complete sales.,Core,4.25,76.0,0
+41-3091.00,"Sales Representatives of Services, Except Advertising, Insurance, Financial Services, and Travel",23228,Develop sales presentations or proposals to explain service specifications.,Core,4.35,71.0,0
+41-3091.00,"Sales Representatives of Services, Except Advertising, Insurance, Financial Services, and Travel",23229,"Distribute promotional materials at meetings, conferences, or trade shows.",Core,3.77,68.0,0
+41-3091.00,"Sales Representatives of Services, Except Advertising, Insurance, Financial Services, and Travel",23230,Emphasize or recommend service features based on knowledge of customers' needs and vendor capabilities and limitations.,Core,3.97,80.0,0
+41-3091.00,"Sales Representatives of Services, Except Advertising, Insurance, Financial Services, and Travel",23231,"Identify prospective customers using business directories, leads from clients, or information from conferences or trade shows.",Core,3.99,74.0,0
+41-3091.00,"Sales Representatives of Services, Except Advertising, Insurance, Financial Services, and Travel",23232,Inform customers of contracts or other information pertaining to purchased services.,Core,3.97,78.0,0
+41-3091.00,"Sales Representatives of Services, Except Advertising, Insurance, Financial Services, and Travel",23233,Maintain customer records using automated systems.,Core,4.02,80.0,0
+41-3091.00,"Sales Representatives of Services, Except Advertising, Insurance, Financial Services, and Travel",23234,"Monitor market conditions, innovations, and competitors' services, prices, and sales.",Core,3.56,75.0,0
+41-3091.00,"Sales Representatives of Services, Except Advertising, Insurance, Financial Services, and Travel",23235,Negotiate prices or terms of sales or service agreements.,Core,4.19,69.0,0
+41-3091.00,"Sales Representatives of Services, Except Advertising, Insurance, Financial Services, and Travel",23236,"Quote prices, credit terms, contract terms, or fulfillment dates for services.",Core,4.05,80.0,0
+43-1011.00,First-Line Supervisors of Office and Administrative Support Workers,9703,Resolve customer complaints or answer customers' questions regarding policies and procedures.,Core,4.36,103.0,0
+43-1011.00,First-Line Supervisors of Office and Administrative Support Workers,9704,"Supervise the work of office, administrative, or customer service employees to ensure adherence to quality standards, deadlines, and proper procedures, correcting errors or problems.",Core,4.4,108.0,0
+43-1011.00,First-Line Supervisors of Office and Administrative Support Workers,9705,Provide employees with guidance in handling difficult or complex problems or in resolving escalated complaints or disputes.,Core,4.34,111.0,0
+43-1011.00,First-Line Supervisors of Office and Administrative Support Workers,9706,"Implement corporate or departmental policies, procedures, and service standards in conjunction with management.",Core,3.97,108.0,0
+43-1011.00,First-Line Supervisors of Office and Administrative Support Workers,9707,Discuss job performance problems with employees to identify causes and issues and to work on resolving problems.,Core,4.12,116.0,0
+43-1011.00,First-Line Supervisors of Office and Administrative Support Workers,9708,Train or instruct employees in job duties or company policies or arrange for training to be provided.,Core,3.99,117.0,0
+43-1011.00,First-Line Supervisors of Office and Administrative Support Workers,9709,Evaluate employees' job performance and conformance to regulations and recommend appropriate personnel action.,Core,4.0,115.0,0
+43-1011.00,First-Line Supervisors of Office and Administrative Support Workers,9710,"Review records or reports pertaining to activities such as production, payroll, or shipping to verify details, monitor work activities, or evaluate performance.",Core,4.15,101.0,0
+43-1011.00,First-Line Supervisors of Office and Administrative Support Workers,9711,"Recruit, interview, and select employees.",Core,4.04,93.0,0
+43-1011.00,First-Line Supervisors of Office and Administrative Support Workers,9712,Interpret and communicate work procedures and company policies to staff.,Core,4.03,112.0,0
+43-1011.00,First-Line Supervisors of Office and Administrative Support Workers,9713,"Prepare and issue work schedules, deadlines, and duty assignments for office or administrative staff.",Core,4.06,103.0,0
+43-1011.00,First-Line Supervisors of Office and Administrative Support Workers,9714,"Maintain records pertaining to inventory, personnel, orders, supplies, or machine maintenance.",Core,3.68,100.0,0
+43-1011.00,First-Line Supervisors of Office and Administrative Support Workers,9715,"Compute figures such as balances, totals, or commissions.",Core,3.95,100.0,0
+43-1011.00,First-Line Supervisors of Office and Administrative Support Workers,9716,"Research, compile, and prepare reports, manuals, correspondence, or other information required by management or governmental agencies.",Core,3.98,110.0,0
+43-1011.00,First-Line Supervisors of Office and Administrative Support Workers,9717,Coordinate activities with other supervisory personnel or with other work units or departments.,Core,3.88,99.0,0
+43-1011.00,First-Line Supervisors of Office and Administrative Support Workers,9718,Analyze financial activities of establishments or departments and provide input into budget planning and preparation processes.,Supplemental,3.93,80.0,0
+43-1011.00,First-Line Supervisors of Office and Administrative Support Workers,9719,"Develop or update procedures, policies, or standards.",Core,3.78,104.0,0
+43-1011.00,First-Line Supervisors of Office and Administrative Support Workers,9720,Make recommendations to management concerning such issues as staffing decisions or procedural changes.,Core,3.83,110.0,0
+43-1011.00,First-Line Supervisors of Office and Administrative Support Workers,9721,"Consult with managers or other personnel to resolve problems in areas such as equipment performance, output quality, or work schedules.",Core,3.63,109.0,0
+43-1011.00,First-Line Supervisors of Office and Administrative Support Workers,9722,Participate in the work of subordinates to facilitate productivity or to overcome difficult aspects of work.,Core,3.85,112.0,0
+43-1011.00,First-Line Supervisors of Office and Administrative Support Workers,9723,"Design, implement, or evaluate staff training and development programs, customer service initiatives, or performance measurement criteria.",Supplemental,3.56,75.0,0
+43-1011.00,First-Line Supervisors of Office and Administrative Support Workers,9724,Develop work schedules according to budgets and workloads.,Supplemental,4.01,81.0,0
+43-1011.00,First-Line Supervisors of Office and Administrative Support Workers,9725,Monitor inventory levels and requisition or purchase supplies as needed.,Supplemental,3.14,82.0,0
+43-1011.00,First-Line Supervisors of Office and Administrative Support Workers,9727,"Plan for or coordinate office services, such as equipment or supply acquisition or organization, disposal of assets, relocation, parking, maintenance, or security services.",Supplemental,3.07,62.0,0
+43-1011.00,First-Line Supervisors of Office and Administrative Support Workers,9728,Arrange for necessary maintenance or repair work.,Supplemental,2.96,82.0,0
+43-1011.00,First-Line Supervisors of Office and Administrative Support Workers,9729,Keep informed of provisions of labor-management agreements and their effects on departmental operations.,Supplemental,3.43,47.0,0
+43-1011.00,First-Line Supervisors of Office and Administrative Support Workers,9730,"Coordinate or perform activities associated with shipping, receiving, distribution, or transportation.",Supplemental,3.22,50.0,0
+43-1011.00,First-Line Supervisors of Office and Administrative Support Workers,9731,"Plan layouts of stockrooms, warehouses, or other storage areas, considering turnover, size, weight, or related factors pertaining to items stored.",Supplemental,2.38,49.0,0
+43-3011.00,Bill and Account Collectors,2472,Receive payments and post amounts paid to customer accounts.,Core,4.19,59.0,0
+43-3011.00,Bill and Account Collectors,2473,"Locate and monitor overdue accounts, using computers and a variety of automated systems.",Core,4.52,62.0,0
+43-3011.00,Bill and Account Collectors,2474,Record information about financial status of customers and status of collection efforts.,Core,4.65,62.0,0
+43-3011.00,Bill and Account Collectors,2475,"Locate and notify customers of delinquent accounts by mail, telephone, or personal visits to solicit payment.",Core,4.52,63.0,0
+43-3011.00,Bill and Account Collectors,2476,"Confer with customers by telephone or in person to determine reasons for overdue payments and to review the terms of sales, service, or credit contracts.",Core,4.26,60.0,0
+43-3011.00,Bill and Account Collectors,2477,Advise customers of necessary actions and strategies for debt repayment.,Core,4.44,64.0,0
+43-3011.00,Bill and Account Collectors,2478,"Persuade customers to pay amounts due on credit accounts, damage claims, or nonpayable checks, or to return merchandise.",Core,4.28,59.0,0
+43-3011.00,Bill and Account Collectors,2479,"Sort and file correspondence and perform miscellaneous clerical duties, such as answering correspondence and writing reports.",Core,3.87,57.0,0
+43-3011.00,Bill and Account Collectors,2480,"Perform various administrative functions for assigned accounts, such as recording address changes and purging the records of deceased customers.",Core,3.64,59.0,0
+43-3011.00,Bill and Account Collectors,2481,"Arrange for debt repayment or establish repayment schedules, based on customers' financial situations.",Core,4.45,63.0,0
+43-3011.00,Bill and Account Collectors,2482,Negotiate credit extensions when necessary.,Supplemental,3.52,41.0,0
+43-3011.00,Bill and Account Collectors,2483,"Trace delinquent customers to new addresses by inquiring at post offices, telephone companies, credit bureaus, or through the questioning of neighbors.",Core,3.97,52.0,0
+43-3011.00,Bill and Account Collectors,2484,"Notify credit departments, order merchandise repossession or service disconnection, and turn over account records to attorneys when customers fail to respond to collection attempts.",Core,3.94,48.0,0
+43-3011.00,Bill and Account Collectors,18559,Answer customer questions regarding problems with their accounts.,Core,4.29,70.0,0
+43-3011.00,Bill and Account Collectors,18560,Contact insurance companies to check on status of claims payments and write appeal letters for denial on claims.,Supplemental,3.78,39.0,0
+43-3021.00,Billing and Posting Clerks,23237,Post stop-payment notices to prevent payment of protested checks.,Supplemental,2.99,39.0,0
+43-3021.00,Billing and Posting Clerks,23238,Verify accuracy of billing data and revise any errors.,Core,4.66,78.0,0
+43-3021.00,Billing and Posting Clerks,23239,Verify signatures and required information on checks.,Supplemental,2.84,56.0,0
+43-3021.00,Billing and Posting Clerks,23240,"Prepare itemized statements, bills, or invoices and record amounts due for items purchased or services rendered.",Core,4.24,63.0,0
+43-3021.00,Billing and Posting Clerks,23241,"Perform bookkeeping work, including posting data or keeping other records concerning costs of goods or services or the shipment of goods.",Supplemental,3.49,60.0,0
+43-3021.00,Billing and Posting Clerks,23242,"Operate typing, adding, calculating, or billing machines.",Core,4.03,76.0,0
+43-3021.00,Billing and Posting Clerks,23243,Resolve discrepancies in accounting records.,Supplemental,3.71,72.0,0
+43-3021.00,Billing and Posting Clerks,23244,Contact customers to obtain or relay account information.,Core,3.44,67.0,0
+43-3021.00,Billing and Posting Clerks,23245,"Review documents, such as purchase orders, sales tickets, charge slips, or hospital records, to compute fees or charges due.",Supplemental,3.84,47.0,0
+43-3021.00,Billing and Posting Clerks,23246,Keep records of invoices and support documents.,Core,4.13,75.0,0
+43-3021.00,Billing and Posting Clerks,23247,Route statements for mailing or over-the-counter delivery to customers.,Supplemental,3.24,51.0,0
+43-3021.00,Billing and Posting Clerks,23248,Monitor equipment to ensure proper operation.,Supplemental,3.43,32.0,0
+43-3021.00,Billing and Posting Clerks,23249,"Fix minor problems, such as equipment jams, and notify repair personnel of major equipment problems.",Supplemental,2.38,57.0,0
+43-3021.00,Billing and Posting Clerks,23250,"Weigh envelopes containing statements to determine correct postage and affix postage, using stamps or metering equipment.",Supplemental,3.31,34.0,0
+43-3021.00,Billing and Posting Clerks,23251,Compare previously prepared bank statements with canceled checks and reconcile discrepancies.,Supplemental,3.24,33.0,0
+43-3021.00,Billing and Posting Clerks,23255,"Consult sources, such as rate books, manuals, or insurance company representatives, to determine specific charges or information such as rules, regulations, or government tax and tariff information.",Supplemental,3.92,37.0,0
+43-3021.00,Billing and Posting Clerks,23256,"Track accumulated hours and dollar amounts charged to each client job to calculate client fees for professional services, such as legal or accounting services.",Supplemental,3.94,28.0,0
+43-3021.00,Billing and Posting Clerks,23257,"Update manuals when rates, rules, or regulations are amended.",Supplemental,3.39,29.0,0
+43-3021.00,Billing and Posting Clerks,23258,"Compute credit terms, discounts, shipment charges, or rates for goods or services to complete billing documents.",Supplemental,3.5,40.0,0
+43-3021.00,Billing and Posting Clerks,23259,"Load machines with statements, cancelled checks, or envelopes to prepare statements for distribution to customers or stuff envelopes by hand.",Supplemental,3.95,40.0,0
+43-3021.00,Billing and Posting Clerks,23260,Review compiled data on operating costs and revenues to set rates.,Supplemental,4.35,22.0,0
+43-3021.00,Billing and Posting Clerks,23262,"Answer inquiries regarding rates, routing, or procedures.",Supplemental,4.23,52.0,0
+43-3021.00,Billing and Posting Clerks,23263,"Compile reports of cost factors, such as labor, production, storage, and equipment.",Supplemental,3.78,29.0,0
+43-3021.00,Billing and Posting Clerks,23264,"Create billing documents, shipping labels, credit memorandums, or credit forms.",Core,3.61,65.0,0
+43-3021.00,Billing and Posting Clerks,23265,"Perform general administrative tasks, such as answering telephones, scheduling appointments, and ordering supplies or equipment.",Core,3.58,70.0,0
+43-3021.00,Billing and Posting Clerks,23266,"Return checks to customers or retrieve checks returned to customers in error, adjusting accounts and answering inquiries about errors as necessary.",Supplemental,3.17,46.0,0
+43-3031.00,"Bookkeeping, Accounting, and Auditing Clerks",2486,"Check figures, postings, and documents for correct entry, mathematical accuracy, and proper codes.",Core,4.68,122.0,0
+43-3031.00,"Bookkeeping, Accounting, and Auditing Clerks",2487,"Operate computers programmed with accounting software to record, store, and analyze information.",Core,4.76,120.0,0
+43-3031.00,"Bookkeeping, Accounting, and Auditing Clerks",2488,"Comply with federal, state, and company policies, procedures, and regulations.",Core,4.57,99.0,0
+43-3031.00,"Bookkeeping, Accounting, and Auditing Clerks",2489,"Debit, credit, and total accounts on computer spreadsheets and databases, using specialized accounting software.",Core,4.15,96.0,0
+43-3031.00,"Bookkeeping, Accounting, and Auditing Clerks",2490,"Classify, record, and summarize numerical and financial data to compile and keep financial records, using journals and ledgers or computers.",Core,4.17,94.0,0
+43-3031.00,"Bookkeeping, Accounting, and Auditing Clerks",2491,"Calculate, prepare, and issue bills, invoices, account statements, and other financial statements according to established procedures.",Supplemental,4.16,77.0,0
+43-3031.00,"Bookkeeping, Accounting, and Auditing Clerks",2492,"Compile statistical, financial, accounting, or auditing reports and tables pertaining to such matters as cash receipts, expenditures, accounts payable and receivable, and profits and losses.",Supplemental,3.97,69.0,0
+43-3031.00,"Bookkeeping, Accounting, and Auditing Clerks",2493,Code documents according to company procedures.,Core,4.32,89.0,0
+43-3031.00,"Bookkeeping, Accounting, and Auditing Clerks",2494,Access computerized financial information to answer general questions as well as those related to specific accounts.,Core,4.19,96.0,0
+43-3031.00,"Bookkeeping, Accounting, and Auditing Clerks",2495,"Operate 10-key calculators, typewriters, and copy machines to perform calculations and produce documents.",Core,4.47,120.0,0
+43-3031.00,"Bookkeeping, Accounting, and Auditing Clerks",2496,Reconcile or note and report discrepancies found in records.,Core,4.29,102.0,0
+43-3031.00,"Bookkeeping, Accounting, and Auditing Clerks",2497,"Perform financial calculations, such as amounts due, interest charges, balances, discounts, equity, and principal.",Core,4.32,91.0,0
+43-3031.00,"Bookkeeping, Accounting, and Auditing Clerks",2498,"Perform general office duties, such as filing, answering telephones, and handling routine correspondence.",Core,4.24,120.0,0
+43-3031.00,"Bookkeeping, Accounting, and Auditing Clerks",2499,"Prepare bank deposits by compiling data from cashiers, verifying and balancing receipts, and sending cash, checks, or other forms of payment to banks.",Supplemental,4.61,79.0,0
+43-3031.00,"Bookkeeping, Accounting, and Auditing Clerks",2500,"Receive, record, and bank cash, checks, and vouchers.",Core,4.46,91.0,0
+43-3031.00,"Bookkeeping, Accounting, and Auditing Clerks",2501,"Calculate and prepare checks for utilities, taxes, and other payments.",Supplemental,4.44,72.0,0
+43-3031.00,"Bookkeeping, Accounting, and Auditing Clerks",2502,Compare computer printouts to manually maintained journals to determine if they match.,Supplemental,4.23,96.0,0
+43-3031.00,"Bookkeeping, Accounting, and Auditing Clerks",2503,Reconcile records of bank transactions.,Supplemental,4.38,67.0,0
+43-3031.00,"Bookkeeping, Accounting, and Auditing Clerks",2504,Prepare trial balances of books.,Supplemental,4.08,37.0,0
+43-3031.00,"Bookkeeping, Accounting, and Auditing Clerks",2505,Monitor status of loans and accounts to ensure that payments are up to date.,Supplemental,4.4,62.0,0
+43-3031.00,"Bookkeeping, Accounting, and Auditing Clerks",2506,Transfer details from separate journals to general ledgers or data processing sheets.,Supplemental,4.2,68.0,0
+43-3031.00,"Bookkeeping, Accounting, and Auditing Clerks",2507,"Compile budget data and documents, based on estimated revenues and expenses and previous budgets.",Supplemental,4.33,53.0,0
+43-3031.00,"Bookkeeping, Accounting, and Auditing Clerks",2508,"Calculate costs of materials, overhead, and other expenses, based on estimates, quotations and price lists.",Supplemental,4.14,38.0,0
+43-3031.00,"Bookkeeping, Accounting, and Auditing Clerks",2509,"Match order forms with invoices, and record the necessary information.",Core,4.12,81.0,0
+43-3031.00,"Bookkeeping, Accounting, and Auditing Clerks",2510,"Complete and submit tax forms and returns, workers' compensation forms, pension contribution forms, and other government documents.",Supplemental,4.17,47.0,0
+43-3031.00,"Bookkeeping, Accounting, and Auditing Clerks",2511,Maintain inventory records.,Supplemental,3.57,52.0,0
+43-3031.00,"Bookkeeping, Accounting, and Auditing Clerks",2514,Prepare purchase orders and expense reports.,Supplemental,4.11,53.0,0
+43-3031.00,"Bookkeeping, Accounting, and Auditing Clerks",18561,Prepare and process payroll information.,Supplemental,4.71,54.0,0
+43-3051.00,Payroll and Timekeeping Clerks,2515,Process and issue employee paychecks and statements of earnings and deductions.,Core,4.72,53.0,0
+43-3051.00,Payroll and Timekeeping Clerks,2516,"Compute wages and deductions, and enter data into computers.",Core,4.69,55.0,0
+43-3051.00,Payroll and Timekeeping Clerks,2517,"Compile employee time, production, and payroll data from time sheets and other records.",Core,4.36,57.0,0
+43-3051.00,Payroll and Timekeeping Clerks,2518,"Review time sheets, work charts, wage computation, and other information to detect and reconcile payroll discrepancies.",Core,4.61,51.0,0
+43-3051.00,Payroll and Timekeeping Clerks,2519,"Verify attendance, hours worked, and pay adjustments, and post information onto designated records.",Core,4.74,57.0,0
+43-3051.00,Payroll and Timekeeping Clerks,2520,"Record employee information, such as exemptions, transfers, and resignations, to maintain and update payroll records.",Core,4.55,54.0,0
+43-3051.00,Payroll and Timekeeping Clerks,2521,Issue and record adjustments to pay related to previous errors or retroactive increases.,Core,4.55,58.0,0
+43-3051.00,Payroll and Timekeeping Clerks,2522,Keep informed about changes in tax and deduction laws that apply to the payroll process.,Core,4.28,44.0,0
+43-3051.00,Payroll and Timekeeping Clerks,2523,"Provide information to employees and managers on payroll matters, tax issues, benefit plans, and collective agreement provisions.",Core,4.01,49.0,0
+43-3051.00,Payroll and Timekeeping Clerks,2524,Complete time sheets showing employees' arrival and departure times.,Core,4.25,38.0,0
+43-3051.00,Payroll and Timekeeping Clerks,2526,Distribute and collect timecards each pay period.,Core,4.61,47.0,0
+43-3051.00,Payroll and Timekeeping Clerks,2527,"Complete, verify, and process forms and documentation for administration of benefits, such as pension plans, and unemployment and medical insurance.",Supplemental,4.08,33.0,0
+43-3051.00,Payroll and Timekeeping Clerks,2528,"Prepare and balance period-end reports, and reconcile issued payrolls to bank statements.",Core,4.62,40.0,0
+43-3051.00,Payroll and Timekeeping Clerks,2529,"Compile statistical reports, statements, and summaries related to pay and benefits accounts, and submit them to appropriate departments.",Supplemental,4.46,35.0,0
+43-3051.00,Payroll and Timekeeping Clerks,2530,"Coordinate special programs, such as United Way campaigns, that involve payroll deductions.",Supplemental,3.09,24.0,0
+43-3051.00,Payroll and Timekeeping Clerks,18562,Process paperwork for new employees and enter employee information into the payroll system.,Core,4.66,47.0,0
+43-3051.00,Payroll and Timekeeping Clerks,18563,"Keep track of leave time, such as vacation, personal, and sick leave, for employees.",Core,4.42,60.0,0
+43-3051.00,Payroll and Timekeeping Clerks,18564,Conduct verifications of employment.,Core,3.52,49.0,0
+43-3051.00,Payroll and Timekeeping Clerks,20901,Balance cash and payroll accounts.,Supplemental,4.37,25.0,0
+43-3051.00,Payroll and Timekeeping Clerks,20902,Train employees on organizations' timekeeping systems.,Supplemental,3.81,42.0,0
+43-3051.00,Payroll and Timekeeping Clerks,23954,Prepare and file payroll tax returns.,Supplemental,4.69,25.0,0
+43-3061.00,Procurement Clerks,2531,Prepare purchase orders and send copies to suppliers and to departments originating requests.,Core,4.36,53.0,0
+43-3061.00,Procurement Clerks,2532,"Determine if inventory quantities are sufficient for needs, ordering more materials when necessary.",Core,4.23,49.0,0
+43-3061.00,Procurement Clerks,2533,"Respond to customer and supplier inquiries about order status, changes, or cancellations.",Core,4.12,55.0,0
+43-3061.00,Procurement Clerks,2534,Perform buying duties when necessary.,Core,4.42,51.0,0
+43-3061.00,Procurement Clerks,2535,"Contact suppliers to schedule or expedite deliveries and to resolve shortages, missed or late deliveries, and other problems.",Core,4.15,50.0,0
+43-3061.00,Procurement Clerks,2536,"Review requisition orders to verify accuracy, terminology, and specifications.",Core,4.14,52.0,0
+43-3061.00,Procurement Clerks,2537,"Prepare, maintain, and review purchasing files, reports and price lists.",Core,4.15,54.0,0
+43-3061.00,Procurement Clerks,2538,"Compare prices, specifications, and delivery dates to determine the best bid among potential suppliers.",Core,4.33,45.0,0
+43-3061.00,Procurement Clerks,2539,"Track the status of requisitions, contracts, and orders.",Core,4.45,58.0,0
+43-3061.00,Procurement Clerks,2540,"Calculate costs of orders, and charge or forward invoices to appropriate accounts.",Core,4.34,45.0,0
+43-3061.00,Procurement Clerks,2541,Check shipments when they arrive to ensure that orders have been filled correctly and that goods meet specifications.,Core,4.23,42.0,0
+43-3061.00,Procurement Clerks,2542,Compare suppliers' bills with bids and purchase orders to verify accuracy.,Core,3.96,47.0,0
+43-3061.00,Procurement Clerks,2544,"Locate suppliers, using sources such as catalogs and the internet, and interview them to gather information about products to be ordered.",Core,3.92,47.0,0
+43-3061.00,Procurement Clerks,2545,"Maintain knowledge of all organizational and governmental rules affecting purchases, and provide information about these rules to organization staff members and to vendors.",Core,4.24,49.0,0
+43-3061.00,Procurement Clerks,2546,Monitor in-house inventory movement and complete inventory transfer forms for bookkeeping purposes.,Core,4.04,36.0,0
+43-3061.00,Procurement Clerks,2547,"Monitor contractor performance, recommending contract modifications when necessary.",Supplemental,3.77,32.0,0
+43-3061.00,Procurement Clerks,2548,"Prepare invitation-of-bid forms, and mail forms to supplier firms or distribute forms for public posting.",Supplemental,3.74,34.0,0
+43-3061.00,Procurement Clerks,20785,Train and supervise subordinates and other staff.,Supplemental,3.47,41.0,0
+43-3061.00,Procurement Clerks,20786,Approve and pay bills.,Core,4.29,42.0,0
+43-3071.00,Tellers,2549,"Balance currency, coin, and checks in cash drawers at ends of shifts and calculate daily transactions, using computers, calculators, or adding machines.",Core,4.81,75.0,0
+43-3071.00,Tellers,2550,"Cash checks and pay out money after verifying that signatures are correct, that written and numerical amounts agree, and that accounts have sufficient funds.",Core,4.78,73.0,0
+43-3071.00,Tellers,2551,"Receive checks and cash for deposit, verify amounts, and check accuracy of deposit slips.",Core,4.79,74.0,0
+43-3071.00,Tellers,2552,"Examine checks for endorsements and to verify other information, such as dates, bank names, identification of the persons receiving payments, and the legality of the documents.",Core,4.67,73.0,0
+43-3071.00,Tellers,2553,Enter customers' transactions into computers to record transactions and issue computer-generated receipts.,Core,4.69,74.0,0
+43-3071.00,Tellers,2554,"Count currency, coins, and checks received, by hand or using currency-counting machine, to prepare them for deposit or shipment to branch banks or the Federal Reserve Bank.",Core,4.7,62.0,0
+43-3071.00,Tellers,2555,Identify transaction mistakes when debits and credits do not balance.,Core,4.54,68.0,0
+43-3071.00,Tellers,2556,Prepare and verify cashier's checks.,Core,4.61,73.0,0
+43-3071.00,Tellers,2557,Arrange monies received in cash boxes and coin dispensers according to denomination.,Core,4.18,65.0,0
+43-3071.00,Tellers,2558,"Process transactions, such as term deposits, retirement savings plan contributions, automated teller transactions, night deposits, and mail deposits.",Core,4.58,73.0,0
+43-3071.00,Tellers,2559,"Receive mortgage, loan, or public utility bill payments, verifying payment dates and amounts due.",Core,4.16,66.0,0
+43-3071.00,Tellers,2560,Resolve problems or discrepancies concerning customers' accounts.,Core,4.61,70.0,0
+43-3071.00,Tellers,2561,"Explain, promote, or sell products or services, such as travelers' checks, savings bonds, money orders, and cashier's checks, using computerized information about customers to tailor recommendations.",Core,4.03,68.0,0
+43-3071.00,Tellers,2562,"Perform clerical tasks, such as typing, filing, and microfilm photography.",Supplemental,3.96,52.0,0
+43-3071.00,Tellers,2563,Monitor bank vaults to ensure cash balances are correct.,Core,4.78,56.0,0
+43-3071.00,Tellers,2564,Order a supply of cash to meet daily needs.,Core,4.32,56.0,0
+43-3071.00,Tellers,2565,Sort and file deposit slips and checks.,Core,4.4,58.0,0
+43-3071.00,Tellers,2566,"Receive and count daily inventories of cash, drafts, and travelers' checks.",Core,4.36,54.0,0
+43-3071.00,Tellers,2567,Process and maintain records of customer loans.,Supplemental,3.75,42.0,0
+43-3071.00,Tellers,2568,"Count, verify, and post armored car deposits.",Supplemental,4.55,49.0,0
+43-3071.00,Tellers,2569,"Carry out special services for customers, such as ordering bank cards and checks.",Core,4.42,60.0,0
+43-3071.00,Tellers,2570,"Compute financial fees, interest, and service charges.",Supplemental,3.96,39.0,0
+43-3071.00,Tellers,2571,"Obtain and process information required for the provision of services, such as opening accounts, savings plans, and purchasing bonds.",Supplemental,4.02,45.0,0
+43-3071.00,Tellers,2572,"Compose, type, and mail customer statements and other correspondence related to issues such as discrepancies and outstanding unpaid items.",Supplemental,3.75,38.0,0
+43-3071.00,Tellers,2573,Issue checks to bond owners in settlement of transactions.,Supplemental,3.31,35.0,0
+43-3071.00,Tellers,2574,Inform customers about foreign currency regulations and compute transaction fees for currency exchanges.,Supplemental,3.12,37.0,0
+43-3071.00,Tellers,2575,"Quote unit exchange rates, following daily international rate sheets or computer displays.",Supplemental,3.31,29.0,0
+43-3071.00,Tellers,21076,Answer telephones and assist customers with their questions.,Core,4.56,75.0,0
+43-4051.00,Customer Service Representatives,2578,"Keep records of customer interactions or transactions, recording details of inquiries, complaints, or comments, as well as actions taken.",Core,4.53,61.0,0
+43-4051.00,Customer Service Representatives,2579,"Resolve customers' service or billing complaints by performing activities such as exchanging merchandise, refunding money, or adjusting bills.",Supplemental,4.19,55.0,0
+43-4051.00,Customer Service Representatives,2580,Check to ensure that appropriate changes were made to resolve customers' problems.,Core,4.39,65.0,0
+43-4051.00,Customer Service Representatives,2581,Contact customers to respond to inquiries or to notify them of claim investigation results or any planned adjustments.,Core,4.22,53.0,0
+43-4051.00,Customer Service Representatives,2582,Refer unresolved customer grievances to designated departments for further investigation.,Core,4.07,61.0,0
+43-4051.00,Customer Service Representatives,2583,"Determine charges for services requested, collect deposits or payments, or arrange for billing.",Core,4.18,54.0,0
+43-4051.00,Customer Service Representatives,2584,"Complete contract forms, prepare change of address records, or issue service discontinuance orders, using computers.",Core,4.1,53.0,0
+43-4051.00,Customer Service Representatives,2585,"Obtain and examine all relevant information to assess validity of complaints and to determine possible causes, such as extreme weather conditions that could increase utility bills.",Supplemental,3.63,45.0,0
+43-4051.00,Customer Service Representatives,2586,Solicit sales of new or additional services or products.,Supplemental,3.87,33.0,0
+43-4051.00,Customer Service Representatives,2587,Review insurance policy terms to determine whether a particular loss is covered by insurance.,Supplemental,4.05,14.0,0
+43-4051.00,Customer Service Representatives,2589,Compare disputed merchandise with original requisitions and information from invoices and prepare invoices for returned goods.,Supplemental,3.64,27.0,0
+43-4051.00,Customer Service Representatives,2591,"Recommend improvements in products, packaging, shipping, service, or billing methods and procedures to prevent future problems.",Supplemental,3.16,42.0,0
+43-4051.00,Customer Service Representatives,18565,"Confer with customers by telephone or in person to provide information about products or services, take or enter orders, cancel accounts, or obtain details of complaints.",Core,4.67,70.0,0
+43-4071.00,File Clerks,2593,Add new material to file records or create new records as necessary.,Core,4.06,55.0,0
+43-4071.00,File Clerks,2595,Track materials removed from files to ensure that borrowed files are returned.,Supplemental,4.15,36.0,0
+43-4071.00,File Clerks,2596,Gather materials to be filed from departments or employees.,Core,4.18,53.0,0
+43-4071.00,File Clerks,2597,"Sort or classify information according to guidelines, such as content, purpose, user criteria, or chronological, alphabetical, or numerical order.",Core,4.05,55.0,0
+43-4071.00,File Clerks,2599,Scan or read incoming materials to determine how and where they should be classified or filed.,Core,3.99,57.0,0
+43-4071.00,File Clerks,2600,"Place materials into storage receptacles, such as file cabinets, boxes, bins, or drawers, according to classification and identification information.",Core,3.89,57.0,0
+43-4071.00,File Clerks,2601,Assign and record or stamp identification numbers or codes to index materials for filing.,Core,3.92,44.0,0
+43-4071.00,File Clerks,2602,Answer questions about records or files.,Core,3.97,59.0,0
+43-4071.00,File Clerks,2603,Modify or improve filing systems or implement new filing systems.,Core,3.33,44.0,0
+43-4071.00,File Clerks,2604,"Perform periodic inspections of materials or files to ensure correct placement, legibility, or proper condition.",Supplemental,3.68,43.0,0
+43-4071.00,File Clerks,2605,"Eliminate outdated or unnecessary materials, destroying them or transferring them to inactive storage, according to file maintenance guidelines or legal requirements.",Core,3.99,56.0,0
+43-4071.00,File Clerks,2607,Operate mechanized files that rotate to bring needed records to a particular location.,Supplemental,3.57,23.0,0
+43-4071.00,File Clerks,2608,Design forms related to filing systems.,Supplemental,3.55,30.0,0
+43-4071.00,File Clerks,2609,Retrieve documents stored in microfilm or microfiche and place them in viewers for reading.,Supplemental,3.61,15.0,0
+43-4071.00,File Clerks,20627,"Input data, such as file numbers, new or updated information, or document information codes into computer systems to support document and information retrieval.",Supplemental,4.34,50.0,0
+43-4071.00,File Clerks,20628,"Perform general office activities, such as typing, answering telephones, operating office machines, processing mail, or securing confidential materials.",Core,4.41,61.0,0
+43-4071.00,File Clerks,20629,"Keep records of materials filed or removed, using logbooks or computers and generate computerized reports.",Core,4.36,48.0,0
+43-4071.00,File Clerks,20630,"Find, retrieve, and make copies of information from files in response to requests and deliver information to authorized users.",Core,4.14,59.0,0
+43-4071.00,File Clerks,20631,"Complete general financial activities, such as processing accounts payable, reviewing invoices, collecting cash payments, or issuing receipts.",Supplemental,4.17,39.0,0
+43-4161.00,"Human Resources Assistants, Except Payroll and Timekeeping",2687,"Explain company personnel policies, benefits, and procedures to employees or job applicants.",Core,4.03,87.0,0
+43-4161.00,"Human Resources Assistants, Except Payroll and Timekeeping",2689,"Record data for each employee, including such information as addresses, weekly earnings, absences, amount of sales or production, supervisory reports on performance, and dates of and reasons for terminations.",Core,4.07,80.0,0
+43-4161.00,"Human Resources Assistants, Except Payroll and Timekeeping",2690,Process and review employment applications to evaluate qualifications or eligibility of applicants.,Supplemental,3.98,55.0,0
+43-4161.00,"Human Resources Assistants, Except Payroll and Timekeeping",2691,"Answer questions regarding examinations, eligibility, salaries, benefits, and other pertinent information.",Core,3.78,90.0,0
+43-4161.00,"Human Resources Assistants, Except Payroll and Timekeeping",2692,Examine employee files to answer inquiries and provide information for personnel actions.,Core,3.67,95.0,0
+43-4161.00,"Human Resources Assistants, Except Payroll and Timekeeping",2693,Gather personnel records from other departments or employees.,Core,3.76,85.0,0
+43-4161.00,"Human Resources Assistants, Except Payroll and Timekeeping",2694,"Search employee files to obtain information for authorized persons and organizations, such as credit bureaus and finance companies.",Core,3.45,71.0,0
+43-4161.00,"Human Resources Assistants, Except Payroll and Timekeeping",2695,Interview job applicants to obtain and verify information used to screen and evaluate them.,Supplemental,4.05,52.0,0
+43-4161.00,"Human Resources Assistants, Except Payroll and Timekeeping",2696,"Request information from law enforcement officials, previous employers, and other references to determine applicants' employment acceptability.",Supplemental,3.74,58.0,0
+43-4161.00,"Human Resources Assistants, Except Payroll and Timekeeping",2697,Compile and prepare reports and documents pertaining to personnel activities.,Core,3.21,78.0,0
+43-4161.00,"Human Resources Assistants, Except Payroll and Timekeeping",2698,Inform job applicants of their acceptance or rejection of employment.,Supplemental,3.89,57.0,0
+43-4161.00,"Human Resources Assistants, Except Payroll and Timekeeping",2699,Select applicants meeting specified job requirements and refer them to hiring personnel.,Supplemental,3.8,41.0,0
+43-4161.00,"Human Resources Assistants, Except Payroll and Timekeeping",2700,Arrange for in-house and external training activities.,Supplemental,2.94,58.0,0
+43-4161.00,"Human Resources Assistants, Except Payroll and Timekeeping",2701,Arrange for advertising or posting of job vacancies and notify eligible workers of position availability.,Supplemental,3.75,53.0,0
+43-4161.00,"Human Resources Assistants, Except Payroll and Timekeeping",2702,Provide assistance in administering employee benefit programs and worker's compensation plans.,Core,3.88,68.0,0
+43-4161.00,"Human Resources Assistants, Except Payroll and Timekeeping",2703,"Prepare badges, passes, and identification cards, and perform other security-related duties.",Supplemental,3.38,56.0,0
+43-4161.00,"Human Resources Assistants, Except Payroll and Timekeeping",2704,"Administer and score applicant and employee aptitude, personality, and interest assessment instruments.",Supplemental,3.54,25.0,0
+43-4161.00,"Human Resources Assistants, Except Payroll and Timekeeping",18572,"Process, verify, and maintain personnel related documentation, including staffing, recruitment, training, grievances, performance evaluations, classifications, and employee leaves of absence.",Core,4.1,89.0,0
+43-4161.00,"Human Resources Assistants, Except Payroll and Timekeeping",21013,Prepare and set up for new employee orientations.,Core,3.78,72.0,0
+43-4171.00,Receptionists and Information Clerks,744,"Operate telephone switchboard to answer, screen, or forward calls, providing information, taking messages, or scheduling appointments.",Core,4.74,87.0,0
+43-4171.00,Receptionists and Information Clerks,745,Receive payment and record receipts for services.,Core,4.64,60.0,0
+43-4171.00,Receptionists and Information Clerks,746,"Perform administrative support tasks, such as proofreading, transcribing handwritten information, or operating calculators or computers to work with pay records, invoices, balance sheets, or other documents.",Core,3.97,66.0,0
+43-4171.00,Receptionists and Information Clerks,747,"Greet persons entering establishment, determine nature and purpose of visit, and direct or escort them to specific destinations.",Core,4.69,87.0,0
+43-4171.00,Receptionists and Information Clerks,748,Hear and resolve complaints from customers or the public.,Core,4.11,82.0,0
+43-4171.00,Receptionists and Information Clerks,749,File and maintain records.,Core,4.09,83.0,0
+43-4171.00,Receptionists and Information Clerks,750,"Transmit information or documents to customers, using computer, mail, or facsimile machine.",Core,4.12,81.0,0
+43-4171.00,Receptionists and Information Clerks,751,Schedule appointments and maintain and update appointment calendars.,Core,4.4,62.0,0
+43-4171.00,Receptionists and Information Clerks,752,Analyze data to determine answers to questions from customers or members of the public.,Supplemental,4.22,47.0,0
+43-4171.00,Receptionists and Information Clerks,753,"Provide information about establishment, such as location of departments or offices, employees within the organization, or services provided.",Core,4.02,80.0,0
+43-4171.00,Receptionists and Information Clerks,754,Keep a current record of staff members' whereabouts and availability.,Supplemental,3.9,56.0,0
+43-4171.00,Receptionists and Information Clerks,755,"Collect, sort, distribute, or prepare mail, messages, or courier deliveries.",Core,3.91,72.0,0
+43-4171.00,Receptionists and Information Clerks,756,"Calculate and quote rates for tours, stocks, insurance policies, or other products or services.",Supplemental,4.21,31.0,0
+43-4171.00,Receptionists and Information Clerks,757,Take orders for merchandise or materials and send them to the proper departments to be filled.,Supplemental,3.18,31.0,0
+43-4171.00,Receptionists and Information Clerks,758,"Process and prepare memos, correspondence, travel vouchers, or other documents.",Supplemental,3.43,56.0,0
+43-4171.00,Receptionists and Information Clerks,759,Schedule space or equipment for special programs and prepare lists of participants.,Supplemental,3.55,34.0,0
+43-4171.00,Receptionists and Information Clerks,760,Enroll individuals to participate in programs and notify them of their acceptance.,Supplemental,3.22,38.0,0
+43-4171.00,Receptionists and Information Clerks,762,"Perform duties, such as taking care of plants or straightening magazines to maintain lobby or reception area.",Core,3.39,68.0,0
+43-5061.00,"Production, Planning, and Expediting Clerks",11362,"Examine documents, materials, or products and monitor work processes to assess completeness, accuracy, and conformance to standards and specifications.",Supplemental,3.85,48.0,0
+43-5061.00,"Production, Planning, and Expediting Clerks",11363,"Review documents, such as production schedules, work orders, or staffing tables, to determine personnel or materials requirements or material priorities.",Core,4.16,58.0,0
+43-5061.00,"Production, Planning, and Expediting Clerks",11364,Confer with department supervisors or other personnel to assess progress and discuss needed changes.,Core,3.86,66.0,0
+43-5061.00,"Production, Planning, and Expediting Clerks",11365,"Revise production schedules when required due to design changes, labor or material shortages, backlogs, or other interruptions, collaborating with management, marketing, sales, production, or engineering.",Core,4.29,54.0,0
+43-5061.00,"Production, Planning, and Expediting Clerks",11366,"Confer with establishment personnel, vendors, or customers to coordinate production or shipping activities and to resolve complaints or eliminate delays.",Core,3.98,53.0,0
+43-5061.00,"Production, Planning, and Expediting Clerks",11367,"Record production data, including volume produced, consumption of raw materials, or quality control measures.",Supplemental,3.45,47.0,0
+43-5061.00,"Production, Planning, and Expediting Clerks",11368,Requisition and maintain inventories of materials or supplies necessary to meet production demands.,Core,3.94,56.0,0
+43-5061.00,"Production, Planning, and Expediting Clerks",11369,"Calculate figures, such as required amounts of labor or materials, manufacturing costs, or wages, using pricing schedules, adding machines, calculators, or computers.",Supplemental,3.67,35.0,0
+43-5061.00,"Production, Planning, and Expediting Clerks",11370,Distribute production schedules or work orders to departments.,Core,4.35,61.0,0
+43-5061.00,"Production, Planning, and Expediting Clerks",11371,"Compile information, such as production rates and progress, materials inventories, materials used, or customer information, so that status reports can be completed.",Core,3.77,55.0,0
+43-5061.00,"Production, Planning, and Expediting Clerks",11372,"Arrange for delivery, assembly, or distribution of supplies or parts to expedite flow of materials and meet production schedules.",Core,3.99,61.0,0
+43-5061.00,"Production, Planning, and Expediting Clerks",11373,Contact suppliers to verify shipment details.,Supplemental,3.63,38.0,0
+43-5061.00,"Production, Planning, and Expediting Clerks",11374,"Maintain files, such as maintenance records, bills of lading, or cost reports.",Supplemental,3.2,41.0,0
+43-5061.00,"Production, Planning, and Expediting Clerks",11375,"Plan production commitments or timetables for business units, specific programs, or jobs, using sales forecasts.",Core,3.78,46.0,0
+43-5061.00,"Production, Planning, and Expediting Clerks",11376,"Establish and prepare product construction directions and locations and information on required tools, materials, equipment, numbers of workers needed, and cost projections.",Supplemental,3.35,29.0,0
+43-5061.00,"Production, Planning, and Expediting Clerks",11377,"Compile and prepare documentation related to production sequences, transportation, personnel schedules, or purchase, maintenance, or repair orders.",Supplemental,3.68,44.0,0
+43-5061.00,"Production, Planning, and Expediting Clerks",11378,"Provide documentation and information to account for delays, difficulties, or changes to cost estimates.",Supplemental,2.92,35.0,0
+43-5071.00,"Shipping, Receiving, and Inventory Clerks",4737,"Prepare documents, such as work orders, bills of lading, or shipping orders, to route materials.",Core,4.05,64.0,0
+43-5071.00,"Shipping, Receiving, and Inventory Clerks",4739,"Record shipment data, such as weight, charges, space availability, damages, or discrepancies, for reporting, accounting, or recordkeeping purposes.",Core,3.96,63.0,0
+43-5071.00,"Shipping, Receiving, and Inventory Clerks",4740,Contact carrier representatives to make arrangements or to issue instructions for shipping and delivery of materials.,Core,3.81,58.0,0
+43-5071.00,"Shipping, Receiving, and Inventory Clerks",4741,"Confer or correspond with establishment representatives to rectify problems, such as damages, shortages, or nonconformance to specifications.",Core,3.95,67.0,0
+43-5071.00,"Shipping, Receiving, and Inventory Clerks",4742,Requisition and store shipping materials and supplies to maintain inventory of stock.,Core,4.05,60.0,0
+43-5071.00,"Shipping, Receiving, and Inventory Clerks",4744,"Compute amounts, such as space available, shipping, storage, or demurrage charges, using computer or price list.",Core,3.73,52.0,0
+43-5071.00,"Shipping, Receiving, and Inventory Clerks",19834,Compare shipping routes or methods to determine which have the least environmental impact.,Supplemental,3.68,26.0,0
+43-5071.00,"Shipping, Receiving, and Inventory Clerks",20276,"Examine shipment contents and compare with records, such as manifests, invoices, or orders, to verify accuracy.",Core,4.22,70.0,0
+43-5071.00,"Shipping, Receiving, and Inventory Clerks",20277,"Pack, seal, label, or affix postage to prepare materials for shipping, using hand tools, power tools, or postage meter.",Core,4.0,58.0,0
+43-5071.00,"Shipping, Receiving, and Inventory Clerks",20278,"Deliver or route materials to departments using handtruck, conveyor, or sorting bins.",Core,3.88,47.0,0
+43-5071.00,"Shipping, Receiving, and Inventory Clerks",20279,"Determine shipping methods, routes, or rates for materials to be shipped.",Core,3.78,56.0,0
+43-6011.00,Executive Secretaries and Executive Administrative Assistants,2770,Manage and maintain executives' schedules.,Core,4.38,109.0,0
+43-6011.00,Executive Secretaries and Executive Administrative Assistants,2771,"Prepare invoices, reports, memos, letters, financial statements, and other documents, using word processing, spreadsheet, database, or presentation software.",Core,4.17,138.0,0
+43-6011.00,Executive Secretaries and Executive Administrative Assistants,2772,"Read and analyze incoming memos, submissions, and reports to determine their significance and plan their distribution.",Core,3.73,116.0,0
+43-6011.00,Executive Secretaries and Executive Administrative Assistants,2773,"Open, sort, and distribute incoming correspondence, including faxes and email.",Core,4.01,127.0,0
+43-6011.00,Executive Secretaries and Executive Administrative Assistants,2774,"File and retrieve corporate documents, records, and reports.",Core,3.78,131.0,0
+43-6011.00,Executive Secretaries and Executive Administrative Assistants,2775,Greet visitors and determine whether they should be given access to specific individuals.,Core,4.0,116.0,0
+43-6011.00,Executive Secretaries and Executive Administrative Assistants,2776,Prepare responses to correspondence containing routine inquiries.,Core,4.02,129.0,0
+43-6011.00,Executive Secretaries and Executive Administrative Assistants,2779,Make travel arrangements for executives.,Core,4.23,97.0,0
+43-6011.00,Executive Secretaries and Executive Administrative Assistants,2780,"Conduct research, compile data, and prepare papers for consideration and presentation by executives, committees, and boards of directors.",Core,3.88,98.0,0
+43-6011.00,Executive Secretaries and Executive Administrative Assistants,2781,"Compile, transcribe, and distribute minutes of meetings.",Supplemental,3.58,91.0,0
+43-6011.00,Executive Secretaries and Executive Administrative Assistants,2782,Attend meetings to record minutes.,Core,3.5,101.0,0
+43-6011.00,Executive Secretaries and Executive Administrative Assistants,2784,"Meet with individuals, special interest groups, and others on behalf of executives, committees, and boards of directors.",Supplemental,3.62,77.0,0
+43-6011.00,Executive Secretaries and Executive Administrative Assistants,2785,Set up and oversee administrative policies and procedures for offices or organizations.,Supplemental,3.69,63.0,0
+43-6011.00,Executive Secretaries and Executive Administrative Assistants,2787,"Review operating practices and procedures to determine whether improvements can be made in areas such as workflow, reporting procedures, or expenditures.",Supplemental,3.28,95.0,0
+43-6011.00,Executive Secretaries and Executive Administrative Assistants,2788,Interpret administrative and operating policies and procedures for employees.,Supplemental,3.8,72.0,0
+43-6011.00,Executive Secretaries and Executive Administrative Assistants,18573,Answer phone calls and direct calls to appropriate parties or take messages.,Core,4.06,137.0,0
+43-6011.00,Executive Secretaries and Executive Administrative Assistants,18574,"Perform general office duties, such as ordering supplies, maintaining records management database systems, and performing basic bookkeeping work.",Core,3.88,136.0,0
+43-6011.00,Executive Secretaries and Executive Administrative Assistants,18575,"Prepare agendas and make arrangements, such as coordinating catering for luncheons, for committee, board, and other meetings.",Core,3.9,126.0,0
+43-6011.00,Executive Secretaries and Executive Administrative Assistants,18576,"Coordinate and direct office services, such as records, departmental finances, budget preparation, personnel issues, and housekeeping, to aid executives.",Core,4.09,103.0,0
+43-6011.00,Executive Secretaries and Executive Administrative Assistants,18577,Provide clerical support to other departments.,Core,3.63,106.0,0
+43-6011.00,Executive Secretaries and Executive Administrative Assistants,18578,Process payroll information.,Supplemental,4.26,54.0,0
+43-6011.00,Executive Secretaries and Executive Administrative Assistants,18579,Supervise and train other clerical staff and arrange for employee training by scheduling training or organizing training material.,Supplemental,3.42,79.0,0
+43-6014.00,"Secretaries and Administrative Assistants, Except Legal, Medical, and Executive",2790,"Answer telephones and give information to callers, take messages, or transfer calls to appropriate individuals.",Core,4.33,152.0,0
+43-6014.00,"Secretaries and Administrative Assistants, Except Legal, Medical, and Executive",2791,Greet visitors or callers and handle their inquiries or direct them to the appropriate persons according to their needs.,Core,4.32,150.0,0
+43-6014.00,"Secretaries and Administrative Assistants, Except Legal, Medical, and Executive",2793,Locate and attach appropriate files to incoming correspondence requiring replies.,Core,3.72,127.0,0
+43-6014.00,"Secretaries and Administrative Assistants, Except Legal, Medical, and Executive",2794,"Open, read, route, and distribute incoming mail or other materials and answer routine letters.",Core,3.67,134.0,0
+43-6014.00,"Secretaries and Administrative Assistants, Except Legal, Medical, and Executive",2795,Complete forms in accordance with company procedures.,Core,3.78,148.0,0
+43-6014.00,"Secretaries and Administrative Assistants, Except Legal, Medical, and Executive",2796,Make copies of correspondence or other printed material.,Core,3.66,160.0,0
+43-6014.00,"Secretaries and Administrative Assistants, Except Legal, Medical, and Executive",2797,"Review work done by others to check for correct spelling and grammar, ensure that company format policies are followed, and recommend revisions.",Core,3.66,122.0,0
+43-6014.00,"Secretaries and Administrative Assistants, Except Legal, Medical, and Executive",2799,Learn to operate new office technologies as they are developed and implemented.,Core,3.5,147.0,0
+43-6014.00,"Secretaries and Administrative Assistants, Except Legal, Medical, and Executive",2800,Maintain scheduling and event calendars.,Core,3.84,128.0,0
+43-6014.00,"Secretaries and Administrative Assistants, Except Legal, Medical, and Executive",2801,"Schedule and confirm appointments for clients, customers, or supervisors.",Core,3.93,114.0,0
+43-6014.00,"Secretaries and Administrative Assistants, Except Legal, Medical, and Executive",2802,Manage projects or contribute to committee or team work.,Supplemental,3.64,106.0,0
+43-6014.00,"Secretaries and Administrative Assistants, Except Legal, Medical, and Executive",2803,"Mail newsletters, promotional material, or other information.",Supplemental,3.42,91.0,0
+43-6014.00,"Secretaries and Administrative Assistants, Except Legal, Medical, and Executive",2804,Order and dispense supplies.,Core,3.31,128.0,0
+43-6014.00,"Secretaries and Administrative Assistants, Except Legal, Medical, and Executive",2805,"Conduct searches to find needed information, using such sources as the Internet.",Core,3.68,156.0,0
+43-6014.00,"Secretaries and Administrative Assistants, Except Legal, Medical, and Executive",2806,"Provide services to customers, such as order placement or account information.",Supplemental,3.77,106.0,0
+43-6014.00,"Secretaries and Administrative Assistants, Except Legal, Medical, and Executive",2808,Prepare and mail checks.,Supplemental,3.73,57.0,0
+43-6014.00,"Secretaries and Administrative Assistants, Except Legal, Medical, and Executive",2809,Establish work procedures or schedules and keep track of the daily work of clerical staff.,Supplemental,3.77,85.0,0
+43-6014.00,"Secretaries and Administrative Assistants, Except Legal, Medical, and Executive",2812,"Arrange conference, meeting, or travel reservations for office personnel.",Supplemental,3.7,90.0,0
+43-6014.00,"Secretaries and Administrative Assistants, Except Legal, Medical, and Executive",2813,"Operate electronic mail systems and coordinate the flow of information, internally or with other organizations.",Core,3.95,127.0,0
+43-6014.00,"Secretaries and Administrative Assistants, Except Legal, Medical, and Executive",2814,Supervise other clerical staff and provide training and orientation to new staff.,Supplemental,3.67,66.0,0
+43-6014.00,"Secretaries and Administrative Assistants, Except Legal, Medical, and Executive",20280,"Use computers for various applications, such as database management or word processing.",Core,4.22,164.0,0
+43-6014.00,"Secretaries and Administrative Assistants, Except Legal, Medical, and Executive",20281,"Create, maintain, and enter information into databases.",Core,4.22,155.0,0
+43-6014.00,"Secretaries and Administrative Assistants, Except Legal, Medical, and Executive",20282,"Set up and manage paper or electronic filing systems, recording information, updating paperwork, or maintaining documents, such as attendance records, correspondence, or other material.",Core,4.0,159.0,0
+43-6014.00,"Secretaries and Administrative Assistants, Except Legal, Medical, and Executive",20283,"Operate office equipment, such as fax machines, copiers, or phone systems and arrange for repairs when equipment malfunctions.",Core,4.06,165.0,0
+43-6014.00,"Secretaries and Administrative Assistants, Except Legal, Medical, and Executive",20284,"Compose, type, and distribute meeting notes, routine correspondence, or reports, such as presentations or expense, statistical, or monthly reports.",Core,3.83,142.0,0
+43-6014.00,"Secretaries and Administrative Assistants, Except Legal, Medical, and Executive",20285,"Perform payroll functions, such as maintaining timekeeping information and processing and submitting payroll.",Supplemental,4.22,54.0,0
+43-6014.00,"Secretaries and Administrative Assistants, Except Legal, Medical, and Executive",20286,"Collect and deposit money into accounts, disburse funds from cash accounts to pay bills or invoices, keep records of collections and disbursements, and ensure accounts are balanced.",Supplemental,4.15,86.0,0
+43-6014.00,"Secretaries and Administrative Assistants, Except Legal, Medical, and Executive",20287,"Coordinate conferences, meetings, or special events, such as luncheons or graduation ceremonies.",Supplemental,3.55,111.0,0
+43-6014.00,"Secretaries and Administrative Assistants, Except Legal, Medical, and Executive",20288,Develop or maintain internal or external company Web sites.,Supplemental,3.1,59.0,0
+43-6014.00,"Secretaries and Administrative Assistants, Except Legal, Medical, and Executive",20289,Train and assist staff with computer usage.,Core,3.37,110.0,0
+43-6014.00,"Secretaries and Administrative Assistants, Except Legal, Medical, and Executive",20290,"Prepare conference or event materials, such as flyers or invitations.",Core,3.29,122.0,0
+43-9021.00,Data Entry Keyers,11401,"Read source documents such as canceled checks, sales reports, or bills, and enter data in specific data fields or onto tapes or disks for subsequent entry, using keyboards or scanners.",Supplemental,4.52,29.0,0
+43-9021.00,Data Entry Keyers,11402,"Compile, sort, and verify the accuracy of data before it is entered.",Core,4.72,46.0,0
+43-9021.00,Data Entry Keyers,11403,"Compare data with source documents, or re-enter data in verification format to detect errors.",Core,4.54,42.0,0
+43-9021.00,Data Entry Keyers,11404,Store completed documents in appropriate locations.,Core,4.39,47.0,0
+43-9021.00,Data Entry Keyers,11405,"Locate and correct data entry errors, or report them to supervisors.",Core,4.82,46.0,0
+43-9021.00,Data Entry Keyers,11406,Maintain logs of activities and completed work.,Supplemental,4.21,41.0,0
+43-9021.00,Data Entry Keyers,11407,Select materials needed to complete work assignments.,Core,4.38,38.0,0
+43-9021.00,Data Entry Keyers,11408,"Load machines with required input or output media, such as paper, cards, disks, tape, or Braille media.",Supplemental,3.52,36.0,0
+43-9021.00,Data Entry Keyers,11409,"Resolve garbled or indecipherable messages, using cryptographic procedures and equipment.",Supplemental,3.38,20.0,0
+43-9041.00,Insurance Claims and Policy Processing Clerks,23313,"Prepare insurance claim forms or related documents, and review them for completeness.",Core,4.75,81.0,0
+43-9041.00,Insurance Claims and Policy Processing Clerks,23314,Calculate amount of claim.,Core,4.64,61.0,0
+43-9041.00,Insurance Claims and Policy Processing Clerks,23315,Post or attach information to claim file.,Core,4.62,89.0,0
+43-9041.00,Insurance Claims and Policy Processing Clerks,23316,Transmit claims for payment or further investigation.,Core,4.61,83.0,0
+43-9041.00,Insurance Claims and Policy Processing Clerks,23317,Contact insured or other involved persons to obtain missing information.,Core,4.48,92.0,0
+43-9041.00,Insurance Claims and Policy Processing Clerks,23318,Review insurance policy to determine coverage.,Core,4.46,77.0,0
+43-9041.00,Insurance Claims and Policy Processing Clerks,23319,Process and record new insurance policies and claims.,Core,4.45,53.0,0
+43-9041.00,Insurance Claims and Policy Processing Clerks,23320,"Organize or work with detailed office or warehouse records, using computers to enter, access, search or retrieve data.",Core,4.41,84.0,0
+43-9041.00,Insurance Claims and Policy Processing Clerks,23321,"Provide customer service, such as limited instructions on proceeding with claims or referrals to auto repair facilities or local contractors.",Core,4.37,77.0,0
+43-9041.00,Insurance Claims and Policy Processing Clerks,23322,Correspond with insured or agent to obtain information or to inform them of account status or changes.,Core,4.29,60.0,0
+43-9041.00,Insurance Claims and Policy Processing Clerks,23323,"Review and verify data, such as age, name, address, and principal sum and value of property, on insurance applications and policies.",Core,4.22,47.0,0
+43-9041.00,Insurance Claims and Policy Processing Clerks,23324,"Compare information from application to criteria for policy reinstatement, and approve reinstatement when criteria are met.",Core,4.16,43.0,0
+43-9041.00,Insurance Claims and Policy Processing Clerks,23325,"Examine letters from policyholders or agents, original insurance applications, and other company documents to determine if changes are needed and effects of changes.",Core,4.14,54.0,0
+43-9041.00,Insurance Claims and Policy Processing Clerks,23326,"Transcribe data to worksheets, and enter data into computer for use in preparing documents and adjusting accounts.",Core,4.08,41.0,0
+43-9041.00,Insurance Claims and Policy Processing Clerks,23327,Notify insurance agent and accounting department of policy cancellation.,Core,3.65,43.0,0
+43-9041.00,Insurance Claims and Policy Processing Clerks,23328,Pay small claims.,Supplemental,4.69,63.0,0
+43-9041.00,Insurance Claims and Policy Processing Clerks,23329,"Process, prepare, and submit business or government forms, such as submitting applications for coverage to insurance carriers.",Supplemental,4.45,25.0,0
+43-9041.00,Insurance Claims and Policy Processing Clerks,23330,Collect initial premiums and issue receipts.,Supplemental,4.06,25.0,0
+43-9041.00,Insurance Claims and Policy Processing Clerks,23332,Interview clients and take their calls to provide customer service and obtain information on claims.,Supplemental,3.91,26.0,0
+43-9041.00,Insurance Claims and Policy Processing Clerks,23333,"Obtain computer printout of policy cancellations, or retrieve cancellation cards from file.",Supplemental,3.78,32.0,0
+43-9041.00,Insurance Claims and Policy Processing Clerks,23334,"Compose business correspondence for supervisors, managers, and professionals.",Supplemental,3.69,35.0,0
+43-9041.00,Insurance Claims and Policy Processing Clerks,23336,"Calculate premiums, refunds, commissions, adjustments, or new reserve requirements, using insurance rate standards.",,,,0
+43-9041.00,Insurance Claims and Policy Processing Clerks,23337,Enter insurance- and claims-related information into database systems.,,,,0
+43-9041.00,Insurance Claims and Policy Processing Clerks,23338,"Modify, update, or process existing policies and claims to reflect any change in beneficiary, amount of coverage, or type of insurance.",,,,0
+43-9041.00,Insurance Claims and Policy Processing Clerks,23339,"Organize or work with detailed office or warehouse records, maintaining files for each policyholder, including policies that are to be reinstated or cancelled.",,,,0
+43-9061.00,"Office Clerks, General",825,"Collect, count, and disburse money, do basic bookkeeping, and complete banking transactions.",Supplemental,4.14,127.0,0
+43-9061.00,"Office Clerks, General",826,"Communicate with customers, employees, and other individuals to answer questions, disseminate or explain information, take orders, and address complaints.",Core,4.28,217.0,0
+43-9061.00,"Office Clerks, General",827,"Answer telephones, direct calls, and take messages.",Core,4.34,221.0,0
+43-9061.00,"Office Clerks, General",828,"Compile, copy, sort, and file records of office activities, business transactions, and other activities.",Core,3.99,200.0,0
+43-9061.00,"Office Clerks, General",829,"Complete and mail bills, contracts, policies, invoices, or checks.",Supplemental,4.11,109.0,0
+43-9061.00,"Office Clerks, General",830,"Operate office machines, such as photocopiers and scanners, facsimile machines, voice mail systems, and personal computers.",Core,4.56,225.0,0
+43-9061.00,"Office Clerks, General",831,"Compute, record, and proofread data and other information, such as records or reports.",Core,3.76,192.0,0
+43-9061.00,"Office Clerks, General",832,"Maintain and update filing, inventory, mailing, and database systems, either manually or using a computer.",Core,4.05,191.0,0
+43-9061.00,"Office Clerks, General",833,"Open, sort, and route incoming mail, answer correspondence, and prepare outgoing mail.",Core,3.91,199.0,0
+43-9061.00,"Office Clerks, General",834,"Review files, records, and other documents to obtain information to respond to requests.",Core,3.91,205.0,0
+43-9061.00,"Office Clerks, General",835,Deliver messages and run errands.,Core,3.47,194.0,0
+43-9061.00,"Office Clerks, General",836,"Inventory and order materials, supplies, and services.",Core,3.5,163.0,0
+43-9061.00,"Office Clerks, General",837,"Complete work schedules, manage calendars, and arrange appointments.",Core,3.73,168.0,0
+43-9061.00,"Office Clerks, General",838,"Process and prepare documents, such as business or government forms and expense reports.",Supplemental,3.82,122.0,0
+43-9061.00,"Office Clerks, General",839,Monitor and direct the work of lower-level clerks.,Supplemental,3.68,80.0,0
+43-9061.00,"Office Clerks, General",840,"Type, format, proofread, and edit correspondence and other documents, from notes or dictating machines, using computers or typewriters.",Core,3.55,180.0,0
+43-9061.00,"Office Clerks, General",841,"Count, weigh, measure, or organize materials.",Supplemental,3.22,145.0,0
+43-9061.00,"Office Clerks, General",842,"Train other staff members to perform work activities, such as using computer applications.",Supplemental,3.29,140.0,0
+43-9061.00,"Office Clerks, General",843,"Prepare meeting agendas, attend meetings, and record and transcribe minutes.",Supplemental,3.58,114.0,0
+43-9061.00,"Office Clerks, General",844,"Troubleshoot problems involving office equipment, such as computer hardware and software.",Supplemental,2.95,165.0,0
+43-9111.00,Statistical Assistants,9788,"Compute and analyze data, using statistical formulas and computers or calculators.",Core,4.49,32.0,0
+43-9111.00,Statistical Assistants,9789,Enter data into computers for use in analyses or reports.,Core,3.79,32.0,0
+43-9111.00,Statistical Assistants,9790,"Compile statistics from source materials, such as production or sales records, quality-control or test records, time sheets, or survey sheets.",Core,4.13,27.0,0
+43-9111.00,Statistical Assistants,9791,"Compile reports, charts, or graphs that describe and interpret findings of analyses.",Core,4.3,32.0,0
+43-9111.00,Statistical Assistants,9792,Check source data to verify completeness and accuracy.,Core,4.15,31.0,0
+43-9111.00,Statistical Assistants,9793,Participate in the publication of data or information.,Core,4.13,31.0,0
+43-9111.00,Statistical Assistants,9794,Discuss data presentation requirements with clients.,Core,3.78,24.0,0
+43-9111.00,Statistical Assistants,9795,"File data and related information, and maintain and update databases.",Core,4.42,26.0,0
+43-9111.00,Statistical Assistants,9796,Select statistical tests for analyzing data.,Core,3.53,26.0,0
+43-9111.00,Statistical Assistants,9797,"Organize paperwork, such as survey forms or reports, for distribution or analysis.",Supplemental,4.14,21.0,0
+43-9111.00,Statistical Assistants,9798,"Code data prior to computer entry, using lists of codes.",Supplemental,3.8,17.0,0
+43-9111.00,Statistical Assistants,9799,"Check survey responses for errors, such as the use of pens instead of pencils, and set aside response forms that cannot be used.",Supplemental,4.2,15.0,0
+43-9111.00,Statistical Assistants,9800,Interview people and keep track of their responses.,Supplemental,2.65,19.0,0
+43-9111.00,Statistical Assistants,9801,Send out surveys.,Supplemental,3.44,20.0,0
+43-9111.00,Statistical Assistants,24048,Write code for statistical applications.,Core,3.66,21.0,0
+43-9111.00,Statistical Assistants,24049,Present results of statistical analyses to stakeholders.,Supplemental,4.46,25.0,0
