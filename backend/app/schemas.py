@@ -34,6 +34,9 @@ class Signal(BaseModel):
     name: str
     value: float
     status: Literal["rising", "stable", "declining"]
+    base_vacancies_2025: int | None = None
+    projected_vacancies_2026: int | None = None
+    growth_rate_pct: float | None = None
     label: Literal["Estimate"] = "Estimate"
     source: SignalBadge
 
@@ -69,10 +72,10 @@ class CourseRecommendation(BaseModel):
     title: str
     provider: str
     url: str
-    cost: str
+    cost: int
     hrd_corp_claimable: bool
     sdg_tags: list[str]
-    hours: float | str
+    hours: int | str
     hours_verified: bool | None
     marginal_score_per_hour: float | None
 
@@ -90,6 +93,35 @@ class PathwayResponse(BaseModel):
     best_next_hour: CourseRecommendation | None
     label: Literal["Estimate"] = "Estimate"
     assumption_note: str
+
+
+class SdgMappingResponse(BaseModel):
+    occupation: str
+    sdg_link: str
+    reasoning: str
+
+
+class IndividualPersonaResponse(BaseModel):
+    id: str
+    name: str
+    persona_type: str
+    current_role: str | None
+    industry: str
+    experience_years: int
+    current_skills: list[str]
+    cv_text: str
+
+
+class HrPersonaResponse(BaseModel):
+    id: str
+    name: str
+    current_role: str
+    current_skills: list[str]
+
+
+class PersonasResponse(BaseModel):
+    individual_users: list[IndividualPersonaResponse]
+    hr_team_cohort: list[HrPersonaResponse]
 
 
 class SnapshotLoadRequest(BaseModel):

@@ -2,8 +2,10 @@ from dataclasses import dataclass
 from pathlib import Path
 import csv
 
+from .curated_data import CURATED, load_courses
 
-ROOT = Path(__file__).resolve().parents[2]
+
+ROOT = Path(__file__).resolve().parents[3]
 
 
 @dataclass(frozen=True)
@@ -26,11 +28,11 @@ class Course:
     title: str
     provider: str
     url: str
-    cost: str
+    cost: int
     hrd_corp_claimable: bool
     sdg_tags: tuple[str, ...]
     skill_ids: tuple[str, ...]
-    hours: float | None
+    hours: int | None
     hours_verified: bool | None
 
 
@@ -57,7 +59,7 @@ COURSES = (
         "Spreadsheet analysis foundations",
         "Development catalogue",
         "https://example.invalid/courses/spreadsheet-analysis",
-        "free",
+        0,
         False,
         ("SDG 8: Decent Work",),
         ("skill-spreadsheets", "skill-data-analysis"),
@@ -69,7 +71,7 @@ COURSES = (
         "Practical project coordination",
         "Development catalogue",
         "https://example.invalid/courses/project-practice",
-        "free",
+        0,
         False,
         ("SDG 8: Decent Work",),
         ("skill-project-management",),
@@ -92,38 +94,42 @@ def verified_course_ids() -> set[str]:
 
 
 def courses_for_skill(skill_id: str) -> list[Course]:
-    return [course for course in course_catalogue() if skill_id in course.skill_ids]
+    prefixes = {
+        "skill-data-analysis": ("ESCO-DA-",),
+        "skill-spreadsheets": ("ESCO-EX-",),
+        "skill-customer-service": ("ESCO-CS-",),
+        "skill-project-management": ("ESCO-PM-", "ESCO-AG-"),
+        "skill-digital-marketing": ("ESCO-DM-",),
+        "skill-sustainability-reporting": ("ESCO-ESG-", "ESCO-SUS-"),
+    }
+    accepted = prefixes.get(skill_id, ())
+    return [
+        course for course in course_catalogue()
+        if skill_id in course.skill_ids
+        or any(course_skill.startswith(prefix) for course_skill in course.skill_ids for prefix in accepted)
+    ]
 
 
 def course_catalogue() -> tuple[Course, ...]:
-    """Load Walid's catalogue when available, otherwise use dev fixtures."""
-    path = ROOT / "data" / "curated" / "courses.csv"
+    """Load the curated catalogue when available, otherwise use dev fixtures."""
+    path = CURATED / "courses.csv"
     if not path.exists():
         return COURSES
-    courses: list[Course] = []
-    with path.open(newline="", encoding="utf-8") as file:
-        for row in csv.DictReader(file):
-            hours_value = row.get("hours", "").strip()
-            verified_value = row.get("hours_verified", "").strip().lower()
-            courses.append(
-                Course(
-                    course_id=row["course_id"],
-                    title=row["title"],
-                    provider=row["provider"],
-                    url=row["url"],
-                    cost=row["cost"],
-                    hrd_corp_claimable=row.get("hrd_corp_claimable", "").strip().lower()
-                    in {"true", "1", "yes"},
-                    sdg_tags=tuple(filter(None, row.get("sdg_tags", "").split(";"))),
-                    skill_ids=tuple(filter(None, row.get("skill_ids", "").split(";"))),
-                    hours=float(hours_value) if hours_value else None,
-                    hours_verified=(
-                        True if verified_value in {"true", "1", "yes"} else
-                        False if verified_value in {"false", "0", "no"} else None
-                    ),
-                )
-            )
-    return tuple(courses)
+    return tuple(
+        Course(
+            course_id=course.course_id,
+            title=course.course_title,
+            provider=course.provider,
+            url=course.url,
+            cost=course.cost,
+            hrd_corp_claimable=False,
+            sdg_tags=(),
+            skill_ids=course.skill_ids,
+            hours=course.hours,
+            hours_verified=course.hours_verified,
+        )
+        for course in load_courses()
+    )
 
 
 def get_skill(skill_id: str) -> Skill | None:

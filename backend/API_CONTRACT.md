@@ -33,9 +33,23 @@ Unknown occupations and unverified IDs are rejected or removed.
 
 ## `GET /api/signals`
 
-Returns a list of `{id, name, value, status, label, source}` objects. Every
-metric has `label: "Estimate"` and a `source` object containing `source` and
-`date`.
+Returns the 20 Malaysian demand records as signal badges. Each object includes
+`name`, `base_vacancies_2025`, `projected_vacancies_2026`,
+`growth_rate_pct`, `status` (`rising`, `declining`, or `stable`), and a
+`source` object containing the original `source` and `date_published`.
+
+## `GET /api/sdg`
+
+Returns all 40 SDG mappings as `{occupation, sdg_link, reasoning}` objects.
+These records are intentionally exposed independently from demand signals:
+there is no exact occupation-name join between the two curated files.
+
+## `GET /api/personas`
+
+Returns `individual_users` and `hr_team_cohort` from the synthetic persona
+catalogue. Individual users include CV text and skills for one-click demo
+profile loading. `USR-002` is a fresh graduate and correctly returns
+`"current_role": null`.
 
 ## `POST /api/match`
 
@@ -111,7 +125,7 @@ return `"hours not verified"` and have `marginal_score_per_hour: null`; their
 hours are never used in calculations.
 
 When present, `data/curated/courses.csv` is loaded through the course adapter.
-It should provide `course_id`, `title`, `provider`, `url`, `cost`,
-`hrd_corp_claimable`, `sdg_tags` (semicolon-separated), `skill_ids
-(semicolon-separated)`, `hours`, and `hours_verified`. If the file is absent,
-the explicitly labeled development catalogue is used.
+It provides `course_id`, `course_title`, `provider`, `skill_ids`
+(semicolon-separated), `hours`, `hours_verified`, `cost`, and `url`.
+The loader validates all fields and splits every `skill_ids` value on `;`.
+If the file is absent, the explicitly labeled development catalogue is used.

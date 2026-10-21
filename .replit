@@ -1,4 +1,4 @@
-run = "bash start.sh"
+run = "bash backend/start.sh"
 
 [env]
 DEV_MODE = "true"

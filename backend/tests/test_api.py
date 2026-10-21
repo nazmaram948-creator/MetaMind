@@ -1,10 +1,10 @@
 from fastapi.testclient import TestClient
 
-from app.main import app
+from backend.app.main import app
 
 
 def test_p1_endpoints_are_gated_without_development_mode(monkeypatch):
-    from app import config
+    from backend.app import config
 
     monkeypatch.setattr(config.settings, "dev_mode", False)
     client = TestClient(app)
@@ -12,7 +12,7 @@ def test_p1_endpoints_are_gated_without_development_mode(monkeypatch):
 
 
 def test_match_returns_ranked_estimates(monkeypatch):
-    from app import config
+    from backend.app import config
 
     monkeypatch.setattr(config.settings, "dev_mode", True)
     client = TestClient(app)
@@ -25,7 +25,7 @@ def test_match_returns_ranked_estimates(monkeypatch):
 
 
 def test_unknown_occupation_is_rejected(monkeypatch):
-    from app import config
+    from backend.app import config
 
     monkeypatch.setattr(config.settings, "dev_mode", True)
     client = TestClient(app)
@@ -37,7 +37,7 @@ def test_unknown_occupation_is_rejected(monkeypatch):
 
 
 def test_pathway_uses_verified_hours_only_and_marks_unverified(monkeypatch):
-    from app import config
+    from backend.app import config
 
     monkeypatch.setattr(config.settings, "dev_mode", True)
     client = TestClient(app)
@@ -62,7 +62,7 @@ def test_pathway_uses_verified_hours_only_and_marks_unverified(monkeypatch):
 
 
 def test_match_includes_1000_run_robustness_estimate(monkeypatch):
-    from app import config
+    from backend.app import config
 
     monkeypatch.setattr(config.settings, "dev_mode", True)
     client = TestClient(app)
