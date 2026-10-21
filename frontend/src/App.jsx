@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import * as api from "./api";
 import Icon from "./components/Icon";
+import Rail from "./components/Rail";
 import Intake from "./components/Intake";
 import SkillPicker from "./components/SkillPicker";
 import Momentum from "./components/Momentum";
@@ -138,14 +139,7 @@ export default function App() {
 
   return (
     <div className="shell">
-      <nav className="rail" aria-label="Sections">
-        <Icon name="logo" size={36} className="logo" />
-        <a href="#top" className={stage !== "results" ? "on" : ""} title="Your CV"><Icon name="user" /></a>
-        <a href="#momentum" title="Skill momentum"><Icon name="pulse" /></a>
-        <a href="#roles" className={stage === "results" ? "on" : ""} title="Roles"><Icon name="list" /></a>
-        <span className="spacer" />
-        <a href="#sources" title="Sources"><Icon name="info" /></a>
-      </nav>
+      <Rail hasResults={!!result} />
 
       <main id="top">
         <header className="top">
@@ -174,7 +168,7 @@ export default function App() {
         {!health && error && <div className="warn">Can't reach the backend: {error}</div>}
 
         <div className="grid">
-          <section className="card hero">
+          <section className="card hero" id="intake">
             {stage === "intake" ? (
               <Intake occupations={occupations} personas={personas} busy={busy === "parse"}
                 onSubmit={onSubmit} error={error} />
