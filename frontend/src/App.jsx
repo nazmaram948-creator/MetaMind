@@ -62,6 +62,18 @@ export default function App() {
         const h = await api.getHealth();
         setHealth(h);
         if (h.mode !== "engine") return;
+        // follow the engine until it is ready (first start on a new machine takes a while)
+        if (h.engine !== "ready") {
+          const poll = setInterval(async () => {
+            try {
+              const now = await api.getHealth();
+              setHealth(now);
+              if (now.engine === "ready" || now.engine?.startsWith("error")) clearInterval(poll);
+            } catch {
+              /* keep polling */
+            }
+          }, 2000);
+        }
         const base = await api.loadSnapshot("baseline_snapshot");
         setSnap({ id: "baseline_snapshot", label: base.metadata.label, baseLabel: base.metadata.label });
         const [occ, ppl, c, cat] = await Promise.all([
@@ -162,10 +174,20 @@ export default function App() {
 
         {health && health.mode !== "engine" && (
           <div className="warn">
-            The backend is running on demo fixtures. Start it with <code>ENGINE_MODE=true</code> to use real data.
+            This API was started without the engine, so there is no real data. Stop it and start the app
+            with <code>run.ps1</code> (Windows) or <code>bash run.sh</code>, or set <code>ENGINE_MODE=true</code>.
           </div>
         )}
-        {!health && error && <div className="warn">Can't reach the backend: {error}</div>}
+        {!health && error && (
+          <div className="warn">Can't reach the API ({error}). Start it with <code>run.ps1</code> or <code>bash run.sh</code>.</div>
+        )}
+        {health?.mode === "engine" && health.engine && health.engine !== "ready" && (
+          <div className="note">
+            {health.engine.startsWith("error")
+              ? `Engine failed to start: ${health.engine.slice(7)}`
+              : "Starting the engine. The first start builds the database and downloads the language model (about 90 MB)."}
+          </div>
+        )}
 
         <div className="grid">
           <section className="card hero" id="intake">
