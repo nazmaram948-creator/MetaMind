@@ -176,6 +176,12 @@ select option { color: #111; }
 .stat .k { display: flex; align-items: center; gap: 7px; font-size: 12.5px; color: var(--muted); margin-top: 4px; }
 .stat .bar { height: 3px; border-radius: 2px; background: rgba(255, 255, 255, 0.16); margin-top: 10px; width: 80%; overflow: hidden; }
 .stat .bar i { display: block; height: 100%; background: #fff; }
+.stat-src { margin-top: 8px; }
+.stats-foot { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 6px 16px; align-items: center;
+  padding-top: 12px; margin-top: 4px; border-top: 1px solid var(--line); }
+.hint { font-size: 12.5px; }
+.body > .hint { margin: -4px 0 0; }
+.scen-hint { font-size: 12px; margin: 0 0 10px; }
 .dot { width: 9px; height: 9px; border-radius: 3px; display: inline-block; flex: none; }
 
 /* skill chips */
@@ -225,6 +231,7 @@ select option { color: #111; }
 /* diff */
 .diff { background: linear-gradient(120deg, rgba(255, 122, 47, 0.2), rgba(255, 255, 255, 0.06)); }
 .diff ul { list-style: none; padding: 0; margin: 12px 0 0; display: grid; gap: 8px; }
+.diff ul.scroll { max-height: 300px; overflow-y: auto; padding-right: 8px; }
 .diff li { display: grid; grid-template-columns: 1fr auto; gap: 12px; align-items: baseline; }
 .mv { font-weight: 500; font-variant-numeric: tabular-nums; }
 .mv.up { color: var(--lime); }
@@ -254,13 +261,33 @@ select option { color: #111; }
 .role.open .chev { transform: rotate(180deg); }
 
 .role-body { padding: 4px 18px 20px 76px; display: grid; gap: 16px; }
+.role-foot { display: flex; flex-wrap: wrap; gap: 6px 16px; align-items: center; padding: 0 18px 12px 76px; margin-top: -4px; }
 .parts { display: flex; height: 10px; border-radius: 5px; overflow: hidden; background: rgba(255, 255, 255, 0.08); }
 .parts i { display: block; height: 100%; }
 .parts-legend { display: flex; flex-wrap: wrap; gap: 16px; font-size: 12.5px; color: var(--muted); margin-top: 8px; }
 .parts-legend span { display: inline-flex; align-items: center; gap: 6px; }
 .facts { display: flex; flex-wrap: wrap; gap: 22px; font-size: 13px; color: var(--muted); }
 .facts b { color: var(--text); font-weight: 500; font-size: 15px; display: block; }
-.sources { display: flex; flex-wrap: wrap; gap: 6px 16px; }
+.sources { display: flex; flex-wrap: wrap; gap: 6px 16px; align-items: center; }
+
+/* SDG links */
+.tag.sdg { background: rgba(120, 190, 255, 0.14); color: var(--text); border: 1px solid rgba(120, 190, 255, 0.35); }
+.rmeta .tag.sdg { height: 20px; font-size: 10.5px; padding: 0 7px; }
+.sdg-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.sdg-why { font-size: 12.5px; color: var(--muted); margin: 0; line-height: 1.45; }
+.sdg-block { display: grid; gap: 8px; }
+.sdg-filters { display: grid; gap: 12px; margin-bottom: 16px; }
+.sdg-search { color: var(--text); min-width: 0; width: 220px; max-width: 100%; }
+.sdg-search::placeholder { color: var(--faint); }
+.sdg-toggle { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; color: var(--muted); cursor: pointer; }
+.sdg-toggle input { accent-color: var(--lime); }
+.sdg-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; max-height: 620px; overflow-y: auto; padding-right: 6px; }
+.sdg-row { display: grid; gap: 8px; padding: 14px 18px; border-radius: 22px; background: rgba(255, 255, 255, 0.07); }
+.sdg-top { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 8px 14px; }
+.sdg-you { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; color: var(--muted); }
+.sdg-you b { color: var(--text); font-weight: 500; }
+.pathway { list-style: none; padding: 0; margin: 0; display: grid; gap: 6px; font-size: 13px; }
+.pathway a { color: var(--text); }
 .more { margin-top: 14px; }
 
 footer { margin-top: 26px; font-size: 12px; color: var(--faint); display: flex; flex-wrap: wrap; gap: 6px 18px; }
@@ -294,6 +321,7 @@ footer a { color: var(--faint); }
   .role-row .c-range { grid-area: range; }
   .role-row .chev { display: none; }
   .role-body { padding: 4px 16px 18px; }
+  .role-foot { padding: 0 16px 12px 70px; }
   .top { flex-direction: column; align-items: flex-start; }
   .top-actions { justify-content: flex-start; }
 }

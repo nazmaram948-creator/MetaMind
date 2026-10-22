@@ -45,6 +45,7 @@ export default function Momentum({ signals, scenario, setScenario, mine }) {
           </div>
         </span>
       </div>
+      <p className="faint scen-hint">{HINT[scenario]}</p>
       {rows.length === 0 ? <p className="skeleton">Loading…</p> : (
         <ResponsiveContainer width="100%" height={rows.length * 30 + 20}>
           <BarChart data={rows} layout="vertical" margin={{ top: 4, right: 8, bottom: 0, left: 0 }}>

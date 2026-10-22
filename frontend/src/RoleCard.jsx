@@ -1,6 +1,9 @@
 import { useState } from "react";
 import Icon from "./components/Icon";
 import { Estimate, Source } from "./components/Badge";
+import { SdgReason, SdgTags } from "./components/Sdg";
+import { SDG_NOTE } from "./components/sdgData";
+import Pathway from "./components/Pathway";
 
 const PART = [
   ["coverage", "Skills you have", "var(--lime)"],
@@ -18,7 +21,24 @@ export function Movement({ value }) {
   );
 }
 
-export default function RoleCard({ role, movement, note }) {
+function SdgBlock({ sdg, rec }) {
+  return (
+    <div className="sdg-block">
+      <p className="faint" style={{ fontSize: 12, margin: 0 }}>SDG links</p>
+      {sdg.status === "loading" ? <p className="faint sdg-why">Loading SDG links…</p>
+        : sdg.status === "error" ? <p className="faint sdg-why">SDG links are unavailable right now.</p>
+        : rec ? (
+          <>
+            <div className="sdg-tags"><SdgTags goals={rec.goals} /></div>
+            <SdgReason text={rec.reasoning} />
+          </>
+        ) : <p className="faint sdg-why">No SDG link in the data</p>}
+      <p className="faint" style={{ fontSize: 11, margin: 0 }}>{SDG_NOTE}</p>
+    </div>
+  );
+}
+
+export default function RoleCard({ role, movement, note, sdg, skillIds }) {
   const [open, setOpen] = useState(false);
   const [allGaps, setAllGaps] = useState(false);
   const r = role.robustness;
@@ -26,6 +46,7 @@ export default function RoleCard({ role, movement, note }) {
   const gaps = role.missing_skill_names || role.missing_skills;
   const shown = allGaps ? gaps : gaps.slice(0, 8);
   const exposure = role.ai_exposure;
+  const sdgRec = sdg?.index[role.role_title.toLowerCase()];
 
   return (
     <div className={`role${open ? " open" : ""}`}>
@@ -39,6 +60,7 @@ export default function RoleCard({ role, movement, note }) {
               you have {role.matched_skills.length} of {role.essential_skills_total} skills this role needs
             </span>
             <Movement value={movement} />
+            {sdgRec && <SdgTags goals={sdgRec.goals} compact />}
           </span>
         </span>
         <span className="c-score score">{role.total_match_score.toFixed(0)}</span>
@@ -55,6 +77,14 @@ export default function RoleCard({ role, movement, note }) {
         </span>
         <Icon name="chevron" className="chev" />
       </button>
+
+      {/* outside the button: badges can be links. The open body repeats them in full. */}
+      {!open && (
+        <div className="role-foot">
+          <Estimate note={note} />
+          {role.source_badges.map((b) => <Source key={b.source} badge={b} />)}
+        </div>
+      )}
 
       {open && (
         <div className="role-body">
@@ -101,6 +131,10 @@ export default function RoleCard({ role, movement, note }) {
               <p className="faint" style={{ fontSize: 12, margin: "8px 0 0" }}>Skills to add for this role</p>
             </div>
           )}
+
+          {sdg && <SdgBlock sdg={sdg} rec={sdgRec} />}
+
+          <Pathway skillIds={skillIds} roleId={role.role_id} />
 
           <div className="sources">
             {role.source_badges.map((b) => <Source key={b.source} badge={b} />)}

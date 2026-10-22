@@ -5,6 +5,7 @@ const ITEMS = [
   { id: "intake", icon: "user", title: "Your CV" },
   { id: "momentum", icon: "pulse", title: "Skill momentum" },
   { id: "roles", icon: "list", title: "Roles", needsResults: true },
+  { id: "sdg", icon: "globe", title: "SDG links" },
   { id: "sources", icon: "info", title: "Sources", bottom: true },
 ];
 

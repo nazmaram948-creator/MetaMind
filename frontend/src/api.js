@@ -12,7 +12,9 @@ async function request(path, options = {}) {
   if (!res.ok) {
     const detail = body?.detail;
     const msg = typeof detail === "string" ? detail : Array.isArray(detail) ? detail[0]?.msg : null;
-    throw new Error(msg || `${path} failed (${res.status})`);
+    const error = new Error(msg || `${path} failed (${res.status})`);
+    error.status = res.status; // lets callers tell "not built yet" (501) from a real failure
+    throw error;
   }
   return body;
 }
@@ -28,6 +30,10 @@ export const getHealth = () => request("/health");
 export const getPersonas = () => request("/api/personas");
 export const getOccupations = () => request("/api/occupations");
 export const getContext = () => request("/api/context");
+export const getSdg = () => request("/api/sdg");
+
+export const getPathway = (skill_ids, target_role_id, sdg_filter = null) =>
+  json("/api/pathway", { skill_ids, target_role_id, sdg_filter });
 
 export const parseProfile = (text, occupation_id) =>
   json("/api/profile/parse", { text, occupation_id: occupation_id || null });

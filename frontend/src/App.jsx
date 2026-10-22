@@ -8,13 +8,19 @@ import Momentum from "./components/Momentum";
 import { MalaysiaTile, SafestTile } from "./components/Tiles";
 import Roles from "./components/Roles";
 import DiffCard from "./components/DiffCard";
+import Sdg from "./components/Sdg";
+import { indexSdg } from "./components/sdgData";
+import { Estimate, Source } from "./components/Badge";
 
-function Stat({ n, k, color, fill }) {
+const badgeKey = (b) => b && `${b.source}|${b.date}`;
+
+function Stat({ n, k, color, fill, badge }) {
   return (
     <div className="stat">
       <div className="n">{n}</div>
       <div className="k"><i className="dot" style={{ background: color }} />{k}</div>
       <div className="bar"><i style={{ width: `${Math.max(0, Math.min(1, fill)) * 100}%` }} /></div>
+      {badge && <div className="stat-src"><Source badge={badge} /></div>}
     </div>
   );
 }
@@ -39,6 +45,7 @@ export default function App() {
   const [diff, setDiff] = useState(null);
   const [busy, setBusy] = useState("");
   const [error, setError] = useState("");
+  const [sdg, setSdg] = useState({ status: "loading", rows: [], index: {} });
 
   const selected = skills.filter((s) => chosen[s.skill_id]).map((s) => s.skill_id);
   const occTitle = occupations.find((o) => o.occ_id === current)?.title;
@@ -88,6 +95,17 @@ export default function App() {
       }
     })();
   }, []);
+
+  // SDG links load on their own, so a failure there never blocks matching
+  const fetchSdg = useCallback(() => api.getSdg().then(
+    (rows) => setSdg({ status: "ready", rows, index: indexSdg(rows) }),
+    (e) => setSdg({ status: "error", rows: [], index: {}, error: e.message }),
+  ), []);
+  useEffect(() => { fetchSdg(); }, [fetchSdg]);
+  const retrySdg = () => {
+    setSdg((s) => ({ ...s, status: "loading" }));
+    fetchSdg();
+  };
 
   const analyse = useCallback(async (ids, occ, scen, withDiff) => {
     const [m, sig, d] = await Promise.all([
@@ -149,6 +167,10 @@ export default function App() {
   const safest = result?.roles.find((r) => r.robustness.safest_pick);
   const rising = mine.filter((s) => s.status === "rising").length;
 
+  // hero tiles: one shared source row; a tile gets its own badge only when its source is not in that row
+  const shared = result ? top.source_badges : ctx?.badge ? [ctx.badge] : [];
+  const own = (b) => (b && !shared.some((s) => badgeKey(s) === badgeKey(b)) ? b : null);
+
   return (
     <div className="shell">
       <Rail hasResults={!!result} />
@@ -206,8 +228,10 @@ export default function App() {
                 <>
                   <Stat n={selected.length} k="skills used for matching" color="var(--lime)" fill={selected.length / 30} />
                   <Stat n={top.total_match_score.toFixed(0)} k={`best: ${top.role_title}`} color="var(--orange)" fill={top.total_match_score / 100} />
-                  <Stat n={`${mine.length ? Math.round((100 * rising) / mine.length) : 0}%`} k="of your skills rising" color="var(--sky)" fill={mine.length ? rising / mine.length : 0} />
-                  <Stat n={ctx?.malaysia_usage_index?.toFixed(2) ?? "–"} k="Malaysia AI index" color="var(--coral)" fill={(ctx?.malaysia_usage_index || 0) / 1.5} />
+                  <Stat n={`${mine.length ? Math.round((100 * rising) / mine.length) : 0}%`} k="of your skills rising" color="var(--sky)" fill={mine.length ? rising / mine.length : 0}
+                    badge={own(mine[0]?.source)} />
+                  <Stat n={ctx?.malaysia_usage_index?.toFixed(2) ?? "–"} k="Malaysia AI index" color="var(--coral)" fill={(ctx?.malaysia_usage_index || 0) / 1.5}
+                    badge={own(ctx?.badge)} />
                 </>
               ) : (
                 <>
@@ -216,6 +240,12 @@ export default function App() {
                   <Stat n="1,000" k="futures per role" color="var(--sky)" fill={1} />
                   <Stat n={ctx?.malaysia_usage_index?.toFixed(2) ?? "–"} k="Malaysia AI index" color="var(--coral)" fill={(ctx?.malaysia_usage_index || 0) / 1.5} />
                 </>
+              )}
+              {(result || shared.length > 0) && (
+                <div className="stats-foot">
+                  {result && <Estimate note={result.assumption_note} />}
+                  {shared.map((b) => <Source key={badgeKey(b)} badge={b} />)}
+                </div>
               )}
             </div>
           </section>
@@ -238,9 +268,13 @@ export default function App() {
 
         {result && (
           <div style={{ marginTop: 22 }}>
-            <Roles result={result} movements={movements} current={occTitle} />
+            <Roles result={result} movements={movements} current={occTitle} sdg={sdg} skillIds={selected} />
           </div>
         )}
+
+        <div style={{ marginTop: 22 }}>
+          <Sdg sdg={sdg} occupations={occupations} result={result} onRetry={retrySdg} />
+        </div>
 
         <footer id="sources">
           <a href="https://huggingface.co/datasets/Anthropic/EconomicIndex" target="_blank" rel="noreferrer">Anthropic Economic Index (CC-BY)</a>
