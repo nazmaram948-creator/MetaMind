@@ -8,7 +8,9 @@ lexical word-overlap (Jaccard on light-stemmed words). No model download;
 from __future__ import annotations
 
 import hashlib
+import os
 import re
+import threading
 from functools import cached_property
 from pathlib import Path
 
@@ -41,6 +43,9 @@ class Similarity:
         self.alt = alt_labels
         self.backend = backend
         self.model_name = model_name
+        self._lock = threading.RLock()
+        self._model = None
+        self._emb: dict[str, np.ndarray] = {}
         self.uris = list(labels)
         self.pos = {u: i for i, u in enumerate(self.uris)}
         # all surface forms: label + alt labels, with the owning skill index
@@ -52,30 +57,40 @@ class Similarity:
         self.forms, self.owner = forms, np.array(owner)
 
     # ---------- backends ----------
-    @cached_property
-    def _model(self):
-        from sentence_transformers import SentenceTransformer
-        return SentenceTransformer(self.model_name, device="cpu")
+    def _get_model(self):
+        with self._lock:
+            if self._model is None:
+                from sentence_transformers import SentenceTransformer
+                self._model = SentenceTransformer(self.model_name, device="cpu")
+            return self._model
 
     def _embed(self, texts: list[str]) -> np.ndarray:
-        return np.asarray(self._model.encode(texts, batch_size=128, normalize_embeddings=True,
-                                             show_progress_bar=False), dtype=np.float32)
+        return np.asarray(self._get_model().encode(texts, batch_size=128, normalize_embeddings=True,
+                                                   show_progress_bar=False), dtype=np.float32)
 
     def _cached(self, name: str, texts: list[str]) -> np.ndarray:
-        key = hashlib.sha1((self.model_name + "\n" + "\n".join(texts)).encode("utf-8")).hexdigest()[:16]
-        path = CACHE / f"{name}_{key}.npy"
-        if path.exists():
-            return np.load(path)
-        emb = self._embed(texts)
-        CACHE.mkdir(parents=True, exist_ok=True)
-        np.save(path, emb)
-        return emb
+        """Embeddings of `texts`, computed once and kept in memory and in data/cache/."""
+        with self._lock:  # requests arrive in parallel: load the model and write the cache once
+            if name in self._emb:
+                return self._emb[name]
+            key = hashlib.sha1((self.model_name + "\n" + "\n".join(texts)).encode("utf-8")).hexdigest()[:16]
+            path = CACHE / f"{name}_{key}.npy"
+            if path.exists():
+                emb = np.load(path)
+            else:
+                emb = self._embed(texts)
+                CACHE.mkdir(parents=True, exist_ok=True)
+                tmp = path.with_name(f"{path.stem}.{os.getpid()}.tmp.npy")
+                np.save(tmp, emb)
+                os.replace(tmp, path)
+            self._emb[name] = emb
+            return emb
 
-    @cached_property
+    @property
     def _label_emb(self) -> np.ndarray:
         return self._cached("skill_labels", [self.labels[u] for u in self.uris])
 
-    @cached_property
+    @property
     def _form_emb(self) -> np.ndarray:
         return self._cached("skill_forms", self.forms)
 

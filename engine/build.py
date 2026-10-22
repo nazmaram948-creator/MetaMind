@@ -13,8 +13,10 @@ from __future__ import annotations
 
 import csv
 import json
+import os
 import sqlite3
 import sys
+import uuid
 from contextlib import closing
 from datetime import datetime, timezone
 from pathlib import Path
@@ -174,8 +176,7 @@ def build(path: Path | None = None) -> Path:
         "onet": (EXTRACTS / "onet_meta.json").read_text(encoding="utf-8"),
     }
 
-    tmp = path.with_suffix(".tmp")
-    tmp.unlink(missing_ok=True)
+    tmp = path.with_name(f"{path.stem}.{os.getpid()}.{uuid.uuid4().hex[:8]}.tmp")
     with closing(sqlite3.connect(tmp)) as con, con:  # close: Windows keeps the file locked
         for name, df in tables.items():
             df.to_sql(name, con, index=False)
