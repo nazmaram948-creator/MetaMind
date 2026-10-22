@@ -56,6 +56,14 @@ export default function RoleCard({ role, movement, note }) {
         <Icon name="chevron" className="chev" />
       </button>
 
+      {/* outside the button: badges can be links. The open body repeats them in full. */}
+      {!open && (
+        <div className="role-foot">
+          <Estimate note={note} />
+          {role.source_badges.map((b) => <Source key={b.source} badge={b} />)}
+        </div>
+      )}
+
       {open && (
         <div className="role-body">
           <div>

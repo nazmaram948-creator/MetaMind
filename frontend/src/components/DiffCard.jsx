@@ -17,8 +17,8 @@ export default function DiffCard({ diff, labels, onUndo, busy }) {
           <button className="pill small ghost" onClick={onUndo} disabled={busy}>Back to {labels.from}</button>
         </span>
       </div>
-      <ul>
-        {diff.changes.slice(0, 6).map((c) => (
+      <ul className={diff.changes.length > 8 ? "scroll" : undefined}>
+        {diff.changes.map((c) => (
           <li key={c.role_id}>
             <span>
               <button className="linkish" style={{ color: "var(--text)", textDecoration: "none" }}

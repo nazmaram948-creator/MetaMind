@@ -35,7 +35,10 @@ export function SafestTile({ role, note }) {
           </div>
         </div>
       ) : <div className="sub">Appears after your skills are read</div>}
-      <Estimate note={note} />
+      <div className="foot">
+        <Estimate note={note} />
+        {role?.source_badges.map((b) => <Source key={b.source} badge={b} />)}
+      </div>
     </div>
   );
 }

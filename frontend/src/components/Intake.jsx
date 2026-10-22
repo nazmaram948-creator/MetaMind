@@ -49,12 +49,13 @@ export default function Intake({ occupations, personas, busy, onSubmit, error })
     setFile(null);
     setText(p.cv_text);
     setMode("paste");
-    setOcc(p.current_occ_id || "");
     setDemoOpen(false);
-    onSubmit({ text: p.cv_text, occupation: p.current_occ_id || "", label: `Demo profile: ${roleOf(p).toLowerCase()}` });
+    // same rule as uploads: the job comes from the dropdown, never from the profile
+    onSubmit({ text: p.cv_text, occupation: occ, label: `Demo profile: ${roleOf(p).toLowerCase()}` });
   };
 
   const ready = mode === "upload" ? !!file : text.trim().length > 20;
+  const short = 21 - text.trim().length;
   const title = persona ? roleOf(persona) : mode === "paste" ? "Paste a CV" : file ? file.name : "Drop a CV";
 
   return (
@@ -89,10 +90,16 @@ export default function Intake({ occupations, personas, busy, onSubmit, error })
               : { text, occupation: occ, label: persona?.name || "Your CV" })}>
             {busy ? <span className="spin" /> : "Read my skills"}
           </button>
+          {mode === "paste" && !ready && (
+            <span className="faint hint" aria-live="polite">
+              Add {short} more character{short === 1 ? "" : "s"}
+            </span>
+          )}
           <button className="linkish" onClick={() => setMode(mode === "upload" ? "paste" : "upload")}>
             {mode === "upload" ? "paste text instead" : "upload a file instead"}
           </button>
         </div>
+        <p className="faint hint">Choose your current job for better matches. It applies to uploads, pasted text and demo profiles.</p>
 
         {error && <p className="error">{error}</p>}
 

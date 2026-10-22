@@ -8,13 +8,17 @@ import Momentum from "./components/Momentum";
 import { MalaysiaTile, SafestTile } from "./components/Tiles";
 import Roles from "./components/Roles";
 import DiffCard from "./components/DiffCard";
+import { Estimate, Source } from "./components/Badge";
 
-function Stat({ n, k, color, fill }) {
+const badgeKey = (b) => b && `${b.source}|${b.date}`;
+
+function Stat({ n, k, color, fill, badge }) {
   return (
     <div className="stat">
       <div className="n">{n}</div>
       <div className="k"><i className="dot" style={{ background: color }} />{k}</div>
       <div className="bar"><i style={{ width: `${Math.max(0, Math.min(1, fill)) * 100}%` }} /></div>
+      {badge && <div className="stat-src"><Source badge={badge} /></div>}
     </div>
   );
 }
@@ -149,6 +153,10 @@ export default function App() {
   const safest = result?.roles.find((r) => r.robustness.safest_pick);
   const rising = mine.filter((s) => s.status === "rising").length;
 
+  // hero tiles: one shared source row; a tile gets its own badge only when its source is not in that row
+  const shared = result ? top.source_badges : ctx?.badge ? [ctx.badge] : [];
+  const own = (b) => (b && !shared.some((s) => badgeKey(s) === badgeKey(b)) ? b : null);
+
   return (
     <div className="shell">
       <Rail hasResults={!!result} />
@@ -206,8 +214,10 @@ export default function App() {
                 <>
                   <Stat n={selected.length} k="skills used for matching" color="var(--lime)" fill={selected.length / 30} />
                   <Stat n={top.total_match_score.toFixed(0)} k={`best: ${top.role_title}`} color="var(--orange)" fill={top.total_match_score / 100} />
-                  <Stat n={`${mine.length ? Math.round((100 * rising) / mine.length) : 0}%`} k="of your skills rising" color="var(--sky)" fill={mine.length ? rising / mine.length : 0} />
-                  <Stat n={ctx?.malaysia_usage_index?.toFixed(2) ?? "–"} k="Malaysia AI index" color="var(--coral)" fill={(ctx?.malaysia_usage_index || 0) / 1.5} />
+                  <Stat n={`${mine.length ? Math.round((100 * rising) / mine.length) : 0}%`} k="of your skills rising" color="var(--sky)" fill={mine.length ? rising / mine.length : 0}
+                    badge={own(mine[0]?.source)} />
+                  <Stat n={ctx?.malaysia_usage_index?.toFixed(2) ?? "–"} k="Malaysia AI index" color="var(--coral)" fill={(ctx?.malaysia_usage_index || 0) / 1.5}
+                    badge={own(ctx?.badge)} />
                 </>
               ) : (
                 <>
@@ -216,6 +226,12 @@ export default function App() {
                   <Stat n="1,000" k="futures per role" color="var(--sky)" fill={1} />
                   <Stat n={ctx?.malaysia_usage_index?.toFixed(2) ?? "–"} k="Malaysia AI index" color="var(--coral)" fill={(ctx?.malaysia_usage_index || 0) / 1.5} />
                 </>
+              )}
+              {(result || shared.length > 0) && (
+                <div className="stats-foot">
+                  {result && <Estimate note={result.assumption_note} />}
+                  {shared.map((b) => <Source key={badgeKey(b)} badge={b} />)}
+                </div>
               )}
             </div>
           </section>
