@@ -14,6 +14,7 @@ const PATHS = {
   arrowUp: "M12 19V5m0 0-6 6m6-6 6 6",
   arrowDown: "M12 5v14m0 0-6-6m6 6 6-6",
   back: "M15 6l-6 6 6 6",
+  globe: "M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Zm-9-9h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18",
 };
 
 export default function Icon({ name, size = 20, stroke = 1.7, className }) {

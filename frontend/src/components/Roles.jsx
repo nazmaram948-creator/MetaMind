@@ -9,7 +9,7 @@ const SORTS = {
   outlook: ["Best outlook", (a, b) => b.score_breakdown.role_trend_score - a.score_breakdown.role_trend_score],
 };
 
-export default function Roles({ result, movements, current }) {
+export default function Roles({ result, movements, current, sdg, skillIds }) {
   const [sort, setSort] = useState("match");
   const [all, setAll] = useState(false);
   const roles = useMemo(() => [...result.roles].sort(SORTS[sort][1]), [result, sort]);
@@ -32,7 +32,8 @@ export default function Roles({ result, movements, current }) {
         <span /><span>Role</span><span>Match</span><span>Stays in top 5</span><span>Range, P10–P90</span><span />
       </div>
       {shown.map((r) => (
-        <RoleCard key={r.role_id} role={r} movement={movements?.[r.role_id]} note={result.assumption_note} />
+        <RoleCard key={r.role_id} role={r} movement={movements?.[r.role_id]} note={result.assumption_note}
+          sdg={sdg} skillIds={skillIds} />
       ))}
       {roles.length > 8 && (
         <button className="pill small ghost more" onClick={() => setAll(!all)}>

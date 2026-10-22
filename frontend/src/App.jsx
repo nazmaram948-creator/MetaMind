@@ -8,6 +8,8 @@ import Momentum from "./components/Momentum";
 import { MalaysiaTile, SafestTile } from "./components/Tiles";
 import Roles from "./components/Roles";
 import DiffCard from "./components/DiffCard";
+import Sdg from "./components/Sdg";
+import { indexSdg } from "./components/sdgData";
 import { Estimate, Source } from "./components/Badge";
 
 const badgeKey = (b) => b && `${b.source}|${b.date}`;
@@ -43,6 +45,7 @@ export default function App() {
   const [diff, setDiff] = useState(null);
   const [busy, setBusy] = useState("");
   const [error, setError] = useState("");
+  const [sdg, setSdg] = useState({ status: "loading", rows: [], index: {} });
 
   const selected = skills.filter((s) => chosen[s.skill_id]).map((s) => s.skill_id);
   const occTitle = occupations.find((o) => o.occ_id === current)?.title;
@@ -92,6 +95,17 @@ export default function App() {
       }
     })();
   }, []);
+
+  // SDG links load on their own, so a failure there never blocks matching
+  const fetchSdg = useCallback(() => api.getSdg().then(
+    (rows) => setSdg({ status: "ready", rows, index: indexSdg(rows) }),
+    (e) => setSdg({ status: "error", rows: [], index: {}, error: e.message }),
+  ), []);
+  useEffect(() => { fetchSdg(); }, [fetchSdg]);
+  const retrySdg = () => {
+    setSdg((s) => ({ ...s, status: "loading" }));
+    fetchSdg();
+  };
 
   const analyse = useCallback(async (ids, occ, scen, withDiff) => {
     const [m, sig, d] = await Promise.all([
@@ -254,9 +268,13 @@ export default function App() {
 
         {result && (
           <div style={{ marginTop: 22 }}>
-            <Roles result={result} movements={movements} current={occTitle} />
+            <Roles result={result} movements={movements} current={occTitle} sdg={sdg} skillIds={selected} />
           </div>
         )}
+
+        <div style={{ marginTop: 22 }}>
+          <Sdg sdg={sdg} occupations={occupations} result={result} onRetry={retrySdg} />
+        </div>
 
         <footer id="sources">
           <a href="https://huggingface.co/datasets/Anthropic/EconomicIndex" target="_blank" rel="noreferrer">Anthropic Economic Index (CC-BY)</a>
