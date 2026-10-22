@@ -1,5 +1,54 @@
-# MetaMind
+# MetaMind: SkillShift MY
 hackathon project on Aiversecity Future-Ready work force
+
+## Run the app
+
+One process serves the app and the API on **http://localhost:8000**, with real data
+(`ENGINE_MODE=true`). You need **Python 3.10+** (3.11 recommended) and **Node.js 20+**.
+
+Windows (PowerShell), from the repository root:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File run.ps1
+```
+
+macOS / Linux:
+
+```bash
+bash run.sh
+```
+
+The script creates `.venv`, installs the Python packages, builds the frontend and
+starts the server. The first run takes a few minutes: about 300 MB of packages, then
+the database builds itself and the language model (about 90 MB) downloads on the
+first start. Later runs start in seconds. On Replit, press **Run** (`.replit` calls `run.sh`).
+
+<details>
+<summary>The same steps by hand</summary>
+
+```bash
+python -m venv .venv
+.venv/Scripts/python -m pip install -r backend/requirements.txt    # macOS/Linux: .venv/bin/python
+cd frontend && npm ci && npm run build && cd ..
+ENGINE_MODE=true .venv/Scripts/python -m uvicorn backend.app.main:app --port 8000
+```
+
+On PowerShell, replace the last line with `$env:ENGINE_MODE="true"` and then
+`.venv\Scripts\python -m uvicorn backend.app.main:app --port 8000`.
+</details>
+
+**Frontend with hot reload (development):** keep the server above running and, in
+a second terminal, run `cd frontend && npm run dev`. Open http://localhost:5173;
+`/api` is forwarded to port 8000.
+
+| Symptom | Fix |
+|---|---|
+| Banner "This API was started without the engine" | The server was started without `ENGINE_MODE=true`. Use `run.ps1` / `run.sh` |
+| Banner "Starting the engine…" | First start: DB build + model download. Wait; it disappears when ready |
+| "Can't reach the API" | The server is not running, or runs on another port |
+| `run.ps1` cannot be loaded | Run it as shown above (`-ExecutionPolicy Bypass`) |
+| Port 8000 busy | `run.ps1 -Port 8010`, or `PORT=8010 bash run.sh` |
+
 
 ## Backend
 
@@ -7,9 +56,9 @@ The P1 backend is a FastAPI service under `backend/app/`. It exposes profile par
 signals, role matching, snapshot load/diff, and the P2 learning pathway and
 robustness fields.
 
-### Quickstart
+### Backend only, with development fixtures
 
-From the repository root:
+For API work without the engine (`DEV_MODE=true` serves synthetic fixtures). From the repository root:
 
 ```powershell
 pip install -r backend/requirements.txt
