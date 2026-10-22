@@ -66,7 +66,8 @@ def ensure_dev_mode() -> None:
 
 @app.get("/health")
 def health() -> dict[str, str]:
-    return {"status": "ok", "mode": "engine" if settings.engine_mode else "fixtures" if settings.dev_mode else "off"}
+    mode = "engine" if settings.engine_mode else "fixtures" if settings.dev_mode else "off"
+    return {"status": "ok", "mode": mode, **(engine_api.status() if settings.engine_mode else {})}
 
 
 @app.post("/api/profile/parse", response_model=ProfileParseResponse)

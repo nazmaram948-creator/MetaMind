@@ -9,7 +9,6 @@ import csv
 import io
 import logging
 import threading
-from functools import lru_cache
 
 from fastapi import HTTPException, UploadFile
 
@@ -37,19 +36,38 @@ log = logging.getLogger("skillshift.api")
 MAX_UPLOAD_BYTES = 2_000_000
 
 
-@lru_cache(maxsize=1)
+_lock = threading.Lock()
+_engine = None
+_status = {"engine": "not started"}
+
+
 def engine():
-    from engine.service import Engine  # imported lazily: fixture mode needs no engine
-    return Engine()
+    """The process-wide Engine. Built once under a lock: the warm-up thread and the
+    first requests arrive together, and a fresh clone must build the DB only once."""
+    global _engine
+    if _engine is None:
+        with _lock:
+            if _engine is None:
+                from engine.service import Engine  # imported lazily: fixture mode needs no engine
+                _status["engine"] = "starting"
+                _engine = Engine()
+    return _engine
+
+
+def status() -> dict:
+    return dict(_status)
 
 
 def warm_up() -> None:
-    """Load the DB and the embedding model in the background at startup."""
+    """Build the DB and load the embedding model in the background at startup."""
     def run():
+        _status["engine"] = "starting"
         try:
             engine().parse("use spreadsheets software")
+            _status["engine"] = "ready"
             log.info("engine ready")
-        except Exception:  # never block startup; the first request will retry
+        except Exception as error:  # never block startup; requests retry on their own
+            _status["engine"] = f"error: {error}"
             log.exception("engine warm-up failed")
     threading.Thread(target=run, daemon=True).start()
 

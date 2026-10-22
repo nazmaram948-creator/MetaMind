@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import json
 import sqlite3
+import threading
 from contextlib import closing
 from dataclasses import dataclass, field
 from functools import cached_property
@@ -13,6 +14,8 @@ import pandas as pd
 from .build import build
 from .config import db_path
 
+_build_lock = threading.Lock()
+
 
 @dataclass
 class Store:
@@ -22,8 +25,9 @@ class Store:
     @classmethod
     def open(cls, path: Path | None = None, *, rebuild: bool = False) -> "Store":
         path = Path(path or db_path())
-        if rebuild or not path.exists():
-            build(path)
+        with _build_lock:
+            if rebuild or not path.exists():
+                build(path)
         with closing(sqlite3.connect(path)) as con:
             names = [n for (n,) in con.execute("SELECT name FROM sqlite_master WHERE type='table'")]
             tables = {n: pd.read_sql(f"SELECT * FROM {n}", con) for n in names}

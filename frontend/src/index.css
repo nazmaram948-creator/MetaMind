@@ -266,6 +266,7 @@ select option { color: #111; }
 footer { margin-top: 26px; font-size: 12px; color: var(--faint); display: flex; flex-wrap: wrap; gap: 6px 18px; }
 footer a { color: var(--faint); }
 
+.note { margin-bottom: 18px; padding: 12px 18px; border-radius: 16px; background: rgba(227, 236, 108, 0.12); border: 1px solid rgba(227, 236, 108, 0.35); font-size: 13.5px; }
 .warn { margin-bottom: 18px; padding: 12px 18px; border-radius: 16px; background: rgba(255, 112, 102, 0.16); border: 1px solid rgba(255, 112, 102, 0.4); font-size: 13.5px; }
 .spin { width: 16px; height: 16px; border-radius: 50%; border: 2px solid rgba(0, 0, 0, 0.2); border-top-color: currentColor; animation: spin .8s linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }

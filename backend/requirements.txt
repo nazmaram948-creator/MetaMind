@@ -1,3 +1,6 @@
+# CPU-only PyTorch (sentence-transformers): avoids the multi-GB CUDA build on Linux/Replit
+--extra-index-url https://download.pytorch.org/whl/cpu
+
 # data pipeline
 pandas>=2.2
 numpy>=1.26
