@@ -48,6 +48,7 @@ a second terminal, run `cd frontend && npm run dev`. Open http://localhost:5173;
 | "Can't reach the API" | The server is not running, or runs on another port |
 | `run.ps1` cannot be loaded | Run it as shown above (`-ExecutionPolicy Bypass`) |
 | Port 8000 busy | `run.ps1 -Port 8010`, or `PORT=8010 bash run.sh` |
+| Windows: pip fails with a "Long Path" / `No such file or directory` error | Clone into a short folder (e.g. `C:\dev\MetaMind`), delete `.venv`, run again |
 
 
 ## Backend

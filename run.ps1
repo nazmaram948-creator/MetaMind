@@ -6,6 +6,10 @@ param([int]$Port = 8000)
 $ErrorActionPreference = "Stop"
 Set-Location $PSScriptRoot
 
+if ($PSScriptRoot.Length -gt 80) {
+  Write-Warning "This folder path is long ($($PSScriptRoot.Length) characters). PyTorch has deep file paths, so pip may fail with a 'Long Path' error. Clone into a short folder such as C:\dev\MetaMind if that happens."
+}
+
 $py = Join-Path $PSScriptRoot ".venv\Scripts\python.exe"
 if (-not (Test-Path $py)) {
   Write-Host "Creating .venv ..."
