@@ -7,6 +7,7 @@ from backend.app.services.curated_data import (
     load_personas,
     load_sdg_mappings,
 )
+from backend.app.services.extraction import extract_skills, normalize_skill_phrases
 
 
 def test_curated_files_have_expected_counts_and_types():
@@ -46,7 +47,9 @@ def test_curated_endpoints_expose_citations_sdg_and_personas(monkeypatch):
     personas = client.get("/api/personas").json()
     assert len(personas["individual_users"]) == 3
     assert personas["individual_users"][1]["current_role"] is None
+    assert personas["individual_users"][1]["normalized_skill_ids"]
     assert len(personas["hr_team_cohort"]) == 5
+    assert all(persona["normalized_skill_ids"] for persona in personas["hr_team_cohort"])
 
 
 def test_curated_courses_drive_pathway_and_verified_hours(monkeypatch):
@@ -80,13 +83,33 @@ def test_all_individual_personas_run_through_profile_and_pathway(monkeypatch):
     for persona in individuals:
         parsed = client.post(
             "/api/profile/parse",
-            json={"occupation_id": None, "text": persona.cv_text},
+            json={
+                "occupation_id": None,
+                "text": persona.cv_text,
+                "current_skills": list(persona.current_skills),
+            },
         )
         assert parsed.status_code == 200, persona.id
         skill_ids = [skill["skill_id"] for skill in parsed.json()["skills"]]
+        assert len(skill_ids) >= 2, persona.id
         pathway = client.post(
             "/api/pathway",
             json={"skill_ids": skill_ids, "target_role_id": "role-data-analyst"},
         )
         assert pathway.status_code == 200, persona.id
         assert pathway.json()["target_role_id"] == "role-data-analyst"
+
+
+def test_persona_aliases_normalize_to_curated_esco_ids():
+    individuals, hr_cohort = load_personas()
+    all_people = [*individuals, *hr_cohort]
+    for persona in all_people:
+        matches = normalize_skill_phrases(persona.current_skills)
+        assert matches, persona.id
+        assert all(match[0].skill_id.startswith("ESCO-") for match in matches)
+
+    assert {match[0].skill_id for match in extract_skills("Python, basic SQL and sustainability")} >= {
+        "ESCO-PY-01",
+        "ESCO-DA-02",
+        "ESCO-SUS-01",
+    }

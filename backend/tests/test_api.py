@@ -72,3 +72,43 @@ def test_match_includes_1000_run_robustness_estimate(monkeypatch):
     assert robustness["runs"] == 1000
     assert robustness["variation"] == 0.2
     assert robustness["label"] == "Estimate"
+
+
+def test_match_returns_sdg_tags_and_applies_sdg_preference(monkeypatch):
+    from backend.app import config
+
+    monkeypatch.setattr(config.settings, "dev_mode", True)
+    client = TestClient(app)
+    without_preference = client.post(
+        "/api/match", json={"skill_ids": ["skill-data-analysis"]}
+    ).json()
+    with_preference = client.post(
+        "/api/match",
+        json={"skill_ids": ["skill-data-analysis"], "sdg_preference": 0.8},
+    ).json()
+    assert with_preference["roles"][0]["sdg_tags"]
+    assert with_preference["roles"][0]["score_breakdown"]["sdg_preference_score"] >= 0
+    assert [
+        role["total_match_score"] for role in without_preference["roles"]
+    ] != [
+        role["total_match_score"] for role in with_preference["roles"]
+    ]
+
+
+def test_pathway_exposes_course_provenance_and_role_sdg_tags(monkeypatch):
+    from backend.app import config
+
+    monkeypatch.setattr(config.settings, "dev_mode", True)
+    client = TestClient(app)
+    courses = client.post(
+        "/api/pathway",
+        json={"skill_ids": [], "target_role_id": "role-data-analyst"},
+    ).json()["pathway"]
+    assert courses
+    assert all(course["source_badges"] for course in courses)
+    assert all(course["sdg_tags"] for course in courses)
+    assert all(
+        course["hrd_corp_claimable"] is None
+        for course in courses
+        if course["source_badges"][0]["source"] == "data/curated/courses.csv"
+    )

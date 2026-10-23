@@ -9,7 +9,11 @@ and course catalogue are available.
 Request:
 
 ```json
-{"occupation_id": "office_clerk", "text": "I use Excel for data analysis"}
+{
+  "occupation_id": "office_clerk",
+  "text": "I use Excel for data analysis",
+  "current_skills": ["Basic Excel"]
+}
 ```
 
 Response:
@@ -29,7 +33,9 @@ Response:
 }
 ```
 
-Unknown occupations and unverified IDs are rejected or removed.
+Unknown occupations and unverified IDs are rejected or removed. Both `text`
+and plain-English `current_skills` are normalized to verified curated
+`ESCO-*` skill IDs.
 
 ## `GET /api/signals`
 
@@ -49,7 +55,7 @@ there is no exact occupation-name join between the two curated files.
 Returns `individual_users` and `hr_team_cohort` from the synthetic persona
 catalogue. Individual users include CV text and skills for one-click demo
 profile loading. `USR-002` is a fresh graduate and correctly returns
-`"current_role": null`.
+`"current_role": null`. Each persona also includes `normalized_skill_ids`.
 
 ## `POST /api/match`
 
@@ -115,7 +121,7 @@ Response fields:
 - `missing_skills`: verified skill IDs still needed by the role.
 - `pathway`: course recommendations with `course_id`, `title`, `provider`,
   `url`, `cost`, `hrd_corp_claimable`, `sdg_tags`, `hours`, and
-  `hours_verified`.
+  `hours_verified`, and `source_badges`.
 - `best_next_hour`: the highest marginal score improvement divided by exact
   verified course hours.
 
@@ -123,6 +129,12 @@ Only courses with `hours_verified: true` participate in `best_next_hour` and
 `marginal_score_per_hour`. Courses with `hours_verified: false` or `null`
 return `"hours not verified"` and have `marginal_score_per_hour: null`; their
 hours are never used in calculations.
+
+The current curated course schema does not provide an HRD Corp eligibility
+column, so curated rows return `hrd_corp_claimable: null` (unknown) rather
+than an unsupported claim. The field is ready for the real catalogue to
+populate. Pathway `sdg_tags` are derived from the target role's curated SDG
+mapping.
 
 When present, `data/curated/courses.csv` is loaded through the course adapter.
 It provides `course_id`, `course_title`, `provider`, `skill_ids`
