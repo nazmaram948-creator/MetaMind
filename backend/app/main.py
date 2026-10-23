@@ -159,7 +159,7 @@ def role_sdg_links(role_title: str) -> list[str]:
     """Return evidence-backed SDG links without joining unrelated occupations."""
     title_words = {
         word.casefold()
-        for word in role_title.replace("-", " ").split()
+        for word in role_title.replace("-", " ").replace("_", " ").split()
         if len(word) > 3
     }
     mappings = load_sdg_mappings()
@@ -169,7 +169,7 @@ def role_sdg_links(role_title: str) -> list[str]:
             title_words.intersection(
                 {
                     word.casefold()
-                    for word in mapping.occupation.replace("-", " ").split()
+                    for word in mapping.occupation.replace("-", " ").replace("_", " ").split()
                     if len(word) > 3
                 }
             )
@@ -182,7 +182,7 @@ def role_sdg_links(role_title: str) -> list[str]:
         if title_words.intersection(
             {
                 word.casefold()
-                for word in mapping.occupation.replace("-", " ").split()
+                for word in mapping.occupation.replace("-", " ").replace("_", " ").split()
                 if len(word) > 3
             }
         )

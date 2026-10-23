@@ -64,10 +64,10 @@ class RoleMatch(BaseModel):
     score_breakdown: dict[str, float]
     matched_skills: list[str]
     missing_skills: list[str]
-    sdg_tags: list[str]
+    sdg_tags: list[str] = Field(default_factory=list)
     robustness_estimate: str
     robustness: dict[str, object]
-    source_badges: list[SignalBadge]
+    source_badges: list[SignalBadge] = Field(default_factory=list)
     is_estimate: Literal[True] = True
     rank: int | None = None
     score_points: dict[str, float] | None = None
@@ -119,11 +119,11 @@ class SdgMappingResponse(BaseModel):
     occupation: str
     sdg_link: str
     reasoning: str
-    status: str
-    basis: str
-    evidence: str
-    source: str
-    date: str
+    status: str = "curated"
+    basis: str = "curated occupation mapping"
+    evidence: str = ""
+    source: str = "curated data"
+    date: str = "undated"
 
 
 class IndividualPersonaResponse(BaseModel):
@@ -134,7 +134,7 @@ class IndividualPersonaResponse(BaseModel):
     industry: str
     experience_years: int
     current_skills: list[str]
-    normalized_skill_ids: list[str]
+    normalized_skill_ids: list[str] = Field(default_factory=list)
     cv_text: str
     current_occ_id: str | None = None
     state: str | None = None
