@@ -17,6 +17,7 @@ class MatchedSkill(BaseModel):
     skill_name: str
     extracted_phrase: str
     confidence: float
+    status: Literal["suggested", "needs_confirmation"] | None = None
 
 
 class ProfileParseResponse(BaseModel):
@@ -28,6 +29,9 @@ class ProfileParseResponse(BaseModel):
 class SignalBadge(BaseModel):
     source: str
     date: str
+    url: str | None = None
+    period: str | None = None
+    date_kind: Literal["published", "retrieved"] | None = None
 
 
 class Signal(BaseModel):
@@ -40,6 +44,10 @@ class Signal(BaseModel):
     growth_rate_pct: float | None = None
     label: Literal["Estimate"] = "Estimate"
     source: SignalBadge
+    is_green: bool | None = None
+    is_digital: bool | None = None
+    scenario: str | None = None
+    snapshot_id: str | None = None
 
 
 class MatchRequest(BaseModel):
@@ -61,12 +69,21 @@ class RoleMatch(BaseModel):
     robustness: dict[str, object]
     source_badges: list[SignalBadge]
     is_estimate: Literal[True] = True
+    rank: int | None = None
+    score_points: dict[str, float] | None = None
+    weights: dict[str, float] | None = None
+    essential_skills_total: int | None = None
+    matched_skill_names: list[str] | None = None
+    missing_skill_names: list[str] | None = None
+    ai_exposure: dict[str, object] | None = None
 
 
 class MatchResponse(BaseModel):
     roles: list[RoleMatch]
     label: Literal["Estimate"] = "Estimate"
     assumption_note: str
+    snapshot_id: str | None = None
+    scenario: str | None = None
 
 
 class CourseRecommendation(BaseModel):
@@ -119,6 +136,8 @@ class IndividualPersonaResponse(BaseModel):
     current_skills: list[str]
     normalized_skill_ids: list[str]
     cv_text: str
+    current_occ_id: str | None = None
+    state: str | None = None
 
 
 class HrPersonaResponse(BaseModel):
@@ -126,7 +145,8 @@ class HrPersonaResponse(BaseModel):
     name: str
     current_role: str
     current_skills: list[str]
-    normalized_skill_ids: list[str]
+    normalized_skill_ids: list[str] = Field(default_factory=list)
+    current_occ_id: str | None = None
 
 
 class PersonasResponse(BaseModel):
@@ -149,6 +169,8 @@ class SnapshotDiffRequest(BaseModel):
     skill_ids: list[str] = Field(default_factory=list)
     baseline_snapshot_id: str = "baseline_snapshot"
     new_snapshot_id: str = "latest_snapshot"
+    current_occupation_id: str | None = None
+    scenario: Scenario = "moderate"
 
 
 class SnapshotDiffResponse(BaseModel):
@@ -157,3 +179,24 @@ class SnapshotDiffResponse(BaseModel):
     changes: list[dict[str, object]]
     label: Literal["Estimate"] = "Estimate"
     assumption_note: str
+
+
+class OccupationResponse(BaseModel):
+    occ_id: str
+    title: str
+    isco_code: str
+    masco_major: int
+    family: str
+    role_type: str
+    esco_label: str
+    onet_soc: str
+
+
+class ContextResponse(BaseModel):
+    snapshot_id: str
+    label: str
+    badge: SignalBadge
+    malaysia_usage_index: float | None
+    malaysia_usage_pct_of_global: float | None
+    malaysia_automation_pct: float | None
+    global_automation_pct: float | None

@@ -7,6 +7,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import os
 import sys
 import time
 from datetime import datetime, timezone
@@ -16,7 +17,8 @@ import requests
 
 ROOT = Path(__file__).resolve().parents[2]
 DATA = ROOT / "data"
-RAW = DATA / "raw"
+# Raw downloads can live outside the checkout (shared cache, CI, second worktree).
+RAW = Path(os.environ.get("SKILLSHIFT_RAW", DATA / "raw")).resolve()
 CURATED = DATA / "curated"
 FIXTURES = DATA / "fixtures"
 EXTRACTS = DATA / "extracts"
@@ -27,6 +29,16 @@ BROWSER_UA = (
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
     "(KHTML, like Gecko) Chrome/130.0 Safari/537.36"
 )
+
+
+def rel(path: Path) -> str:
+    """Stable key for logs and the manifest: 'data/raw/...' even when RAW is elsewhere."""
+    path = path.resolve()
+    if path.is_relative_to(RAW):
+        return "data/raw/" + path.relative_to(RAW).as_posix()
+    if path.is_relative_to(ROOT):
+        return path.relative_to(ROOT).as_posix()
+    return path.as_posix()
 
 
 def now_iso() -> str:
@@ -64,10 +76,10 @@ def download(url: str, dest: Path, *, source: str, force: bool = False,
     can print the exact URL for a human to fetch.
     """
     dest.parent.mkdir(parents=True, exist_ok=True)
-    rel = dest.relative_to(ROOT).as_posix()
+    rel_path = rel(dest)
     manifest = load_manifest()
     if dest.exists() and dest.stat().st_size > 0 and not force:
-        print(f"  [skip] {rel} already present ({dest.stat().st_size:,} bytes)")
+        print(f"  [skip] {rel_path} already present ({dest.stat().st_size:,} bytes)")
         return dest
 
     tmp = dest.with_suffix(dest.suffix + ".part")
@@ -86,14 +98,14 @@ def download(url: str, dest: Path, *, source: str, force: bool = False,
                         f.write(chunk)
                         done += len(chunk)
                         if total > 20_000_000:
-                            print(f"\r  {rel}: {done/1e6:,.0f}/{total/1e6:,.0f} MB",
+                            print(f"\r  {rel_path}: {done/1e6:,.0f}/{total/1e6:,.0f} MB",
                                   end="", file=sys.stderr)
                 if total > 20_000_000:
                     print(file=sys.stderr)
             tmp.replace(dest)
             break
         except ManualDownloadNeeded:
-            manifest[rel] = {"url": url, "source": source, "status": "manual_download_needed",
+            manifest[rel_path] = {"url": url, "source": source, "status": "manual_download_needed",
                              "checked_at": now_iso()}
             save_manifest(manifest)
             raise
@@ -104,7 +116,7 @@ def download(url: str, dest: Path, *, source: str, force: bool = False,
     else:
         raise RuntimeError(f"download failed after {retries} attempts: {url}") from last_err
 
-    manifest[rel] = {
+    manifest[rel_path] = {
         "url": url,
         "source": source,
         "status": "ok",
@@ -113,15 +125,15 @@ def download(url: str, dest: Path, *, source: str, force: bool = False,
         "fetched_at": now_iso(),
     }
     save_manifest(manifest)
-    print(f"  [ok]   {rel} ({dest.stat().st_size:,} bytes)")
+    print(f"  [ok]   {rel_path} ({dest.stat().st_size:,} bytes)")
     return dest
 
 
 def manual_notice(url: str, dest: Path, extra: str = "") -> None:
-    rel = dest.relative_to(ROOT).as_posix()
+    rel_path = rel(dest)
     print("\n  !! MANUAL DOWNLOAD NEEDED")
     print(f"     open:    {url}")
-    print(f"     save to: {rel}")
+    print(f"     save to: {rel_path}")
     if extra:
         print(f"     note:    {extra}")
     print()

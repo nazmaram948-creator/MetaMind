@@ -1,0 +1,88 @@
+{
+    "individual_users": [
+        {
+            "id": "SYN-001",
+            "name": "Aina",
+            "persona_type": "Worker at Risk",
+            "current_role": "Accounts clerk",
+            "current_occ_id": "accounts_clerk",
+            "state": "Selangor",
+            "industry": "Wholesale trade (SME)",
+            "experience_years": 9,
+            "synthetic": true,
+            "current_skills": [
+                "Maintain financial records",
+                "Reconcile bank statements",
+                "Issue sales invoices",
+                "Accounts receivable follow-up",
+                "Spreadsheets",
+                "SST calculation"
+            ],
+            "cv_text": "SYNTHETIC PERSONA FOR DEMO - NOT A REAL PERSON.\n\nAina - Accounts Clerk, Selangor\n\nSummary: Accounts clerk with 9 years in a 40-person wholesale distributor (Contoh Trading Sdn Bhd, fictional). My employer has announced an AI tool that will read supplier invoices and post them to the ledger automatically, and I want to know which of my tasks will change.\n\nExperience:\n- Maintain financial records and post daily transactions in AutoCount Accounting.\n- Issue sales invoices and credit notes; submit e-invoices through the LHDN MyInvois portal.\n- Follow up accounts receivables, send payment reminders and update the debtor ageing report.\n- Reconcile bank statements monthly and check accounting records for errors before month-end closing.\n- Calculate SST on sales and prepare supporting schedules for the external tax agent.\n- Prepare petty cash vouchers and file supporting documents.\n- Use spreadsheets software (Excel: VLOOKUP, pivot tables) for monthly sales and collection reports.\n- Communicate with customers and suppliers about payment and invoice queries.\n\nEducation: Diploma in Accountancy.\nLanguages: Malay, English."
+        },
+        {
+            "id": "SYN-002",
+            "name": "Faris",
+            "persona_type": "Worker at Risk",
+            "current_role": "Customer service officer",
+            "current_occ_id": "customer_service_rep",
+            "state": "Penang",
+            "industry": "E-commerce (SME)",
+            "experience_years": 5,
+            "synthetic": true,
+            "current_skills": [
+                "Handle customer complaints",
+                "Live chat support",
+                "CRM software",
+                "Order tracking",
+                "Refund processing"
+            ],
+            "cv_text": "SYNTHETIC PERSONA FOR DEMO - NOT A REAL PERSON.\n\nFaris - Customer Service Officer, Penang\n\nSummary: Customer service officer with 5 years at an online home-appliance retailer (Contoh Online Sdn Bhd, fictional). The company is launching an AI chatbot that will answer order-status and return questions, and my role is being reviewed.\n\nExperience:\n- Handle customer complaints by phone, email, WhatsApp and live chat; about 60 cases a day.\n- Use customer relationship management software (Zoho Desk) to log, track and close tickets.\n- Assist customers with order tracking, delivery issues and warranty claims with courier partners.\n- Process refunds and returns according to company policy and escalate difficult cases to the supervisor.\n- Maintain relationship with customers through follow-up calls after a complaint is resolved.\n- Identify customer's needs and recommend suitable products and accessories.\n- Prepare a weekly report on complaint categories for the operations team.\n\nEducation: Diploma in Business Management.\nLanguages: Malay, English, Mandarin (conversational)."
+        },
+        {
+            "id": "SYN-003",
+            "name": "Kavitha",
+            "persona_type": "Worker at Risk",
+            "current_role": "Data entry clerk",
+            "current_occ_id": "data_entry_clerk",
+            "state": "Johor",
+            "industry": "Logistics (SME)",
+            "experience_years": 6,
+            "synthetic": true,
+            "current_skills": [
+                "Data entry",
+                "Verify data accuracy",
+                "Digitise documents",
+                "File documents",
+                "Spreadsheets"
+            ],
+            "cv_text": "SYNTHETIC PERSONA FOR DEMO - NOT A REAL PERSON.\n\nKavitha - Data Entry Clerk, Johor\n\nSummary: Data entry clerk with 6 years at a freight forwarding company (Contoh Logistik Sdn Bhd, fictional). Management plans to introduce AI document capture for delivery orders and customs forms, which covers most of my current work.\n\nExperience:\n- Enter shipment, delivery order and customs declaration data into the company database and the warehouse system.\n- Verify data against source documents and correct mismatches before daily cut-off.\n- Digitise documents with a scanner and optical character recognition software, then file documents in the shared drive.\n- Maintain logistics databases of customers, consignees and freight rates.\n- Use spreadsheets software to prepare daily shipment summaries for the operations supervisor.\n- Keep task records and track backlog during peak season.\n\nEducation: SPM; certificate in office administration.\nLanguages: Tamil, Malay, English."
+        },
+        {
+            "id": "USR-002",
+            "name": "Danial",
+            "persona_type": "Fresh Graduate",
+            "current_role": null,
+            "current_occ_id": null,
+            "state": "Kuala Lumpur",
+            "industry": "Information Technology",
+            "experience_years": 0,
+            "synthetic": true,
+            "current_skills": [
+                "Python",
+                "Basic SQL",
+                "Communication",
+                "Teamwork",
+                "Research"
+            ],
+            "cv_text": "SYNTHETIC PERSONA FOR DEMO - NOT A REAL PERSON. (Copied from the team's v1 personas.)\n\nRecent IT graduate with a passion for data and sustainability. Completed university projects in basic data analysis using Python and SQL. Eager to start a career where I can apply my foundational tech skills to meaningful, future-ready challenges."
+        }
+    ],
+    "hr_team_cohort": [
+        {"id": "HR-001", "name": "Khairul", "current_role": "Junior Marketing Executive", "current_occ_id": "digital_marketing_manager", "current_skills": ["Social Media", "Copywriting", "Basic SEO"]},
+        {"id": "HR-002", "name": "Mei Ling", "current_role": "Customer Support Agent", "current_occ_id": "customer_service_rep", "current_skills": ["Call Handling", "CRM Software", "Empathy", "Troubleshooting"]},
+        {"id": "HR-003", "name": "Raj", "current_role": "Logistics Coordinator", "current_occ_id": "supply_chain_assistant", "current_skills": ["Supply Chain Tracking", "Vendor Management", "Excel"]},
+        {"id": "HR-004", "name": "Siti", "current_role": "Operations Analyst", "current_occ_id": "business_analyst", "current_skills": ["Process Mapping", "Report Generation", "Time Management"]},
+        {"id": "HR-005", "name": "Arif", "current_role": "Sales Representative", "current_occ_id": "client_relations_manager", "current_skills": ["Lead Generation", "Negotiation", "B2B Sales"]}
+    ]
+}

@@ -5,6 +5,10 @@ import os
 @dataclass
 class Settings:
     dev_mode: bool = os.getenv("DEV_MODE", "false").lower() == "true"
+    # ENGINE_MODE=true serves every route from the real engine (engine/, SQLite DB)
+    # instead of the development fixtures. Response models are unchanged.
+    engine_mode: bool = os.getenv("ENGINE_MODE", "false").lower() == "true"
+    # one origin, or several separated by commas
     cors_origin: str = os.getenv("CORS_ORIGIN", "http://localhost:5173")
     assumption_note: str = os.getenv(
         "ASSUMPTION_NOTE",

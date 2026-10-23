@@ -1,5 +1,9 @@
-run = "bash backend/start.sh"
+modules = ["python-3.11", "nodejs-20"]
+run = "bash run.sh"
 
 [env]
-DEV_MODE = "true"
-CORS_ORIGIN = "http://localhost:5173"
+ENGINE_MODE = "true"
+
+[[ports]]
+localPort = 8000
+externalPort = 80

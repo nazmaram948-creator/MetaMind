@@ -1,7 +1,10 @@
+from contextlib import asynccontextmanager
 from datetime import datetime, timezone
+from pathlib import Path
 
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, File, Form, HTTPException, Query, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 
 from .config import settings
 from .schemas import (
@@ -24,7 +27,10 @@ from .schemas import (
     PersonasResponse,
     IndividualPersonaResponse,
     HrPersonaResponse,
+    OccupationResponse,
+    ContextResponse,
 )
+from .services import engine_api
 from .services.extraction import extract_skills, normalize_skill_phrases
 from .services.guardrails import validate_db_ids
 from .services.repository import (
@@ -42,10 +48,17 @@ from .services.curated_data import (
     load_sdg_mappings,
 )
 
-app = FastAPI(title="Future Skills Compass API", version="0.1.0")
+@asynccontextmanager
+async def lifespan(_app: FastAPI):
+    if settings.engine_mode:
+        engine_api.warm_up()  # load DB + embedding model in the background
+    yield
+
+
+app = FastAPI(title="Future Skills Compass API", version="0.1.0", lifespan=lifespan)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[settings.cors_origin],
+    allow_origins=[origin.strip() for origin in settings.cors_origin.split(",") if origin.strip()],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -64,11 +77,14 @@ def ensure_dev_mode() -> None:
 
 @app.get("/health")
 def health() -> dict[str, str]:
-    return {"status": "ok"}
+    mode = "engine" if settings.engine_mode else "fixtures" if settings.dev_mode else "off"
+    return {"status": "ok", "mode": mode, **(engine_api.status() if settings.engine_mode else {})}
 
 
 @app.post("/api/profile/parse", response_model=ProfileParseResponse)
 def parse_profile(request: ProfileParseRequest) -> ProfileParseResponse:
+    if settings.engine_mode:
+        return engine_api.parse_profile(request)
     ensure_dev_mode()
     if request.occupation_id and request.occupation_id not in occupation_ids():
         raise HTTPException(status_code=422, detail="Unknown occupation_id")
@@ -96,8 +112,25 @@ def parse_profile(request: ProfileParseRequest) -> ProfileParseResponse:
     return ProfileParseResponse(skills=matches, assumption_note=settings.assumption_note)
 
 
+@app.post("/api/profile/parse_file", response_model=ProfileParseResponse)
+async def parse_profile_file(
+    file: UploadFile = File(...), occupation_id: str | None = Form(default=None)
+) -> ProfileParseResponse:
+    """CV upload (PDF or .txt). Engine mode only."""
+    if not settings.engine_mode:
+        raise HTTPException(status_code=503, detail="CV upload needs ENGINE_MODE=true.")
+    return await engine_api.parse_profile_file(file, occupation_id)
+
+
 @app.get("/api/signals", response_model=list[Signal])
-def signals() -> list[Signal]:
+def signals(
+    skill: list[str] | None = Query(default=None),
+    scenario: str = "moderate",
+    snapshot_id: str | None = None,
+) -> list[Signal]:
+    """Engine mode: Skills Radar (momentum per skill). Fixtures: demand rows."""
+    if settings.engine_mode:
+        return engine_api.signals(skill, scenario, snapshot_id)
     ensure_dev_mode()
     return [
         Signal(
@@ -116,6 +149,8 @@ def signals() -> list[Signal]:
 
 @app.get("/api/sdg", response_model=list[SdgMappingResponse])
 def sdg_mappings() -> list[SdgMappingResponse]:
+    if settings.engine_mode:
+        return engine_api.sdg()
     ensure_dev_mode()
     return [SdgMappingResponse(**mapping.__dict__) for mapping in load_sdg_mappings()]
 
@@ -157,6 +192,8 @@ def role_sdg_links(role_title: str) -> list[str]:
 
 @app.get("/api/personas", response_model=PersonasResponse)
 def personas() -> PersonasResponse:
+    if settings.engine_mode:
+        return engine_api.personas()
     ensure_dev_mode()
     individuals, hr_cohort = load_personas()
     return PersonasResponse(
@@ -191,6 +228,8 @@ def personas() -> PersonasResponse:
 
 @app.post("/api/match", response_model=MatchResponse)
 def match(request: MatchRequest) -> MatchResponse:
+    if settings.engine_mode:
+        return engine_api.match(request)
     ensure_dev_mode()
     skill_ids = normalize_backend_skill_ids(
         set(validate_db_ids(request.skill_ids, kind="skill"))
@@ -238,6 +277,8 @@ def match(request: MatchRequest) -> MatchResponse:
 
 @app.post("/api/pathway", response_model=PathwayResponse)
 def pathway(request: PathwayRequest) -> PathwayResponse:
+    if settings.engine_mode:
+        raise HTTPException(status_code=501, detail="Pathway on real data arrives in P2.")
     ensure_dev_mode()
     role = get_role(request.target_role_id)
     if role is None:
@@ -293,6 +334,8 @@ def pathway(request: PathwayRequest) -> PathwayResponse:
 
 @app.post("/api/snapshot/load", response_model=SnapshotLoadResponse)
 def load_snapshot(request: SnapshotLoadRequest) -> SnapshotLoadResponse:
+    if settings.engine_mode:
+        return engine_api.load_snapshot(request)
     ensure_dev_mode()
     return SnapshotLoadResponse(
         active_snapshot_id=request.snapshot_id,
@@ -303,6 +346,8 @@ def load_snapshot(request: SnapshotLoadRequest) -> SnapshotLoadResponse:
 
 @app.post("/api/snapshot/diff", response_model=SnapshotDiffResponse)
 def diff_snapshot(request: SnapshotDiffRequest) -> SnapshotDiffResponse:
+    if settings.engine_mode:
+        return engine_api.diff(request, request.current_occupation_id, request.scenario)
     ensure_dev_mode()
     valid_skills = validate_db_ids(request.skill_ids, kind="skill")
     return SnapshotDiffResponse(
@@ -320,3 +365,26 @@ def diff_snapshot(request: SnapshotDiffRequest) -> SnapshotDiffResponse:
         ],
         assumption_note=settings.assumption_note,
     )
+
+
+@app.get("/api/occupations", response_model=list[OccupationResponse])
+def occupations() -> list[OccupationResponse]:
+    """Target occupations for the 'current job' picker. Engine mode only."""
+    if not settings.engine_mode:
+        raise HTTPException(status_code=503, detail="Needs ENGINE_MODE=true.")
+    return engine_api.occupations()
+
+
+@app.get("/api/context", response_model=ContextResponse)
+def context(snapshot_id: str | None = None) -> ContextResponse:
+    """Malaysia vs global AI-usage context from the active AEI snapshot. Engine mode only."""
+    if not settings.engine_mode:
+        raise HTTPException(status_code=503, detail="Needs ENGINE_MODE=true.")
+    return engine_api.context(snapshot_id)
+
+
+# Serve the built frontend (frontend/dist) from the same process and port, e.g. on
+# Replit. Mounted last so every /api route above takes precedence.
+FRONTEND_DIST = Path(__file__).resolve().parents[2] / "frontend" / "dist"
+if FRONTEND_DIST.is_dir():
+    app.mount("/", StaticFiles(directory=FRONTEND_DIST, html=True), name="frontend")
