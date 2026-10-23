@@ -37,6 +37,11 @@ class SdgMapping:
     occupation: str
     sdg_link: str
     reasoning: str
+    basis: str
+    evidence: str
+    status: str
+    source: str
+    date: str
 
 
 @dataclass(frozen=True)
@@ -137,11 +142,44 @@ def load_courses() -> tuple[CuratedCourse, ...]:
 
 
 def load_sdg_mappings() -> tuple[SdgMapping, ...]:
-    filename = "sdg_mapping.csv"
+    v2 = CURATED / "sdg_map_v2.csv"
+    filename = "sdg_map_v2.csv" if v2.exists() else "sdg_mapping.csv"
+    if v2.exists():
+        expected_v2 = {
+            "key_type", "key", "occ_id", "isco_code", "esco_uri", "sdg_ids",
+            "targets", "reason", "evidence", "basis", "status",
+        }
+        rows = _rows(filename, expected_v2)
+        return tuple(
+            SdgMapping(
+                occupation=row["key"],
+                sdg_link="; ".join(
+                    f"SDG {value}" for value in row["sdg_ids"].split(";") if value
+                ),
+                reasoning=row["reason"],
+                basis=row["basis"],
+                evidence=row["evidence"],
+                status=row["status"],
+                source=filename,
+                date="undated",
+            )
+            for row in rows
+            if row["key_type"] == "occupation"
+        )
     expected = {"occupation", "sdg_link", "reasoning"}
+    rows = _rows(filename, expected)
     return tuple(
-        SdgMapping(row["occupation"], row["sdg_link"], row["reasoning"])
-        for row in _rows(filename, expected)
+        SdgMapping(
+            occupation=row["occupation"],
+            sdg_link=row["sdg_link"],
+            reasoning=row["reasoning"],
+            basis=row.get("basis", "curated occupation mapping"),
+            evidence=row.get("evidence", row["reasoning"]),
+            status=row.get("status", "curated"),
+            source=row.get("source", filename),
+            date=row.get("date_published", row.get("date", "undated")),
+        )
+        for row in rows
     )
 
 

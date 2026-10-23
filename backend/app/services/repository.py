@@ -29,11 +29,13 @@ class Course:
     provider: str
     url: str
     cost: int
-    hrd_corp_claimable: bool
+    hrd_corp_claimable: bool | None
     sdg_tags: tuple[str, ...]
     skill_ids: tuple[str, ...]
     hours: int | None
     hours_verified: bool | None
+    source: str
+    date: str
 
 
 SKILLS = (
@@ -65,6 +67,8 @@ COURSES = (
         ("skill-spreadsheets", "skill-data-analysis"),
         2.0,
         True,
+        "development fixture",
+        "2026-10-20",
     ),
     Course(
         "course-project-practice",
@@ -77,12 +81,35 @@ COURSES = (
         ("skill-project-management",),
         4.0,
         False,
+        "development fixture",
+        "2026-10-20",
     ),
 )
 
 
 def verified_skill_ids() -> set[str]:
-    return {skill.skill_id for skill in SKILLS}
+    return {
+        skill_id
+        for course in course_catalogue()
+        for skill_id in course.skill_ids
+    } | {skill.skill_id for skill in SKILLS}
+
+
+def normalize_backend_skill_ids(skill_ids: set[str]) -> set[str]:
+    """Translate curated ESCO IDs to the role engine's legacy skill groups."""
+    normalized = set(skill_ids)
+    groups = {
+        "skill-data-analysis": ("ESCO-DA-",),
+        "skill-spreadsheets": ("ESCO-EX-",),
+        "skill-customer-service": ("ESCO-CS-",),
+        "skill-project-management": ("ESCO-PM-", "ESCO-AG-"),
+        "skill-digital-marketing": ("ESCO-DM-",),
+        "skill-sustainability-reporting": ("ESCO-ESG-", "ESCO-SUS-"),
+    }
+    for backend_id, prefixes in groups.items():
+        if any(skill_id.startswith(prefix) for skill_id in skill_ids for prefix in prefixes):
+            normalized.add(backend_id)
+    return normalized
 
 
 def verified_role_ids() -> set[str]:
@@ -122,11 +149,13 @@ def course_catalogue() -> tuple[Course, ...]:
             provider=course.provider,
             url=course.url,
             cost=course.cost,
-            hrd_corp_claimable=False,
+            hrd_corp_claimable=None,
             sdg_tags=(),
             skill_ids=course.skill_ids,
             hours=course.hours,
             hours_verified=course.hours_verified,
+            source="data/curated/courses.csv",
+            date="curated",
         )
         for course in load_courses()
     )

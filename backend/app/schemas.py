@@ -9,6 +9,7 @@ Scenario = Literal["moderate", "fast"]
 class ProfileParseRequest(BaseModel):
     occupation_id: str | None = None
     text: str = Field(default="", max_length=20_000)
+    current_skills: list[str] = Field(default_factory=list, max_length=100)
 
 
 class MatchedSkill(BaseModel):
@@ -63,9 +64,10 @@ class RoleMatch(BaseModel):
     score_breakdown: dict[str, float]
     matched_skills: list[str]
     missing_skills: list[str]
+    sdg_tags: list[str] = Field(default_factory=list)
     robustness_estimate: str
     robustness: dict[str, object]
-    source_badges: list[SignalBadge]
+    source_badges: list[SignalBadge] = Field(default_factory=list)
     is_estimate: Literal[True] = True
     rank: int | None = None
     score_points: dict[str, float] | None = None
@@ -90,11 +92,12 @@ class CourseRecommendation(BaseModel):
     provider: str
     url: str
     cost: int
-    hrd_corp_claimable: bool
+    hrd_corp_claimable: bool | None
     sdg_tags: list[str]
     hours: int | str
     hours_verified: bool | None
     marginal_score_per_hour: float | None
+    source_badges: list[SignalBadge]
 
 
 class PathwayRequest(BaseModel):
@@ -116,6 +119,11 @@ class SdgMappingResponse(BaseModel):
     occupation: str
     sdg_link: str
     reasoning: str
+    status: str = "curated"
+    basis: str = "curated occupation mapping"
+    evidence: str = ""
+    source: str = "curated data"
+    date: str = "undated"
 
 
 class IndividualPersonaResponse(BaseModel):
@@ -126,6 +134,7 @@ class IndividualPersonaResponse(BaseModel):
     industry: str
     experience_years: int
     current_skills: list[str]
+    normalized_skill_ids: list[str] = Field(default_factory=list)
     cv_text: str
     current_occ_id: str | None = None
     state: str | None = None
@@ -136,6 +145,7 @@ class HrPersonaResponse(BaseModel):
     name: str
     current_role: str
     current_skills: list[str]
+    normalized_skill_ids: list[str] = Field(default_factory=list)
     current_occ_id: str | None = None
 
 

@@ -31,11 +31,22 @@ from .schemas import (
     ContextResponse,
 )
 from .services import engine_api
-from .services.extraction import extract_skills
+from .services.extraction import extract_skills, normalize_skill_phrases
 from .services.guardrails import validate_db_ids
-from .services.repository import ROLES, courses_for_skill, get_role, get_skill, occupation_ids
+from .services.repository import (
+    ROLES,
+    courses_for_skill,
+    get_role,
+    get_skill,
+    normalize_backend_skill_ids,
+    occupation_ids,
+)
 from .services.simulation import simulate_role_robustness
-from .services.curated_data import load_demand_signals, load_personas, load_sdg_mappings
+from .services.curated_data import (
+    load_demand_signals,
+    load_personas,
+    load_sdg_mappings,
+)
 
 @asynccontextmanager
 async def lifespan(_app: FastAPI):
@@ -77,16 +88,27 @@ def parse_profile(request: ProfileParseRequest) -> ProfileParseResponse:
     ensure_dev_mode()
     if request.occupation_id and request.occupation_id not in occupation_ids():
         raise HTTPException(status_code=422, detail="Unknown occupation_id")
-    matches = [
-        MatchedSkill(
-            skill_id=skill.skill_id,
-            skill_name=skill.skill_name,
-            extracted_phrase=phrase,
-            confidence=confidence,
+    valid_ids = validate_db_ids(
+        [skill.skill_id for skill, _, _ in extract_skills(request.text)]
+        + [skill.skill_id for skill, _, _ in normalize_skill_phrases(request.current_skills)],
+        kind="skill",
+    )
+    matches: list[MatchedSkill] = []
+    seen: set[str] = set()
+    for skill, phrase, confidence in (
+        extract_skills(request.text) + normalize_skill_phrases(request.current_skills)
+    ):
+        if skill.skill_id not in valid_ids or skill.skill_id in seen:
+            continue
+        matches.append(
+            MatchedSkill(
+                skill_id=skill.skill_id,
+                skill_name=skill.skill_name,
+                extracted_phrase=phrase,
+                confidence=confidence,
+            )
         )
-        for skill, phrase, confidence in extract_skills(request.text)
-        if skill.skill_id in validate_db_ids([skill.skill_id], kind="skill")
-    ]
+        seen.add(skill.skill_id)
     return ProfileParseResponse(skills=matches, assumption_note=settings.assumption_note)
 
 
@@ -133,6 +155,41 @@ def sdg_mappings() -> list[SdgMappingResponse]:
     return [SdgMappingResponse(**mapping.__dict__) for mapping in load_sdg_mappings()]
 
 
+def role_sdg_links(role_title: str) -> list[str]:
+    """Return evidence-backed SDG links without joining unrelated occupations."""
+    title_words = {
+        word.casefold()
+        for word in role_title.replace("-", " ").replace("_", " ").split()
+        if len(word) > 3
+    }
+    mappings = load_sdg_mappings()
+    ranked = sorted(
+        mappings,
+        key=lambda mapping: len(
+            title_words.intersection(
+                {
+                    word.casefold()
+                    for word in mapping.occupation.replace("-", " ").replace("_", " ").split()
+                    if len(word) > 3
+                }
+            )
+        ),
+        reverse=True,
+    )
+    best = [
+        mapping.sdg_link
+        for mapping in ranked
+        if title_words.intersection(
+            {
+                word.casefold()
+                for word in mapping.occupation.replace("-", " ").replace("_", " ").split()
+                if len(word) > 3
+            }
+        )
+    ]
+    return list(dict.fromkeys(best[:3]))
+
+
 @app.get("/api/personas", response_model=PersonasResponse)
 def personas() -> PersonasResponse:
     if settings.engine_mode:
@@ -142,13 +199,27 @@ def personas() -> PersonasResponse:
     return PersonasResponse(
         individual_users=[
             IndividualPersonaResponse(
-                **{**persona.__dict__, "current_skills": list(persona.current_skills)}
+                **{
+                    **persona.__dict__,
+                    "current_skills": list(persona.current_skills),
+                    "normalized_skill_ids": [
+                        skill.skill_id
+                        for skill, _, _ in normalize_skill_phrases(persona.current_skills)
+                    ],
+                }
             )
             for persona in individuals
         ],
         hr_team_cohort=[
             HrPersonaResponse(
-                **{**persona.__dict__, "current_skills": list(persona.current_skills)}
+                **{
+                    **persona.__dict__,
+                    "current_skills": list(persona.current_skills),
+                    "normalized_skill_ids": [
+                        skill.skill_id
+                        for skill, _, _ in normalize_skill_phrases(persona.current_skills)
+                    ],
+                }
             )
             for persona in hr_cohort
         ],
@@ -160,14 +231,23 @@ def match(request: MatchRequest) -> MatchResponse:
     if settings.engine_mode:
         return engine_api.match(request)
     ensure_dev_mode()
-    skill_ids = validate_db_ids(request.skill_ids, kind="skill")
+    skill_ids = normalize_backend_skill_ids(
+        set(validate_db_ids(request.skill_ids, kind="skill"))
+    )
     robustness = simulate_role_robustness(ROLES, set(skill_ids))
     roles: list[RoleMatch] = []
     for role in ROLES:
+        sdg_tags = role_sdg_links(role.role_title)
         matched = sorted(set(skill_ids).intersection(role.skill_ids))
         missing = sorted(set(role.skill_ids).difference(skill_ids))
         covered = len(matched) / len(role.skill_ids)
-        score = round((covered * 0.65 + role.trend * 0.35) * 100, 2)
+        base_score = covered * 0.65 + role.trend * 0.35
+        sdg_score = min(len(sdg_tags) / 3, 1.0)
+        score = round(
+            ((base_score * (1 - (request.sdg_preference or 0)))
+             + (sdg_score * (request.sdg_preference or 0))) * 100,
+            2,
+        )
         roles.append(
             RoleMatch(
                 role_id=role.role_id,
@@ -177,9 +257,11 @@ def match(request: MatchRequest) -> MatchResponse:
                     "skills_covered_score": round(covered * 100, 2),
                     "role_trend_score": round(role.trend * 100, 2),
                     "transferability_score": round((1 - len(missing) / len(role.skill_ids)) * 100, 2),
+                    "sdg_preference_score": round(sdg_score * 100, 2),
                 },
                 matched_skills=matched,
                 missing_skills=missing,
+                sdg_tags=sdg_tags,
                 robustness_estimate=(
                     f"Estimate: stays in your top 5 in "
                     f"{round(robustness[role.role_id]['top5_frequency'] * 100)}% "
@@ -201,7 +283,9 @@ def pathway(request: PathwayRequest) -> PathwayResponse:
     role = get_role(request.target_role_id)
     if role is None:
         raise HTTPException(status_code=422, detail="Unknown target_role_id")
-    skill_ids = set(validate_db_ids(request.skill_ids, kind="skill"))
+    skill_ids = normalize_backend_skill_ids(
+        set(validate_db_ids(request.skill_ids, kind="skill"))
+    )
     missing_skills = sorted(set(role.skill_ids).difference(skill_ids))
     recommendations: list[CourseRecommendation] = []
     for skill_id in missing_skills:
@@ -224,10 +308,13 @@ def pathway(request: PathwayRequest) -> PathwayResponse:
                     url=course.url,
                     cost=course.cost,
                     hrd_corp_claimable=course.hrd_corp_claimable,
-                    sdg_tags=list(course.sdg_tags),
+                    sdg_tags=role_sdg_links(role.role_title),
                     hours=hours,
                     hours_verified=course.hours_verified,
                     marginal_score_per_hour=marginal,
+                    source_badges=[
+                        SignalBadge(source=course.source, date=course.date)
+                    ],
                 )
             )
     recommendations.sort(
