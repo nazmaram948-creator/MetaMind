@@ -14,6 +14,7 @@ Weekly effort ("10 hours a week") is never turned into a total, because the
 number of weeks is the learner's choice. Page text is treated as data: we only
 pattern-match duration phrases. Pages are cached in data/raw/course_pages/.
 
+Input:  data/curated/courses.csv (team) and courses_extra_v2.csv (added in v2)
 Output: data/curated/course_page_checks.csv
 Usage:  python data/scripts/check_course_pages.py [--refresh]
 """
@@ -108,8 +109,12 @@ def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--refresh", action="store_true", help="refetch pages instead of using the cache")
     args = ap.parse_args()
-    with (CURATED / "courses.csv").open(encoding="utf-8-sig", newline="") as f:
-        courses = list(csv.DictReader(f))
+    courses = []
+    for name in ("courses.csv", "courses_extra_v2.csv"):  # team catalogue + courses added in v2
+        path = CURATED / name
+        if path.exists():
+            with path.open(encoding="utf-8-sig", newline="") as f:
+                courses += list(csv.DictReader(f))
     today = date.today().isoformat()
     s = requests.Session()
     rows = []

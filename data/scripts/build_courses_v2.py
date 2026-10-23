@@ -2,6 +2,7 @@
 
 Inputs
   data/curated/courses.csv            team catalogue (v1): ids, titles, urls, hours
+  data/curated/courses_extra_v2.csv   courses added in v2 for clerical roles (no hours / cost claimed)
   data/curated/course_skill_map_v2.csv course -> ESCO skill labels (hand-curated)
   data/curated/course_page_checks.csv  live page checks (check_course_pages.py)
   data/extracts/esco_skills.csv, esco_occ_skill.csv
@@ -54,6 +55,11 @@ def resolver():
 def main() -> None:
     resolve, linked = resolver()
     v1 = read(CURATED / "courses.csv")
+    extra_path = CURATED / "courses_extra_v2.csv"
+    extra = read(extra_path) if extra_path.exists() else []
+    for e in extra:  # same shape as v1 rows; skill_ids empty (mapped in course_skill_map_v2.csv)
+        e["skill_ids"] = ""
+    v1 = v1 + extra
     mapping = defaultdict(list)
     for m in read(CURATED / "course_skill_map_v2.csv"):
         mapping[m["course_id"]].append(m)
@@ -78,7 +84,7 @@ def main() -> None:
             notes.append("url is a provider homepage, not a course page: hours cannot be checked")
         elif chk and not verified:
             notes.append("page does not state total hours: check by hand")
-        if verified and abs(float(page_hours) - float(c["hours"])) > 0.5:
+        if verified and c["hours"] and abs(float(page_hours) - float(c["hours"])) > 0.5:
             notes.append(f"team sheet said {c['hours']} h; page states {page_hours} h")
 
         out.append({
@@ -98,7 +104,9 @@ def main() -> None:
             "mapping_confidence": min((m["confidence"] for m in maps), key=CONF_RANK.get, default=""),
             "relevant_to_targets": "true" if any(u in linked for u in uris) else "false",
             "checked_on": chk.get("checked_on", ""),
-            "status": "UNVERIFIED - team to check skill mapping, cost (assumed MYR) and HRD Corp claimability",
+            "status": ("UNVERIFIED - added in v2, team to check skill mapping, cost and HRD Corp claimability"
+                       if c["course_id"] in {e["course_id"] for e in extra} else
+                       "UNVERIFIED - team to check skill mapping, cost (assumed MYR) and HRD Corp claimability"),
             "notes": "; ".join(notes),
             "original_skill_ids_v1": c["skill_ids"],
         })

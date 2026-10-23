@@ -5,7 +5,7 @@ from contextlib import closing
 import pytest
 
 from engine import build as build_mod
-from engine.config import load_config
+from engine.config import CURATED, load_config
 
 TABLES = {"meta", "snapshots", "occupations", "skills", "skill_broader", "occ_skill", "tasks",
           "occ_task", "signals", "courses", "sdg_map"}
@@ -49,4 +49,7 @@ def test_both_curated_versions_build(tmp_path, monkeypatch, version):
     path = build_mod.build(tmp_path / f"{version}.db")
     with closing(sqlite3.connect(path)) as con:
         assert con.execute("SELECT value FROM meta WHERE key='curated_version'").fetchone()[0] == version
-        assert con.execute("SELECT COUNT(*) FROM courses").fetchone()[0] == 60
+        team = sum(1 for _ in (CURATED / "courses.csv").open(encoding="utf-8-sig")) - 1
+        added = sum(1 for _ in (CURATED / "courses_extra_v2.csv").open(encoding="utf-8")) - 1
+        expected = team if version == "v1" else team + added
+        assert con.execute("SELECT COUNT(*) FROM courses").fetchone()[0] == expected

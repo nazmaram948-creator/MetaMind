@@ -50,8 +50,9 @@ def test_target_occupations_link_to_esco(occ_ids):
 
 def test_courses_v2_ids_are_real(esco_skill_uris):
     v1_ids = [r["course_id"] for r in rows("courses.csv")]
+    extra_ids = [r["course_id"] for r in rows("courses_extra_v2.csv")]
     v2 = rows("courses_v2.csv")
-    assert [r["id"] for r in v2] == v1_ids, "v2 must keep every v1 course, same order"
+    assert [r["id"] for r in v2] == v1_ids + extra_ids, "v2 keeps every v1 course (same order), then the added ones"
     for r in v2:
         uris = [u for u in r["esco_skill_uris"].split(";") if u]
         assert set(uris) <= esco_skill_uris, r["id"]
