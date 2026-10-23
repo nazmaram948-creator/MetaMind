@@ -1,18 +1,200 @@
-# MetaMind: SkillShift MY
-hackathon project on Aiversecity Future-Ready work force
+# Future Skills Compass
 
-## Run the app
+[![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-3776AB?logo=python&logoColor=white)](https://www.python.org/)
+[![FastAPI](https://img.shields.io/badge/FastAPI-0.115%2B-009688?logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
+[![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=20232A)](https://react.dev/)
+[![Vite](https://img.shields.io/badge/Vite-8-646CFF?logo=vite&logoColor=white)](https://vite.dev/)
+[![License](https://img.shields.io/badge/license-Apache--2.0-green.svg)](LICENSE)
+[![Guardrail verification](https://img.shields.io/badge/guardrail-50%2F50%20passed-2ea44f)](backend/tests/guardrail_50run_report.json)
 
-One process serves the app and the API on **http://localhost:8000**, with real data
-(`ENGINE_MODE=true`). You need **Python 3.10+** (3.11 recommended) and **Node.js 20+**.
+> Deterministic career-transition analysis for Malaysian workers and SMEs.
 
-Windows (PowerShell), from the repository root:
+Future Skills Compass combines skill-momentum modelling, Monte Carlo career-robustness simulation, and SDG-weighted upskilling recommendations for workers exposed to AI task automation. It returns ranked roles, evidence badges, snapshot deltas, and verified-hour learning pathways without inventing database identifiers or course facts.
 
-```powershell
-powershell -ExecutionPolicy Bypass -File run.ps1
+**Quick links:** [Architecture](#system-architecture-and-data-pipeline) · [Algorithms](#core-algorithmic-mechanics) · [API](#api-reference) · [Runbook](#local-development-testing-and-replit-deployment) · [Limitations](#known-limitations-and-tooling-declaration)
+
+## System architecture and data pipeline
+
+```text
+┌─────────────────────────────────────────────────────────────────────────┐
+│ Data ingestion and signal layer: data/curated/ + data/extracts/          │
+│ AEI · ESCO v1.2 · O*NET/ISCO · DOSM/PERKESO · SDG maps · course catalog │
+└──────────────────────────────┬──────────────────────────────────────────┘
+                               │ validated CSV/JSON → SQLite
+                               ▼
+┌─────────────────────────────────────────────────────────────────────────┐
+│ Core engine: engine/service.py                                           │
+│ exposure/outlook → skill momentum → match ranking → snapshot diff       │
+│ 1,000-run momentum perturbation and top-5 survival frequency              │
+└──────────────────────────────┬──────────────────────────────────────────┘
+                               │ typed response models
+                               ▼
+┌─────────────────────────────────────────────────────────────────────────┐
+│ FastAPI gateway: backend/app/                                             │
+│ deterministic phrase extraction · curated adapters · strict ID allowlist │
+│ provenance badges · DEV_MODE fixture path · ENGINE_MODE real-data path   │
+└──────────────────────────────┬──────────────────────────────────────────┘
+                               │ REST /api/*
+                               ▼
+┌─────────────────────────────────────────────────────────────────────────┐
+│ React/Vite client: frontend/ · http://localhost:5173                     │
+│ Skills Radar · Role Cards · SDG trade-off slider · pathway ROI           │
+└─────────────────────────────────────────────────────────────────────────┘
 ```
 
-To run manually in demo mode, use:
+The project keeps two curated generations side by side. The current fixture
+adapter reads the v1 files (`courses.csv`, `sdg_mapping.csv`, and related
+persona/demand files). The engine build is configured for v2 ESCO-keyed files;
+see [data/curated/README.md](data/curated/README.md) before changing the active
+curated version.
+
+## Core algorithmic mechanics
+
+### Skill momentum and outlook
+
+For occupation \(o\), the engine derives an outlook from demand and exposure:
+
+```text
+O_o = α·D_o + β·z(augmentation_o) − γ·z(automation_o)
+```
+
+`moderate` uses `γ = 1`; `fast` uses `γ = 2`. Demand is neutral when source
+verification is disabled in `engine/config.yaml`. Skill momentum is the
+weighted outlook of occupations requiring the skill:
+
+```text
+M_k = Σ_o r_ok·O_o / Σ_o r_ok
+```
+
+`r_ok` is `1.0` for essential and `0.5` for optional skill relations.
+
+### Match score
+
+The configured engine decomposition is:
+
+```text
+S = 100 × (w_c·C + w_o·Ô + w_t·T) + λ·SDG
+```
+
+where `C` is essential-skill coverage, `Ô` is normalized role outlook,
+`T` is transferability, and `λ` is the SDG weight. The fixture adapter also
+accepts `sdg_preference ∈ [0, 1]` and blends the base role score with the
+SDG-tag score. Current engine configuration keeps `sdg_lambda: 0.0`; the
+parameter is therefore contract-compatible but disabled in the real-engine
+ranker until the SDG slider weighting is enabled.
+
+### 1,000 futures robustness estimate
+
+For each run, each role's skill-momentum contribution is perturbed:
+
+```text
+M'_k = M_k × (1 + U(-r, r)),   r = 0.2
+```
+
+The default fixture configuration executes `1,000` seeded runs, re-ranks roles
+on each run, and reports:
+
+```text
+top5_frequency(role) = top5_count(role) / 1000
+```
+
+Responses carry `label: "Estimate"` and the configured assumption text. This
+is sensitivity analysis, not a jobs forecast.
+
+### Pathway and “Best Next Hour”
+
+The pathway adapter computes missing skills, selects matching courses, and
+ranks verified recommendations by career-score delta per verified training
+hour. A course with `hours_verified=true` contributes to `best_next_hour` and
+ROI calculations. An unverified course is returned with:
+
+```json
+{ "hours": "hours not verified", "marginal_score_per_hour": null }
+```
+
+Course `skill_ids` are semicolon-delimited in the v1 catalogue and are split by
+the typed loader. Course, role, skill, cost, SDG, and source/date fields remain
+attached to each response step.
+
+### Snapshot diffing
+
+The engine compares deterministic state vectors between `baseline_snapshot`
+(`aei_2025_11`) and `latest_snapshot` (`aei_2026_05`). Each metric carries
+source and publication-date metadata; aliases are resolved through the engine
+store rather than through client-side string conventions.
+
+## Zero-hallucination guardrails and security posture
+
+`backend/app/services/guardrails.py` validates response identifiers against
+verified repository sets. Unknown skill, role, and course identifiers are
+blocked before serialization; engine responses pass through the corresponding
+store guardrail. SDG records are loaded from curated tables rather than
+created from free text.
+
+The demo personas are synthetic-only: Aina, Danial (fresh graduate), Sarah
+(career switcher), and the HR cohort. The repository does not collect or ship
+NRIC numbers, phone numbers, email addresses, or production user records.
+Uploaded CV parsing is an engine-mode local feature and is bounded to 2 MB and
+20,000 characters.
+
+### 50-run adversarial verification
+
+| Check | Result |
+|---|---:|
+| Test | `backend/tests/test_guardrails_50runs.py` |
+| Runs | 50 |
+| Unverified IDs passed | 0 |
+| Invalid values blocked | 150 |
+| Report | [guardrail_50run_report.json](backend/tests/guardrail_50run_report.json) |
+
+## API reference
+
+The canonical request/response contract is
+[backend/API_CONTRACT.md](backend/API_CONTRACT.md). Interactive OpenAPI
+documentation is available at [http://localhost:8000/docs](http://localhost:8000/docs).
+
+| Method | Endpoint | Purpose | Key request / response fields |
+|---|---|---|---|
+| `POST` | `/api/profile/parse` | Extract and normalize skills | `text`, `current_skills` → `skills[]` |
+| `GET` | `/api/signals` | Skills Radar or demand signals | `skill`, `scenario`, `snapshot_id` → dated badges |
+| `POST` | `/api/match` | Rank target occupations | `skill_ids`, `current_occupation_id`, `scenario`, `sdg_preference` |
+| `POST` | `/api/snapshot/load` | Select a market snapshot | `snapshot_id` → active snapshot metadata |
+| `POST` | `/api/snapshot/diff` | Compare baseline and latest state | `skill_ids`, snapshot IDs → role changes |
+| `POST` | `/api/pathway` | Generate pathway and best next hour | `skill_ids`, `target_role_id`, `sdg_filter` |
+| `GET` | `/api/sdg` | Read curated SDG mappings | → occupation, SDG, evidence, status, source/date |
+
+Additional engine-only endpoints are `/api/profile/parse_file`,
+`/api/occupations`, `/api/context`, and `/api/personas`. Health is exposed at
+`/health`.
+
+## Data sources, provenance, and licensing
+
+The repository stores source snapshots and transformation scripts. Dates below
+refer to the committed snapshot or source period, not a claim of live data.
+External dataset redistribution remains subject to each upstream provider's
+terms.
+
+| Dataset | Repository path | Scope / role | Snapshot or update | License / provenance |
+|---|---|---|---|---|
+| Anthropic Economic Index | `data/extracts/aei_*` | Task usage, automation, augmentation, country signals | Nov 2025 baseline; May 2026 latest | Anthropic source data; retain upstream terms |
+| ESCO v1.2 | `data/extracts/esco_*` | Occupations, skills, broader-skill links | ESCO v1.2 extract | European Commission / ESCO terms |
+| O*NET 31.0 | `data/extracts/onet_*` | Task importance and occupation task evidence | O*NET 31.0 | O*NET data notice |
+| DOSM/PERKESO demand | `data/curated/malaysian_job_demand_real.csv`, `demand_*` | Malaysian vacancies and occupation mapping | 2025–2026 fields in committed CSVs | Curated public-source records; verify source terms |
+| Course catalogue / HRD Corp fields | `data/curated/courses*.csv`, `course_*` | Course IDs, providers, hours, cost, URL, verification | Curated project snapshot | Provider pages and project curation; no HRD claim is inferred when absent |
+| UN SDG mapping | `data/curated/sdg_mapping.csv`, `sdg_map_v2.csv` | Occupation/skill evidence mapped to SDG targets | Curated build; v2 covers 42 occupations in this checkout | UN SDG taxonomy plus project mapping rules |
+
+## Local development, testing, and Replit deployment
+
+### Requirements
+
+- Python 3.10+; Python 3.11 is the recommended runtime.
+- Node.js 20+ and npm for the Vite client.
+- PowerShell on Windows, Bash on macOS/Linux/Replit.
+
+### Backend fixture mode
+
+`DEV_MODE=true` enables the deterministic synthetic adapter for frontend
+integration. It is not the real engine.
 
 ```powershell
 cd D:\Coding_Proj\Hackathon\MetaMind
@@ -23,14 +205,30 @@ $env:ENGINE_MODE="false"
 .venv\Scripts\python -m uvicorn backend.app.main:app --reload --port 8000
 ```
 
-For the real engine, replace the two environment-variable lines with:
+Open [http://localhost:8000/docs](http://localhost:8000/docs). CORS defaults to
+`http://localhost:5173`; override it with `CORS_ORIGIN`.
+
+### Engine mode
+
+`ENGINE_MODE=true` routes API work to `engine/`, builds the local SQLite store
+from committed extracts/curated data, and may download the configured MiniLM
+model. Use lexical matching to avoid the model download:
 
 ```powershell
+cd D:\Coding_Proj\Hackathon\MetaMind
 $env:DEV_MODE="false"
 $env:ENGINE_MODE="true"
+$env:SIMILARITY_BACKEND="lexical"
+.venv\Scripts\python -m uvicorn backend.app.main:app --reload --port 8000
 ```
 
-For frontend hot reload, open a second PowerShell terminal:
+The supported environment variables are `DEV_MODE`, `ENGINE_MODE`,
+`CORS_ORIGIN`, `SIMULATION_RUNS`, `SIMULATION_VARIATION`, `CURATED_VERSION`,
+`SIMILARITY_BACKEND`, and `SKILLSHIFT_DB`. The one-command scripts
+[`run.ps1`](run.ps1) and [`run.sh`](run.sh) install dependencies, build the
+frontend, and start engine mode by default.
+
+### Frontend
 
 ```powershell
 cd D:\Coding_Proj\Hackathon\MetaMind\frontend
@@ -38,215 +236,64 @@ npm ci
 npm run dev
 ```
 
-macOS / Linux:
-
-```bash
-bash run.sh
-```
-
-The script creates `.venv`, installs the Python packages, builds the frontend and
-starts the server. The first run takes a few minutes: about 300 MB of packages, then
-the database builds itself and the language model (about 90 MB) downloads on the
-first start. Later runs start in seconds. On Replit, press **Run** (`.replit` calls `run.sh`).
-
-<details>
-<summary>The same steps by hand</summary>
-
-```bash
-python -m venv .venv
-.venv/Scripts/python -m pip install -r backend/requirements.txt    # macOS/Linux: .venv/bin/python
-cd frontend && npm ci && npm run build && cd ..
-ENGINE_MODE=true .venv/Scripts/python -m uvicorn backend.app.main:app --port 8000
-```
-
-On PowerShell, replace the last line with `$env:ENGINE_MODE="true"` and then
-`.venv\Scripts\python -m uvicorn backend.app.main:app --port 8000`.
-</details>
-
-**Frontend with hot reload (development):** keep the server above running and, in
-a second terminal, run `cd frontend` followed by `npm run dev`. Open http://localhost:5173;
-`/api` is forwarded to port 8000.
-
-| Symptom | Fix |
-|---|---|
-| Banner "This API was started without the engine" | The server was started without `ENGINE_MODE=true`. Use `run.ps1` / `run.sh` |
-| Banner "Starting the engine…" | First start: DB build + model download. Wait; it disappears when ready |
-| "Can't reach the API" | The server is not running, or runs on another port |
-| `run.ps1` cannot be loaded | Run it as shown above (`-ExecutionPolicy Bypass`) |
-| Port 8000 busy | `run.ps1 -Port 8010`, or `PORT=8010 bash run.sh` |
-| Windows: pip fails with a "Long Path" / `No such file or directory` error | Clone into a short folder (e.g. `C:\dev\MetaMind`), delete `.venv`, run again |
-
-
-## Backend
-
-The P1 backend is a FastAPI service under `backend/app/`. It exposes profile parsing,
-signals, role matching, snapshot load/diff, and the P2 learning pathway and
-robustness fields.
-
-### Backend only, with development fixtures
-
-For API work without the engine (`DEV_MODE=true` serves synthetic fixtures). From the repository root:
+Open [http://localhost:5173](http://localhost:5173). The Vite proxy forwards
+`/api` to port 8000. For a production bundle:
 
 ```powershell
-pip install -r backend/requirements.txt
-$env:DEV_MODE="true"
-uvicorn backend.app.main:app --reload --port 8000
-```
-
-On macOS/Linux:
-
-```bash
-pip install -r backend/requirements.txt
-export DEV_MODE=true
-uvicorn backend.app.main:app --reload --port 8000
-```
-
-Open the interactive API at [http://localhost:8000/docs](http://localhost:8000/docs).
-The complete request and response schemas are documented in
-[backend/API_CONTRACT.md](backend/API_CONTRACT.md).
-
-### Environment
-
-- `DEV_MODE=true` enables the synthetic skills, roles, courses, and signal
-  fixtures so the frontend can integrate immediately. Use this only for local
-  development and demos.
-- `DEV_MODE=false` disables fixture-backed API responses until the verified
-  data/engine adapters are configured.
-- `CORS_ORIGIN` defaults to `http://localhost:5173` for the Vite frontend.
-- `SIMULATION_RUNS` defaults to `1000`.
-- `SIMULATION_VARIATION` defaults to `0.2`, representing the `U(-0.2, 0.2)`
-  skill-momentum variation used by the development robustness adapter.
-- Curated deliverables are loaded from `data/curated/`: `courses.csv`,
-  `malaysian_job_demand_real.csv`, `sdg_mapping.csv`, and
-  `synthetic_personas.json`.
-
-### Tests and guardrails
-
-Run the backend suite from the repository root:
-
-```bash
-pytest -c backend/pytest.ini -q
-```
-
-Run the API tests and required 50-run adversarial ID guardrail check:
-
-```bash
-pytest -c backend/pytest.ini -q backend/tests/test_api.py backend/tests/test_guardrails_50runs.py
-```
-
-The guardrail test writes its verification result to
-`backend/tests/guardrail_50run_report.json`. It records 50 runs and confirms that no
-unverified skill, role, or course IDs pass through the API.
-
-Run the engine and data tests separately:
-
-```powershell
-$env:PYTHONPATH="."
-pytest -q engine\tests data\tests
-```
-
-Build the frontend:
-
-```powershell
-Set-Location frontend
-npm ci
 npm run build
 ```
 
-### Data and engine integration
+### Tests and report generation
 
-The development repository is implemented in
-`backend/app/services/repository.py`. Replace the fixture adapters there with the
-verified data sources once the real tables are ready:
+From the repository root:
 
-- **Max / data engine:** wire the role matching, dated signals, skill momentum,
-  snapshot loading/diff, and 1,000-futures simulation through the existing
-  service seams. Keep the route response models and verified-ID guardrails
-  unchanged.
-- **Walid / course and demand data:** provide
-  `data/curated/courses.csv` with `course_id`, `course_title`, `provider`,
-  semicolon-separated `skill_ids`, integer `hours`, boolean `hours_verified`,
-  integer `cost`, and `url`. Only courses with `hours_verified=true` may be
-  used for `best_next_hour` calculations; unverified hours must remain
-  `"hours not verified"`.
-- **Demand and SDG data:** `/api/signals` reads the 20 demand rows and exposes
-  category, growth, source, and publication date. `/api/sdg` reads the 40 SDG
-  rows independently; do not inner-join the two files by occupation name.
-- **Demo selectors:** `/api/personas` exposes the three individual personas
-  and five-person HR cohort, including Danial's nullable `current_role`.
+```powershell
+pytest -c backend\pytest.ini -q
+$env:PYTHONPATH="."
+pytest -q engine\tests data\tests
+pytest -c backend\pytest.ini -q backend\tests\test_guardrails_50runs.py
+```
 
-After integrating real sources, run the focused tests and full suite before
-switching demos or deployments away from `DEV_MODE=true`.
+The guardrail test regenerates
+`backend/tests/guardrail_50run_report.json`. The full current validation baseline
+is 53 backend tests and 29 engine/data tests.
 
-### Engine mode (real data)
+### Replit
 
-`ENGINE_MODE=true` serves the same routes from the real engine in `engine/` instead
-of the fixtures. Response models are unchanged; they only gain optional fields (see
-[backend/API_CONTRACT.md](backend/API_CONTRACT.md#engine-mode-engine_modetrue)).
-Without it, nothing changes: fixtures with `DEV_MODE=true`, `503` otherwise.
+The root [.replit](.replit) selects Python 3.11 and Node.js 20, sets
+`ENGINE_MODE=true`, exposes port 8000 as external port 80, and runs `bash run.sh`.
+To reproduce the runtime locally:
 
 ```bash
-export ENGINE_MODE=true
-uvicorn backend.app.main:app --reload --port 8000
+ENGINE_MODE=true PORT=8000 bash run.sh
 ```
 
-On Windows PowerShell use `$env:ENGINE_MODE="true"` instead of `export`.
+Replit sets `REPL_ID`; `run.sh` responds by binding Uvicorn to `0.0.0.0`.
 
-On first start the SQLite database is built from `data/extracts/` and `data/curated/`
-in a few seconds (no network). The embedding model (all-MiniLM-L6-v2, about 90 MB)
-downloads once and the skill embeddings are cached in `data/cache/`.
+## Known limitations and tooling declaration
 
-| Setting | Default | Meaning |
-|---|---|---|
-| `ENGINE_MODE` | `false` | `true` = real engine |
-| `CURATED_VERSION` | `v2` | `v1` = team curated files, `v2` = ESCO-keyed files ([data/curated/README.md](data/curated/README.md)) |
-| `SIMILARITY_BACKEND` | `minilm` | `lexical` = word overlap, no model download |
-| `SKILLSHIFT_DB` | `data/skillshift_<version>.db` | database path |
+- The fixture extractor is deterministic phrase/alias matching. It is not a
+  general semantic parser and unknown phrases are not converted into invented
+  IDs.
+- Curated CSVs are point-in-time snapshots. Demand is neutral in the v2 engine
+  until a checked source URL and verified figures are supplied.
+- `sdg_map_v2.csv` is generated from project mapping rules and contains 42
+  occupation rows in this checkout; treat its `status`, `basis`, and `evidence`
+  fields as reviewable provenance.
+- Synthetic CV intake is bounded and local. Scanned PDFs are not OCR'd.
+- `hours_verified` is a hard gate for pathway ROI; missing HRD Corp data is
+  represented as `null`, not as a false eligibility claim.
+- The engine's `sdg_lambda` is currently `0.0`; the fixture API supports the
+  `sdg_preference` contract while real-engine SDG weighting remains a configured
+  follow-up.
 
-All weights and thresholds are in [engine/config.yaml](engine/config.yaml). The model:
+Development tooling and provenance are explicit: Python, FastAPI, Pydantic,
+Uvicorn, React, Vite, pytest, Replit, Claude Code, ESCO, O*NET, Anthropic
+Economic Index extracts, Malaysian public demand records, and UN SDG mapping
+rules are used as documented above. No hardcoded credentials or secrets are
+stored in the repository.
 
-- **Exposure** per occupation from O*NET task importance and the Anthropic Economic
-  Index task-level usage and automation/augmentation split.
-- **Outlook** `O = alpha·D + beta·z(augmentation) − gamma·z(automation)`, with
-  `gamma` = 1 (moderate) or 2 (fast). Demand `D` stays neutral until DOSM figures
-  with source URLs are entered.
-- **Skill momentum** = outlook of the occupations that need the skill (Skills Radar).
-- **Match** = coverage of essential skills, outlook and transferability, plus 1,000
-  simulated futures for robustness.
-- **Snapshots**: `baseline_snapshot` = AEI Nov 2025, `latest_snapshot` = AEI May 2026.
+## License
 
-Rebuild the database after changing curated files with `python -m engine.build`.
-
-Replit / Linux: plain `pip install sentence-transformers` pulls the CUDA build of
-PyTorch (several GB). Install the CPU build first:
-
-```bash
-pip install torch --index-url https://download.pytorch.org/whl/cpu
-```
-
-Or run with `SIMILARITY_BACKEND=lexical`. The engine also falls back to lexical
-matching on its own when sentence-transformers is not installed.
-
-The backend pytest configuration covers `backend/tests/`. Run the engine and data
-tests with the separate command above; they use lexical matching, so no model
-download is needed.
-
-### Backend layout
-
-```text
-backend/
-  app/
-    main.py                 # FastAPI app and routes
-    schemas.py              # Request/response models
-    config.py               # Environment-backed settings
-    services/               # Data, extraction, guardrail, and simulation adapters
-  tests/                    # API, curated-data, and 50-run guardrail tests
-  requirements.txt          # Backend dependencies
-  pytest.ini                # Backend pytest discovery/import path
-  start.sh                 # Replit/Linux startup script
-  .env.example              # Backend environment reference
-  API_CONTRACT.md           # Frontend integration contract
-```
-
-The curated datasets remain shared project inputs under `data/curated/`.
-`.replit` stays at the repository root and starts `backend/start.sh`.
+This project is licensed under the [Apache License 2.0](LICENSE). Upstream data
+and provider content remain subject to their respective licenses and terms.
