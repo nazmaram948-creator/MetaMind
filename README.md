@@ -12,6 +12,32 @@ Windows (PowerShell), from the repository root:
 powershell -ExecutionPolicy Bypass -File run.ps1
 ```
 
+To run manually in demo mode, use:
+
+```powershell
+cd D:\Coding_Proj\Hackathon\MetaMind
+python -m venv .venv
+.venv\Scripts\python -m pip install -r backend\requirements.txt
+$env:DEV_MODE="true"
+$env:ENGINE_MODE="false"
+.venv\Scripts\python -m uvicorn backend.app.main:app --reload --port 8000
+```
+
+For the real engine, replace the two environment-variable lines with:
+
+```powershell
+$env:DEV_MODE="false"
+$env:ENGINE_MODE="true"
+```
+
+For frontend hot reload, open a second PowerShell terminal:
+
+```powershell
+cd D:\Coding_Proj\Hackathon\MetaMind\frontend
+npm ci
+npm run dev
+```
+
 macOS / Linux:
 
 ```bash
@@ -38,7 +64,7 @@ On PowerShell, replace the last line with `$env:ENGINE_MODE="true"` and then
 </details>
 
 **Frontend with hot reload (development):** keep the server above running and, in
-a second terminal, run `cd frontend && npm run dev`. Open http://localhost:5173;
+a second terminal, run `cd frontend` followed by `npm run dev`. Open http://localhost:5173;
 `/api` is forwarded to port 8000.
 
 | Symptom | Fix |
@@ -96,7 +122,7 @@ The complete request and response schemas are documented in
 
 ### Tests and guardrails
 
-Run the full suite:
+Run the backend suite from the repository root:
 
 ```bash
 pytest -c backend/pytest.ini -q
@@ -111,6 +137,21 @@ pytest -c backend/pytest.ini -q backend/tests/test_api.py backend/tests/test_gua
 The guardrail test writes its verification result to
 `backend/tests/guardrail_50run_report.json`. It records 50 runs and confirms that no
 unverified skill, role, or course IDs pass through the API.
+
+Run the engine and data tests separately:
+
+```powershell
+$env:PYTHONPATH="."
+pytest -q engine\tests data\tests
+```
+
+Build the frontend:
+
+```powershell
+Set-Location frontend
+npm ci
+npm run build
+```
 
 ### Data and engine integration
 
@@ -186,8 +227,9 @@ pip install torch --index-url https://download.pytorch.org/whl/cpu
 Or run with `SIMILARITY_BACKEND=lexical`. The engine also falls back to lexical
 matching on its own when sentence-transformers is not installed.
 
-`pytest -c backend/pytest.ini -q` runs the engine tests (`engine/tests/`) too; they
-use lexical matching, so no model download is needed.
+The backend pytest configuration covers `backend/tests/`. Run the engine and data
+tests with the separate command above; they use lexical matching, so no model
+download is needed.
 
 ### Backend layout
 
