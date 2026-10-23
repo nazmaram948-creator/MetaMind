@@ -85,3 +85,23 @@ def test_diff_reports_rank_changes_with_driver(engine):
 def test_personas_have_no_age_or_gender(engine):
     for p in engine.personas()["individual_users"]:
         assert not {"age", "gender"} & set(p)
+
+
+def test_pathway_orders_steps_and_ranks_only_verified(engine, store):
+    skills = [f["skill_id"] for f in engine.parse(CV)]
+    p = engine.pathway(skills, "data_analyst", current_occ="accounts_clerk")
+    assert p["missing_skills"] and set(p["missing_skills"]) <= store.skill_ids
+    missing = set(p["missing_skills"])
+    order = {k: i for i, k in enumerate(p["missing_skills"])}
+    for k in p["missing_skills"]:                       # broader concepts come first
+        for anc in engine._ancestors(k) & missing:
+            assert order[anc] < order[k]
+    for c in p["pathway"]:
+        assert c["course_id"] in store.course_ids
+        assert (c["marginal_score_per_hour"] is None) == (not c["hours_verified"])
+    best = p["best_next_hour"]
+    if best:
+        assert best["hours_verified"] and best["marginal_score_per_hour"] == max(
+            c["marginal_score_per_hour"] for c in p["pathway"] if c["marginal_score_per_hour"] is not None)
+    with pytest.raises(KeyError):
+        engine.pathway(skills, "astronaut")

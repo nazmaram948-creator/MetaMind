@@ -280,6 +280,128 @@ class Engine:
         name = "personas_v2.json" if self.cfg["curated_version"] == "v2" else "synthetic_personas.json"
         return json.loads((CURATED / name).read_text(encoding="utf-8-sig"))
 
+    # ---------- P2: learning pathway ----------
+    def _courses_by_skill(self) -> dict[str, list[dict]]:
+        if "courses_by_skill" not in self._cache:
+            idx: dict[str, list[dict]] = {}
+            for c in self.store["courses"].to_dict("records"):
+                for uri in filter(None, (c["esco_skill_uris"] or "").split(";")):
+                    idx.setdefault(uri, []).append(c)
+            self._cache["courses_by_skill"] = idx
+        return self._cache["courses_by_skill"]
+
+    def _ancestors(self, uri: str) -> set[str]:
+        """Broader ESCO concepts of a skill (skill pillar, all levels)."""
+        key = ("anc", uri)
+        if key not in self._cache:
+            br = self._cache.setdefault("broader", {})
+            if not br:
+                for s, b in zip(self.store["skill_broader"].skill_uri, self.store["skill_broader"].broader_uri):
+                    br.setdefault(s, set()).add(b)
+            seen, todo = set(), [uri]
+            while todo:
+                for b in br.get(todo.pop(), ()):
+                    if b not in seen:
+                        seen.add(b)
+                        todo.append(b)
+            self._cache[key] = seen
+        return self._cache[key]
+
+    @staticmethod
+    def _pick_course(courses: list[dict]) -> dict | None:
+        """Shortest course with verified hours (then cheapest); else the cheapest unverified one."""
+        cost = lambda c: int(c["cost_myr"]) if str(c["cost_myr"]).isdigit() else 10**9
+        verified = [c for c in courses if c["hours_verified"] and pd.notna(c["hours"])]
+        if verified:
+            return min(verified, key=lambda c: (c["hours"], cost(c), c["course_id"]))
+        return min(courses, key=lambda c: (cost(c), c["course_id"])) if courses else None
+
+    def _sdg_tags(self, course: dict) -> list[str]:
+        sk = self.store["skills"].set_index("skill_uri")
+        goals: set[int] = set()
+        for uri in filter(None, course["esco_skill_uris"].split(";")):
+            if uri in sk.index:
+                if sk.is_green[uri]:
+                    goals |= {7, 12, 13}   # ESCO Green collection (project rule)
+                if sk.is_digital[uri]:
+                    goals.add(9)          # ESCO Digital collection
+        return [f"SDG {g}" for g in sorted(goals)]
+
+    def pathway(self, skill_ids: list[str], target_role: str, current_occ: str | None = None,
+                scenario: str = "moderate", snapshot_id: str | None = None, top_roles: int = 10) -> dict:
+        """F5 pathway + H5 best next hour for one target role.
+
+        Steps = the role's missing essential skills, broader ESCO concepts first, then
+        by score gain for the target role. Each step gets the shortest course with
+        verified hours (else one marked "hours not verified"). best_next_hour = the
+        verified course with the largest gain across the user's top roles per hour.
+        """
+        if target_role not in self.store.occupation_ids:
+            raise KeyError(f"unknown target_role_id {target_role!r}")
+        sid = self.resolve_snapshot(snapshot_id)
+        have = [k for k in dict.fromkeys(skill_ids) if k in self.store.skill_ids]
+        base = self.rank(have, current_occ, scenario, sid).set_index("occ_id")
+        top = list(base.sort_values("rank").index[:top_roles])
+        missing = [k for k in self.essentials.get(target_role, []) if k not in set(have)]
+        by_skill = self._courses_by_skill()
+        label = self.store.skill_label
+
+        steps = []
+        for k in missing:
+            after = self.rank(have + [k], current_occ, scenario, sid).set_index("occ_id")
+            gain_target = float(after.S.get(target_role, 0) - base.S.get(target_role, 0)) if target_role in base.index else 0.0
+            gain_top = float(sum(max(0.0, after.S[o] - base.S[o]) for o in top if o in after.index))
+            course = self._pick_course(by_skill.get(k, []))
+            steps.append({"skill_id": k, "skill_name": label[k], "gain_points": round(gain_target, 2),
+                          "gain_top_roles": round(gain_top, 2),
+                          "rank_after": int(after["rank"][target_role]) if target_role in after.index else None,
+                          "n_missing_ancestors": len(self._ancestors(k) & set(missing)), "course": course})
+        steps.sort(key=lambda s: (s["n_missing_ancestors"], -s["gain_points"], s["skill_name"]))
+
+        def rec(step: dict, i: int) -> dict:
+            c = step["course"]
+            verified = bool(c["hours_verified"]) and pd.notna(c["hours"])
+            hours = float(c["hours"]) if verified else None
+            return {"course_id": c["course_id"], "title": c["title"], "provider": c["provider"], "url": c["url"],
+                    "cost": int(c["cost_myr"]) if str(c["cost_myr"]).isdigit() else 0,
+                    "hrd_corp_claimable": None if c["hrd_claimable"] in ("", "unknown") else c["hrd_claimable"] == "true",
+                    "sdg_tags": self._sdg_tags(c), "hours": hours if verified else "hours not verified",
+                    "hours_verified": verified, "hours_method": c.get("hours_method") or None,
+                    "checked_on": c.get("checked_on") or None,
+                    "marginal_score_per_hour": round(step["gain_top_roles"] / hours, 3) if verified and hours else None,
+                    "skill_id": step["skill_id"], "skill_name": step["skill_name"], "step": i,
+                    "gain_points": step["gain_points"]}
+
+        recs, by_course = [], {}
+        for st in (s for s in steps if s["course"]):
+            cid = st["course"]["course_id"]
+            if cid in by_course:  # one course teaching several missing skills: list it once
+                r = by_course[cid]
+                r["also_covers"].append(st["skill_name"])
+                r["gain_points"] = round(r["gain_points"] + st["gain_points"], 2)
+                continue
+            r = rec(st, len(recs) + 1)
+            r["also_covers"] = []
+            by_course[cid] = r
+            recs.append(r)
+        ranked = [r for r in recs if r["marginal_score_per_hour"] is not None]
+        best = max(ranked, key=lambda r: (r["marginal_score_per_hour"], -r["step"])) if ranked else None
+        verified = [r for r in recs if r["hours_verified"]]
+        out = {
+            "target_role_id": target_role, "target_role_title": self.store.occ_title[target_role],
+            "missing_skills": [s["skill_id"] for s in steps],
+            "skills_without_course": [{"skill_id": s["skill_id"], "skill_name": s["skill_name"]}
+                                      for s in steps if not s["course"]],
+            "pathway": recs, "best_next_hour": best,
+            "totals": {"courses": len(recs), "verified_hours": round(sum(r["hours"] for r in verified), 1),
+                       "unverified_courses": len(recs) - len(verified), "cost_myr": sum(r["cost"] for r in recs)},
+            "label": ESTIMATE,
+            "assumption_note": ("Gain = change in match score if you add the skill (same model as the role ranking). "
+                                f"Best next hour = gain summed over your top {top_roles} roles divided by verified "
+                                "course hours; courses without hours checked on the course page are never ranked."),
+        }
+        return self._guard(out)
+
 
 @lru_cache(maxsize=1)
 def get_engine() -> Engine:
