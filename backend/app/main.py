@@ -32,6 +32,8 @@ from .schemas import (
     UpgradeRequest,
     UpgradeResponse,
     XrayResponse,
+    TeamRequest,
+    TeamResponse,
 )
 from .services import engine_api
 from .services import runpod_client
@@ -407,6 +409,22 @@ def upgrade(request: UpgradeRequest) -> UpgradeResponse:
     if not settings.engine_mode:
         raise HTTPException(status_code=503, detail="Needs ENGINE_MODE=true.")
     return engine_api.upgrade(request)
+
+
+@app.get("/api/team", response_model=TeamResponse)
+def team_demo(scenario: str = "moderate") -> TeamResponse:
+    """HR heatmap for the synthetic demo cohort (personas file). Engine mode only."""
+    if not settings.engine_mode:
+        raise HTTPException(status_code=503, detail="Needs ENGINE_MODE=true.")
+    return engine_api.team(None, scenario)
+
+
+@app.post("/api/team", response_model=TeamResponse)
+def team(request: TeamRequest) -> TeamResponse:
+    """HR heatmap for a list of team members (synthetic data only). Engine mode only."""
+    if not settings.engine_mode:
+        raise HTTPException(status_code=503, detail="Needs ENGINE_MODE=true.")
+    return engine_api.team(request)
 
 
 # Serve the built frontend (frontend/dist) from the same process and port, e.g. on

@@ -208,3 +208,17 @@ def test_xray_needs_engine_mode(monkeypatch):
     monkeypatch.setattr(config.settings, "engine_mode", False)
     c = TestClient(app)
     assert c.get("/api/xray", params={"occupation": "accounts_clerk"}).status_code == 503
+
+
+def test_team_heatmap_demo_and_custom(client):
+    demo = client.get("/api/team")
+    assert demo.status_code == 200, demo.text
+    rows = demo.json()["members"]
+    assert rows and all(r["top_roles"] for r in rows)
+    custom = client.post("/api/team", json={"members": [
+        {"id": "T1", "name": "Test", "current_occ_id": "accounts_clerk", "skills": ["issue sales invoices"]}]})
+    assert custom.status_code == 200, custom.text
+    m = custom.json()["members"][0]
+    assert m["current_title"] == "Accounts clerk" and m["task_split_pct"]
+    bad = client.post("/api/team", json={"members": [{"id": "T2", "current_occ_id": "astronaut"}]})
+    assert bad.status_code == 422

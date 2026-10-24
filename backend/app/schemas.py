@@ -256,6 +256,38 @@ class UpgradeResponse(BaseModel):
     assumption_note: str
 
 
+class TeamMemberIn(BaseModel):
+    id: str
+    name: str = ""
+    current_occ_id: str | None = None
+    skill_ids: list[str] = Field(default_factory=list)
+    skills: list[str] = Field(default_factory=list)  # free text, mapped to ESCO when skill_ids is empty
+
+
+class TeamRequest(BaseModel):
+    members: list[TeamMemberIn] = Field(default_factory=list, max_length=50)
+    scenario: Scenario = "moderate"
+
+
+class TeamMember(BaseModel):
+    id: str
+    name: str
+    current_occ_id: str | None
+    current_title: str | None
+    skills_matched: int
+    task_split_pct: dict[str, float] | None
+    top_roles: list[dict[str, object]]
+
+
+class TeamResponse(BaseModel):
+    snapshot_id: str
+    scenario: str
+    members: list[TeamMember]
+    source_badges: list[SignalBadge]
+    label: Literal["Estimate"] = "Estimate"
+    assumption_note: str
+
+
 class ContextResponse(BaseModel):
     snapshot_id: str
     label: str

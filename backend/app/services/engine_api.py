@@ -25,6 +25,8 @@ from ..schemas import (
     ProfileParseResponse,
     RoleMatch,
     SdgMappingResponse,
+    TeamRequest,
+    TeamResponse,
     UpgradeRequest,
     UpgradeResponse,
     XrayResponse,
@@ -278,5 +280,17 @@ def upgrade(request: UpgradeRequest) -> UpgradeResponse:
     try:
         return UpgradeResponse(**engine().upgrade(request.occupation_id, request.skill_ids,
                                                   scenario=request.scenario))
+    except KeyError as error:
+        raise _bad_request(error) from error
+
+
+def team(request: TeamRequest | None, scenario: str = "moderate") -> TeamResponse:
+    """HR heatmap for a cohort (engine/service.py: Engine.team); demo cohort when no members are sent."""
+    members = [m.model_dump() for m in request.members] if request and request.members else None
+    scen = request.scenario if request else scenario
+    for m in members or []:
+        _check_occupation(m["current_occ_id"])
+    try:
+        return TeamResponse(**engine().team(members, scenario=scen))
     except KeyError as error:
         raise _bad_request(error) from error
