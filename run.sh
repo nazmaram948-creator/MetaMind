@@ -6,10 +6,13 @@
 set -euo pipefail
 cd "$(dirname "$0")"
 
-PY="${PYTHON:-python3}"
+case "$(uname -s)" in MINGW*|MSYS*|CYGWIN*) WIN=1 ;; *) WIN=0 ;; esac   # Git Bash on Windows
+PY="${PYTHON:-$([ "$WIN" = 1 ] && echo python || echo python3)}"
+VENV_PY=.venv/bin/python
+[ "$WIN" = 1 ] && VENV_PY=.venv/Scripts/python.exe
 if [ -z "${REPL_ID:-}" ]; then            # own machine: use a local virtualenv
-  [ -x .venv/bin/python ] || { echo "Creating .venv ..."; "$PY" -m venv .venv; }
-  PY=.venv/bin/python
+  [ -x "$VENV_PY" ] || { echo "Creating .venv ..."; "$PY" -m venv .venv; }
+  PY=$VENV_PY
 fi
 "$PY" -c "import sys; sys.exit(sys.version_info < (3, 10))" || {
   echo "Python 3.10+ is needed (3.11 recommended)." >&2; exit 1; }

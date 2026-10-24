@@ -4,3 +4,4 @@
 *.zip binary
 *.pdf binary
 *.png binary
+*.cmd text eol=crlf
