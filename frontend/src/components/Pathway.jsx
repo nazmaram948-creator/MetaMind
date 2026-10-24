@@ -3,14 +3,13 @@ import * as api from "../api";
 import { Estimate, Source } from "./Badge";
 
 const BEST_LABEL = "Highest estimated gain per verified study hour in our catalogue";
-// Off until the API flags its generic fallback list: with no flag, the rule below shows a "best"
-// course for roles whose list is not linked to their missing skills. Set to true to switch it back on.
-const SHOW_BEST_NEXT_HOUR = false;
 const MISSING_SHOWN = 5;
-// The API has no fallback flag: when no course covers a missing skill it returns a generic
-// list instead, and the frontend cannot tell the two cases apart. So the wording stays neutral.
+// Used only when the response has no fallback flag: the frontend cannot then tell a list mapped
+// to the missing skills from a generic one, so the wording stays neutral.
 const CATALOGUE_NOTE = "The catalogue does not always link each course to your missing skills, "
   + "so treat this as a starting point, not a complete plan.";
+const FALLBACK_NOTE = "No course in our catalogue covers this role's missing skills. "
+  + "The courses below are general suggestions only.";
 
 const verified = (c) => c.hours_verified === true && typeof c.hours === "number";
 const costText = (cost) =>
@@ -66,8 +65,10 @@ export default function Pathway({ skillIds, roleId, missingIds, missingNames, no
   const courses = data.pathway || [];
   const pathMissing = data.missing_skills || [];
   const names = missingNamesFor(pathMissing, missingIds, missingNames);
+  // true: generic list, false: mapped to the missing skills, anything else: unknown (older API)
+  const fallback = data.fallback;
   const best = data.best_next_hour;
-  const showBest = SHOW_BEST_NEXT_HOUR && best && verified(best)
+  const showBest = fallback === false && best && verified(best)
     && typeof best.marginal_score_per_hour === "number" && best.marginal_score_per_hour > 0;
   const hoursTotal = courses.filter(verified).reduce((n, c) => n + c.hours, 0);
   const nVerified = courses.filter(verified).length;
@@ -126,7 +127,11 @@ export default function Pathway({ skillIds, roleId, missingIds, missingNames, no
           )}
 
           <p className="faint" style={{ fontSize: 12.5, margin: 0 }}>
-            Courses returned by our catalogue for this role ({courses.length}). {CATALOGUE_NOTE}
+            {fallback === true ? FALLBACK_NOTE
+              : fallback === false
+                ? `Courses in our catalogue mapped to this role's missing skills (${courses.length}). `
+                  + "The mapping is a first pass and flagged for review."
+                : `Courses returned by our catalogue for this role (${courses.length}). ${CATALOGUE_NOTE}`}
           </p>
           <ol className="pathway">
             {courses.map((c, i) => (
@@ -144,10 +149,12 @@ export default function Pathway({ skillIds, roleId, missingIds, missingNames, no
               </li>
             ))}
           </ol>
-          <p className="faint" style={{ fontSize: 12, margin: 0 }}>
-            {hoursTotal} verified hours across {plural(nVerified, "course")}
-            {courses.length - nVerified > 0 && ` · ${plural(courses.length - nVerified, "course")} without verified hours`}
-          </p>
+          {fallback !== true && (
+            <p className="faint" style={{ fontSize: 12, margin: 0 }}>
+              {hoursTotal} verified hours across {plural(nVerified, "course")}
+              {courses.length - nVerified > 0 && ` · ${plural(courses.length - nVerified, "course")} without verified hours`}
+            </p>
+          )}
         </>
       )}
 
