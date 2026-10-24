@@ -126,6 +126,9 @@ Response fields:
   `hours_verified`, and `source_badges`.
 - `best_next_hour`: the highest marginal score improvement divided by exact
   verified course hours.
+- `fallback`: `false` when the pathway contains courses matched to missing
+  skills; `true` when the response uses generic catalogue recommendations
+  instead. A fallback response always has `best_next_hour: null`.
 
 Only courses with `hours_verified: true` participate in `best_next_hour` and
 `marginal_score_per_hour`. Courses with `hours_verified: false` or `null`

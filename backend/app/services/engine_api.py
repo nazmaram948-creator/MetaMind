@@ -249,7 +249,8 @@ def pathway(request: PathwayRequest) -> PathwayResponse:
                 marginal_score_per_hour=marginal,
                 source_badges=[SignalBadge(source="data/curated/courses_v2.csv", date=str(row.checked_on))],
             ))
-    if not rows:
+    fallback = not bool(rows)
+    if fallback:
         matched = courses[courses.relevant_to_targets.astype(str).str.lower() == "true"].head(10)
         for row in matched.itertuples():
             verified = bool(row.hours_verified)
@@ -282,6 +283,7 @@ def pathway(request: PathwayRequest) -> PathwayResponse:
         best_next_hour=next(
             (item for item in ordered if item.marginal_score_per_hour is not None),
             None,
-        ),
+        ) if not fallback else None,
+        fallback=fallback,
         assumption_note=engine().cfg["futures"]["assumption"],
     )

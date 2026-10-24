@@ -333,6 +333,7 @@ def pathway(request: PathwayRequest) -> PathwayResponse:
         missing_skills=missing_skills,
         pathway=recommendations,
         best_next_hour=recommendations[0] if recommendations and recommendations[0].marginal_score_per_hour is not None else None,
+        fallback=not recommendations,
         assumption_note=settings.assumption_note,
     )
 
