@@ -105,3 +105,29 @@ def test_pathway_orders_steps_and_ranks_only_verified(engine, store):
             c["marginal_score_per_hour"] for c in p["pathway"] if c["marginal_score_per_hour"] is not None)
     with pytest.raises(KeyError):
         engine.pathway(skills, "astronaut")
+
+
+def test_xray_labels_follow_thresholds(engine, store):
+    x = engine.xray("accounts_clerk")
+    assert x["label"] == "Estimate" and x["tasks"]
+    assert sum(t["weight_pct"] for t in x["tasks"]) == pytest.approx(100, abs=1)
+    cfg = engine.cfg["xray"]
+    for t in x["tasks"]:
+        u = t["usage_share_pct"]
+        if u is None or u / 100 < cfg["min_usage_share"]:
+            assert t["label"] == "mostly human"
+        elif t["automation_pct"] is not None:
+            want = "automating" if t["automation_pct"] / 100 >= cfg["automating_min_auto"] else "assisting"
+            assert t["label"] == want
+    assert set(x["summary_weight_pct"]) == {"automating", "assisting", "mostly human"}
+    with pytest.raises(KeyError):
+        engine.xray("astronaut")
+
+
+def test_upgrade_lists_only_missing_skills_of_the_current_job(engine, store):
+    skills = [f["skill_id"] for f in engine.parse(CV)]
+    u = engine.upgrade("accounts_clerk", skills)
+    own = set(store["occ_skill"][store["occ_skill"].occ_id == "accounts_clerk"].skill_uri)
+    for s in u["skills"]:
+        assert s["skill_id"] in own and s["skill_id"] not in skills
+        assert s["supports_tasks"]

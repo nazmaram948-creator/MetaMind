@@ -65,3 +65,18 @@ futures:
     in each of 1,000 simulated runs; roles are re-ranked every run and we count how
     often each role stays in your top 5. This tests how sensitive the ranking is to
     our own assumptions. It is an estimate, not a forecast of jobs.
+
+xray:
+  # Task X-ray of the current job, from AEI task-level usage (per snapshot).
+  # A task with no published usage, or below min_usage_share of all chats, is "mostly human".
+  min_usage_share: 0.00004     # 0.004% of all Claude.ai conversations (published values are rounded)
+  # Of the AI use observed on a task: automation share >= this is "automating", below is "assisting".
+  automating_min_auto: 0.60
+
+upgrade:
+  # "AI-upgraded version of your current role": skills of the current job most similar
+  # (MiniLM; lexical in tests) to its "assisting" tasks that the user does not have yet.
+  min_similarity: 0.40
+  min_similarity_lexical: 0.15
+  top_skills_per_task: 3
+  max_results: 12

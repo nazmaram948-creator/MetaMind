@@ -18,12 +18,13 @@ SCALAR_KEYS = {"skill_id": "skill", "skill_uri": "skill", "role_id": "occupation
                "occ_id": "occupation", "occupation_id": "occupation",
                "current_occupation_id": "occupation", "current_occ_id": "occupation",
                "course_id": "course", "snapshot_id": "snapshot", "active_snapshot_id": "snapshot",
-               "baseline_snapshot_id": "snapshot", "new_snapshot_id": "snapshot"}
+               "baseline_snapshot_id": "snapshot", "new_snapshot_id": "snapshot", "task_id": "task"}
 
 
 def known(store: Store) -> dict[str, set[str]]:
     return {"skill": store.skill_ids, "occupation": store.occupation_ids,
-            "course": store.course_ids, "snapshot": set(store.snapshots)}
+            "course": store.course_ids, "snapshot": set(store.snapshots),
+            "task": {str(t) for t in store["tasks"].task_id} | set(store["tasks"].task_id.astype(int))}
 
 
 def validate_ids(payload: Any, store: Store) -> tuple[Any, list[tuple[str, str]]]:

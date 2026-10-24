@@ -407,6 +407,104 @@ class Engine:
         }
         return self._guard(out)
 
+    # ---------- P4: Task X-ray and upgrade in place ----------
+    def xray(self, occupation: str, snapshot_id: str | None = None) -> dict:
+        """H1: each task of an occupation with AI usage, automation / augmentation and a label."""
+        if occupation not in self.store.occupation_ids:
+            raise KeyError(f"unknown occupation {occupation!r}")
+        sid = self.resolve_snapshot(snapshot_id)
+        cfg = self.cfg["xray"]
+        ot = self.store["occ_task"]
+        ot = ot[ot.occ_id == occupation].merge(self.store.task_signals(sid), left_on="task_id",
+                                               right_index=True, how="left")
+        text = self.store["tasks"].set_index("task_id").task
+        default_auto = (self.store.country_signal(sid, "GLOBAL", "collaboration_bucket_automation_pct")
+                        or 50.0) / 100
+        tasks = []
+        for r in ot.itertuples():
+            u = None if pd.isna(r.usage_share) else float(r.usage_share)
+            auto = None if pd.isna(r.automation_share) else float(r.automation_share)
+            if u is None or u < cfg["min_usage_share"]:
+                label = "mostly human"
+                note = "no AI use observed in this sample" if u is None else "AI use below the measurable threshold"
+            else:
+                share = auto if auto is not None else default_auto
+                label = "automating" if share >= cfg["automating_min_auto"] else "assisting"
+                note = "" if auto is not None else "no published split: snapshot-wide automation share used"
+            tasks.append({
+                "task_id": int(r.task_id), "task": text[r.task_id], "weight_pct": round(100 * r.weight, 1),
+                "usage_share_pct": None if u is None else round(100 * u, 3),
+                "automation_pct": None if auto is None else round(100 * auto, 1),
+                "augmentation_pct": None if pd.isna(r.augmentation_share) else round(100 * r.augmentation_share, 1),
+                "label": label, "note": note,
+            })
+        order = {"automating": 0, "assisting": 1, "mostly human": 2}
+        tasks.sort(key=lambda t: (order[t["label"]], -t["weight_pct"]))
+        summary = {lab: round(sum(t["weight_pct"] for t in tasks if t["label"] == lab), 1) for lab in order}
+        out = {
+            "occupation_id": occupation, "occupation_title": self.store.occ_title[occupation],
+            "snapshot_id": sid, "tasks": tasks, "summary_weight_pct": summary,
+            "thresholds": {"min_usage_share_pct": 100 * cfg["min_usage_share"],
+                           "automating_min_automation_pct": 100 * cfg["automating_min_auto"]},
+            "source_badges": [self.store.badge(sid), *self.store.static_badges()[1:]],
+            "label": ESTIMATE,
+            "assumption_note": ("Labels apply our thresholds to observed Claude.ai usage of each O*NET task "
+                                "(global, not Malaysia-specific). 'Mostly human' means no measurable AI use in "
+                                "this sample, not that AI cannot do the task."),
+        }
+        return self._guard(out)
+
+    def upgrade(self, occupation: str, skill_ids: list[str], scenario: str = "moderate",
+                snapshot_id: str | None = None) -> dict:
+        """H2: skills of the current job that support its 'assisting' tasks and the user lacks."""
+        xr = self.xray(occupation, snapshot_id)
+        sid = xr["snapshot_id"]
+        have = set(skill_ids)
+        assisting = [t for t in xr["tasks"] if t["label"] == "assisting"]
+        os_ = self.store["occ_skill"]
+        cand = sorted(set(os_[os_.occ_id == occupation].skill_uri) & self.store.linked_skill_ids)
+        cfg = self.cfg["upgrade"]
+        floor = cfg["min_similarity_lexical"] if self.sim.backend == "lexical" else cfg["min_similarity"]
+        found: dict[str, dict] = {}
+        if assisting and cand:
+            sims = self.sim.phrases([t["task"] for t in assisting], cand)
+            for i, t in enumerate(assisting):
+                for j in sims[i].argsort()[::-1][:cfg["top_skills_per_task"]]:
+                    if sims[i][j] < floor:
+                        break
+                    entry = found.setdefault(cand[j], {"tasks": [], "weight": 0.0, "sim": 0.0})
+                    entry["tasks"].append({"task_id": t["task_id"], "task": t["task"]})
+                    entry["weight"] += t["weight_pct"]
+                    entry["sim"] = max(entry["sim"], float(sims[i][j]))
+        m = self.state(sid, scenario)["m"]
+        thr = self.cfg["momentum"]["radar_threshold"]
+        by_skill = self._courses_by_skill()
+        skills = []
+        for k, e in found.items():
+            if k in have:
+                continue
+            c = self._pick_course(by_skill.get(k, []))
+            mk = float(m.get(k, 0.0))
+            course = None
+            if c is not None:
+                ok = bool(c["hours_verified"]) and pd.notna(c["hours"])
+                course = {"course_id": c["course_id"], "title": c["title"], "url": c["url"],
+                          "hours": float(c["hours"]) if ok else "hours not verified", "hours_verified": ok}
+            skills.append({"skill_id": k, "skill_name": self.store.skill_label[k],
+                           "supports_tasks": e["tasks"], "task_weight_pct": round(e["weight"], 1),
+                           "similarity": round(e["sim"], 3), "momentum": round(mk, 3),
+                           "momentum_status": model.radar_status(mk, thr), "course": course})
+        skills.sort(key=lambda x: (-x["task_weight_pct"], -x["momentum"], x["skill_name"]))
+        out = {
+            "occupation_id": occupation, "occupation_title": xr["occupation_title"], "snapshot_id": sid,
+            "assisting_tasks": len(assisting), "skills": skills[:cfg["max_results"]],
+            "source_badges": xr["source_badges"], "label": ESTIMATE,
+            "assumption_note": ("Skills of your current job (ESCO) most similar to the tasks where AI assists "
+                                "rather than automates: adding them is the 'AI-upgraded' version of your role. "
+                                "Task-skill links are text similarity, not an official mapping."),
+        }
+        return self._guard(out)
+
 
 @lru_cache(maxsize=1)
 def get_engine() -> Engine:
