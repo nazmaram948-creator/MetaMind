@@ -92,19 +92,28 @@ class CourseRecommendation(BaseModel):
     title: str
     provider: str
     url: str
-    cost: int
+    cost: int | None  # MYR; None = not checked
     hrd_corp_claimable: bool | None
     sdg_tags: list[str]
-    hours: int | str
+    hours: float | str
     hours_verified: bool | None
     marginal_score_per_hour: float | None
     source_badges: list[SignalBadge]
+    skill_id: str | None = None
+    skill_name: str | None = None
+    also_covers: list[str] | None = None
+    step: int | None = None
+    gain_points: float | None = None
+    hours_method: str | None = None
+    checked_on: str | None = None
 
 
 class PathwayRequest(BaseModel):
     skill_ids: list[str] = Field(default_factory=list)
     target_role_id: str
     sdg_filter: str | None = None
+    current_occupation_id: str | None = None
+    scenario: Scenario = "moderate"
 
 
 class PathwayResponse(BaseModel):
@@ -114,6 +123,9 @@ class PathwayResponse(BaseModel):
     best_next_hour: CourseRecommendation | None
     label: Literal["Estimate"] = "Estimate"
     assumption_note: str
+    target_role_title: str | None = None
+    skills_without_course: list[dict[str, str]] | None = None
+    totals: dict[str, float] | None = None
 
 
 class SdgMappingResponse(BaseModel):

@@ -345,6 +345,9 @@ class Engine:
         missing = [k for k in self.essentials.get(target_role, []) if k not in set(have)]
         by_skill = self._courses_by_skill()
         label = self.store.skill_label
+        sm = self.store["sdg_map"]
+        role_row = sm[(sm.key_type == "occupation") & (sm.occ_id == target_role)]
+        role_sdg = [f"SDG {g}" for g in str(role_row.iloc[0].sdg_ids).split(";") if g] if len(role_row) else []
 
         steps = []
         for k in missing:
@@ -363,9 +366,9 @@ class Engine:
             verified = bool(c["hours_verified"]) and pd.notna(c["hours"])
             hours = float(c["hours"]) if verified else None
             return {"course_id": c["course_id"], "title": c["title"], "provider": c["provider"], "url": c["url"],
-                    "cost": int(c["cost_myr"]) if str(c["cost_myr"]).isdigit() else 0,
+                    "cost": int(c["cost_myr"]) if str(c["cost_myr"]).isdigit() else None,  # None = not checked
                     "hrd_corp_claimable": None if c["hrd_claimable"] in ("", "unknown") else c["hrd_claimable"] == "true",
-                    "sdg_tags": self._sdg_tags(c), "hours": hours if verified else "hours not verified",
+                    "sdg_tags": role_sdg or self._sdg_tags(c), "hours": hours if verified else "hours not verified",
                     "hours_verified": verified, "hours_method": c.get("hours_method") or None,
                     "checked_on": c.get("checked_on") or None,
                     "marginal_score_per_hour": round(step["gain_top_roles"] / hours, 3) if verified and hours else None,
@@ -394,7 +397,9 @@ class Engine:
                                       for s in steps if not s["course"]],
             "pathway": recs, "best_next_hour": best,
             "totals": {"courses": len(recs), "verified_hours": round(sum(r["hours"] for r in verified), 1),
-                       "unverified_courses": len(recs) - len(verified), "cost_myr": sum(r["cost"] for r in recs)},
+                       "unverified_courses": len(recs) - len(verified),
+                       "cost_myr": sum(r["cost"] for r in recs if r["cost"] is not None),
+                       "cost_unknown": sum(r["cost"] is None for r in recs)},
             "label": ESTIMATE,
             "assumption_note": ("Gain = change in match score if you add the skill (same model as the role ranking). "
                                 f"Best next hour = gain summed over your top {top_roles} roles divided by verified "

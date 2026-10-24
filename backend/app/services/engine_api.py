@@ -10,7 +10,6 @@ import io
 import logging
 import threading
 
-import pandas as pd
 from fastapi import HTTPException, UploadFile
 
 from ..schemas import (
@@ -228,79 +227,34 @@ def sdg() -> list[SdgMappingResponse]:
 
 
 def pathway(request: PathwayRequest) -> PathwayResponse:
+    """P2 learning pathway from the engine (engine/service.py: Engine.pathway).
+
+    Missing essential skills in learning order (broader ESCO concepts first, then by
+    score gain), one course per skill, best_next_hour from verified hours only.
+    Every course carries the page it was checked on and the check date.
+    """
     _check_occupation(request.target_role_id)
-    store = engine().store
-    essentials = engine().essentials.get(request.target_role_id, [])
-    valid_skills = [skill_id for skill_id in request.skill_ids if skill_id in store.skill_ids]
-    missing = [skill_id for skill_id in essentials if skill_id not in valid_skills]
-    courses = store["courses"]
-    rows = []
-    sdg_rows = store["sdg_map"]
-    role_sdg = sdg_rows[
-        (sdg_rows.key_type == "occupation")
-        & (sdg_rows.occ_id == request.target_role_id)
-    ]
-    sdg_tags = [
-        f"SDG {value}"
-        for value in str(role_sdg.iloc[0].sdg_ids).split(";")
-        if value
-    ] if not role_sdg.empty and role_sdg.iloc[0].sdg_ids else []
-    for skill_id in missing:
-        matched = courses[
-            courses.esco_skill_uris.fillna("").str.split(";").apply(
-                lambda values: skill_id in values
-            )
-        ]
-        for row in matched.itertuples():
-            verified = bool(row.hours_verified)
-            hours = int(row.hours) if verified and pd.notna(row.hours) else "hours not verified"
-            marginal = round(1 / (len(essentials) * row.hours), 4) if verified and row.hours else None
-            rows.append(CourseRecommendation(
-                course_id=row.course_id,
-                title=row.title,
-                provider=row.provider,
-                url=row.url,
-                cost=int(row.cost_myr),
-                hrd_corp_claimable=None if row.hrd_claimable == "unknown" else row.hrd_claimable == "true",
-                sdg_tags=sdg_tags,
-                hours=hours,
-                hours_verified=verified,
-                marginal_score_per_hour=marginal,
-                source_badges=[SignalBadge(source="data/curated/courses_v2.csv", date=str(row.checked_on))],
-            ))
-    if not rows:
-        matched = courses[courses.relevant_to_targets.astype(str).str.lower() == "true"].head(10)
-        for row in matched.itertuples():
-            verified = bool(row.hours_verified)
-            hours = int(row.hours) if verified and pd.notna(row.hours) else "hours not verified"
-            marginal = round(1 / (len(essentials) * row.hours), 4) if verified and row.hours else None
-            rows.append(CourseRecommendation(
-                course_id=row.course_id,
-                title=row.title,
-                provider=row.provider,
-                url=row.url,
-                cost=int(row.cost_myr),
-                hrd_corp_claimable=None if row.hrd_claimable == "unknown" else row.hrd_claimable == "true",
-                sdg_tags=sdg_tags,
-                hours=hours,
-                hours_verified=verified,
-                marginal_score_per_hour=marginal,
-                source_badges=[SignalBadge(source="data/curated/courses_v2.csv", date=str(row.checked_on))],
-            ))
-    unique = {item.course_id: item for item in rows}
-    ordered = sorted(
-        unique.values(),
-        key=lambda item: item.marginal_score_per_hour
-        if item.marginal_score_per_hour is not None else -1,
-        reverse=True,
-    )
+    _check_occupation(request.current_occupation_id)
+    try:
+        out = engine().pathway(request.skill_ids, request.target_role_id,
+                               current_occ=request.current_occupation_id, scenario=request.scenario)
+    except KeyError as error:
+        raise _bad_request(error) from error
+
+    def course(c: dict) -> CourseRecommendation:
+        badge = SignalBadge(source=f"Course page, {c['provider']}" if c["hours_verified"] else
+                            f"Course link, {c['provider']} (hours not on the page)",
+                            date=c.get("checked_on") or "", url=c["url"], date_kind="retrieved")
+        return CourseRecommendation(**c, source_badges=[badge])
+
+    items = [course(c) for c in out["pathway"]]
+    if request.sdg_filter:
+        items = [c for c in items if request.sdg_filter in c.sdg_tags]
+    best = out["best_next_hour"]
     return PathwayResponse(
-        target_role_id=request.target_role_id,
-        missing_skills=missing,
-        pathway=ordered,
-        best_next_hour=next(
-            (item for item in ordered if item.marginal_score_per_hour is not None),
-            None,
-        ),
-        assumption_note=engine().cfg["futures"]["assumption"],
+        target_role_id=out["target_role_id"], target_role_title=out["target_role_title"],
+        missing_skills=out["missing_skills"], pathway=items,
+        best_next_hour=next((c for c in items if best and c.course_id == best["course_id"]), None),
+        skills_without_course=out["skills_without_course"], totals=out["totals"],
+        assumption_note=out["assumption_note"],
     )

@@ -165,3 +165,26 @@ def test_50_api_requests_leak_no_unknown_ids(client):
             ids = [s["skill_id"] for s in body["skills"]]
         leaked += [x for x in ids if x not in known]
     assert leaked == []
+
+
+def test_pathway_orders_skills_and_ranks_only_verified_hours(client):
+    skills = [s["skill_id"] for s in client.post("/api/profile/parse", json={"text": CV}).json()["skills"]]
+    r = client.post("/api/pathway", json={"skill_ids": skills, "target_role_id": "data_analyst",
+                                          "current_occupation_id": "accounts_clerk"})
+    assert r.status_code == 200, r.text
+    p = r.json()
+    assert p["label"] == "Estimate" and p["target_role_title"] == "Data analyst"
+    assert p["pathway"], "data analyst skills are taught by catalogue courses"
+    assert [c["step"] for c in p["pathway"]] == list(range(1, len(p["pathway"]) + 1))
+    for c in p["pathway"]:
+        assert c["source_badges"] and c["source_badges"][0]["url"] == c["url"]
+        assert c["skill_name"] and c["skill_id"] in p["missing_skills"]
+        if c["hours_verified"]:
+            assert isinstance(c["hours"], (int, float)) and c["marginal_score_per_hour"] is not None
+        else:
+            assert c["hours"] == "hours not verified" and c["marginal_score_per_hour"] is None
+    if p["best_next_hour"]:
+        assert p["best_next_hour"]["hours_verified"] is True
+    assert p["totals"]["verified_hours"] == pytest.approx(
+        sum(c["hours"] for c in p["pathway"] if c["hours_verified"]), abs=0.11)
+    assert client.post("/api/pathway", json={"skill_ids": [], "target_role_id": "astronaut"}).status_code == 422
