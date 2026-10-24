@@ -46,7 +46,9 @@ Returns the 20 Malaysian demand records as signal badges. Each object includes
 
 ## `GET /api/sdg`
 
-Returns all 40 SDG mappings as `{occupation, sdg_link, reasoning}` objects.
+Returns one record per engine occupation with `occupation`, `sdg_link`,
+`reasoning`, `status`, `basis`, `evidence`, `source`, and `date`. The current
+engine catalogue contains 42 occupations.
 These records are intentionally exposed independently from demand signals:
 there is no exact occupation-name join between the two curated files.
 
@@ -184,8 +186,12 @@ Same routes and response models, served from the real engine. Differences:
 - **`GET /api/context?snapshot_id=`** (new): Malaysia vs global AI-usage figures from
   the AEI snapshot, labelled as observed usage. A value is `null` where that release
   does not publish it.
-- **`POST /api/pathway`** returns `501` until the P2 pathway is built on verified
-  course hours.
+- **`POST /api/pathway`** is backed by the engine's SQLite course table. It
+  returns ordered recommendations, verified-hour ROI, and `"hours not verified"`
+  for courses whose hours are not checked. `best_next_hour` is `null` when no
+  verified-hour recommendation is available.
+- **`GET /health`** and **`GET /api/health`** expose the active mode and
+  `compute_provider` (`local-deterministic` or `runpod-serverless`).
 
 Frontend note: `frontend/src/api.js` calls `http://localhost:8000`. For single-port
 hosting (FastAPI serves `frontend/dist` when it exists) the base URL should be

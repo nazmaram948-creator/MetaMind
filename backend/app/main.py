@@ -31,6 +31,7 @@ from .schemas import (
     ContextResponse,
 )
 from .services import engine_api
+from .services import runpod_client
 from .services.extraction import extract_skills, normalize_skill_phrases
 from .services.guardrails import validate_db_ids
 from .services.repository import (
@@ -76,9 +77,15 @@ def ensure_dev_mode() -> None:
 
 
 @app.get("/health")
-def health() -> dict[str, str]:
+@app.get("/api/health")
+def health() -> dict[str, object]:
     mode = "engine" if settings.engine_mode else "fixtures" if settings.dev_mode else "off"
-    return {"status": "ok", "mode": mode, **(engine_api.status() if settings.engine_mode else {})}
+    return {
+        "status": "ok",
+        "mode": mode,
+        **runpod_client.provider_status(),
+        **(engine_api.status() if settings.engine_mode else {}),
+    }
 
 
 @app.post("/api/profile/parse", response_model=ProfileParseResponse)
@@ -278,7 +285,7 @@ def match(request: MatchRequest) -> MatchResponse:
 @app.post("/api/pathway", response_model=PathwayResponse)
 def pathway(request: PathwayRequest) -> PathwayResponse:
     if settings.engine_mode:
-        raise HTTPException(status_code=501, detail="Pathway on real data arrives in P2.")
+        return engine_api.pathway(request)
     ensure_dev_mode()
     role = get_role(request.target_role_id)
     if role is None:

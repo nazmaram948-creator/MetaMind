@@ -89,6 +89,7 @@ def test_match_with_and_without_current_job(client):
     assert "accounts_clerk" not in {r["role_id"] for r in with_job["roles"]}
     top = with_job["roles"][0]
     assert top["is_estimate"] and top["score_points"] and top["source_badges"][0]["date"]
+    assert top["sdg_ids"]
     assert 0 <= top["robustness"]["top5_frequency"] <= 1
     fresh_grad = client.post("/api/match", json={"skill_ids": skills, "current_occupation_id": None})
     assert fresh_grad.status_code == 200 and len(fresh_grad.json()["roles"]) == 42
@@ -121,12 +122,19 @@ def test_occupations_context_personas_sdg(client):
     assert ctx["badge"]["date"] and ctx["label"].startswith("Observed")
     people = client.get("/api/personas").json()
     assert people["individual_users"] and "current_occ_id" in people["individual_users"][0]
-    assert client.get("/api/sdg").status_code == 200
+    sdg = client.get("/api/sdg")
+    assert sdg.status_code == 200
+    sdg_titles = {row["occupation"] for row in sdg.json()}
+    assert {row["title"] for row in occ} <= sdg_titles
+    assert all(row["source"] and row["date"] for row in sdg.json())
 
 
 def test_pathway_is_not_faked_in_engine_mode(client):
     r = client.post("/api/pathway", json={"skill_ids": [], "target_role_id": "bookkeeper"})
-    assert r.status_code == 501
+    assert r.status_code == 200
+    payload = r.json()
+    assert payload["pathway"]
+    assert payload["best_next_hour"]["hours_verified"] is True
 
 
 def test_engine_only_routes_are_gated_without_engine_mode(monkeypatch):

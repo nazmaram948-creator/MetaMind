@@ -144,7 +144,42 @@ def courses(cfg: dict) -> pd.DataFrame:
 
 def sdg_map(cfg: dict) -> pd.DataFrame:
     if cfg["curated_version"] == "v2":
-        return _read(CURATED / "sdg_map_v2.csv")
+        frame = _read(CURATED / "sdg_map_v2.csv")
+        if "source" not in frame:
+            frame["source"] = "UN SDG / ESCO Mapping"
+        else:
+            frame["source"] = frame["source"].fillna("").replace("", "UN SDG / ESCO Mapping")
+        if "date_published" not in frame:
+            frame["date_published"] = "2026-10"
+        else:
+            frame["date_published"] = frame["date_published"].fillna("").replace("", "2026-10")
+        occupations_frame = occupations()
+        by_title = {
+            "".join(str(value).casefold().split()): occ_id
+            for occ_id, title in occupations_frame[["occ_id", "title"]].itertuples(index=False)
+            for value in [title]
+        }
+        frame.loc[frame["key_type"] == "occupation", "occ_id"] = frame.loc[
+            frame["key_type"] == "occupation", "key"
+        ].map(lambda value: by_title.get("".join(str(value).casefold().split()), ""))
+        known = set(frame.loc[frame["key_type"] == "occupation", "occ_id"]) - {""}
+        missing = occupations_frame[~occupations_frame.occ_id.isin(known)]
+        fallback = pd.DataFrame({
+            "key_type": "occupation",
+            "key": missing.title,
+            "occ_id": missing.occ_id,
+            "isco_code": missing.isco_code,
+            "esco_uri": missing.esco_uri,
+            "sdg_ids": "8",
+            "targets": "",
+            "reason": "Fallback SDG 8 tag; no direct curated occupation row was supplied.",
+            "evidence": "Requires data-team review before production use.",
+            "basis": "fallback",
+            "status": "needs_review",
+            "source": "UN SDG / ESCO Mapping",
+            "date_published": "2026-10",
+        })
+        return pd.concat([frame, fallback], ignore_index=True)
     s = _read(CURATED / "sdg_mapping.csv")
     return pd.DataFrame({"key_type": "job_title", "key": s.occupation, "occ_id": "", "isco_code": "",
                          "esco_uri": "", "sdg_ids": s.sdg_link.str.extract(r"SDG (\d+)")[0], "targets": "",

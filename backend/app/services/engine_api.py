@@ -10,6 +10,7 @@ import io
 import logging
 import threading
 
+import pandas as pd
 from fastapi import HTTPException, UploadFile
 
 from ..schemas import (
@@ -30,7 +31,12 @@ from ..schemas import (
     SnapshotDiffResponse,
     SnapshotLoadRequest,
     SnapshotLoadResponse,
+    CourseRecommendation,
+    PathwayRequest,
+    PathwayResponse,
+    SignalBadge,
 )
+from . import runpod_client
 
 log = logging.getLogger("skillshift.api")
 MAX_UPLOAD_BYTES = 2_000_000
@@ -83,6 +89,23 @@ def _bad_request(error: KeyError) -> HTTPException:
 
 def parse_profile(request: ProfileParseRequest) -> ProfileParseResponse:
     _check_occupation(request.occupation_id)
+    remote_ids = runpod_client.extract_skill_ids(request.text)
+    if remote_ids:
+        valid_ids = [skill_id for skill_id in remote_ids if skill_id in engine().store.skill_ids]
+        if valid_ids:
+            return ProfileParseResponse(
+                skills=[
+                    MatchedSkill(
+                        skill_id=skill_id,
+                        skill_name=engine().store.skill_label[skill_id],
+                        extracted_phrase="RunPod extraction",
+                        confidence=0.8,
+                        status="suggested",
+                    )
+                    for skill_id in dict.fromkeys(valid_ids)
+                ],
+                assumption_note=engine().cfg["futures"]["assumption"],
+            )
     found = engine().parse(request.text)
     return ProfileParseResponse(skills=[MatchedSkill(**f) for f in found],
                                 assumption_note=engine().cfg["futures"]["assumption"])
@@ -183,9 +206,101 @@ def sdg() -> list[SdgMappingResponse]:
     titles = engine().store.occ_title
     out = []
     for r in rows.itertuples():
-        if r.key_type == "skill_collection" or not r.sdg_ids:
+        if (
+            r.key_type == "skill_collection"
+            or not r.sdg_ids
+            or not getattr(r, "occ_id", "")
+        ):
             continue
         name = titles.get(r.occ_id, r.key)
         link = "; ".join(f"SDG {g}" for g in str(r.sdg_ids).split(";") if g)
-        out.append(SdgMappingResponse(occupation=name, sdg_link=link, reasoning=r.reason))
+        out.append(SdgMappingResponse(
+            occupation=name,
+            sdg_link=link,
+            reasoning=r.reason,
+            status=getattr(r, "status", "") or "curated",
+            basis=getattr(r, "basis", "") or "curated occupation mapping",
+            evidence=getattr(r, "evidence", "") or r.reason,
+            source=getattr(r, "source", "") or "UN SDG / ESCO Mapping",
+            date=getattr(r, "date_published", "") or "2026-10",
+        ))
     return out
+
+
+def pathway(request: PathwayRequest) -> PathwayResponse:
+    _check_occupation(request.target_role_id)
+    store = engine().store
+    essentials = engine().essentials.get(request.target_role_id, [])
+    valid_skills = [skill_id for skill_id in request.skill_ids if skill_id in store.skill_ids]
+    missing = [skill_id for skill_id in essentials if skill_id not in valid_skills]
+    courses = store["courses"]
+    rows = []
+    sdg_rows = store["sdg_map"]
+    role_sdg = sdg_rows[
+        (sdg_rows.key_type == "occupation")
+        & (sdg_rows.occ_id == request.target_role_id)
+    ]
+    sdg_tags = [
+        f"SDG {value}"
+        for value in str(role_sdg.iloc[0].sdg_ids).split(";")
+        if value
+    ] if not role_sdg.empty and role_sdg.iloc[0].sdg_ids else []
+    for skill_id in missing:
+        matched = courses[
+            courses.esco_skill_uris.fillna("").str.split(";").apply(
+                lambda values: skill_id in values
+            )
+        ]
+        for row in matched.itertuples():
+            verified = bool(row.hours_verified)
+            hours = int(row.hours) if verified and pd.notna(row.hours) else "hours not verified"
+            marginal = round(1 / (len(essentials) * row.hours), 4) if verified and row.hours else None
+            rows.append(CourseRecommendation(
+                course_id=row.course_id,
+                title=row.title,
+                provider=row.provider,
+                url=row.url,
+                cost=int(row.cost_myr),
+                hrd_corp_claimable=None if row.hrd_claimable == "unknown" else row.hrd_claimable == "true",
+                sdg_tags=sdg_tags,
+                hours=hours,
+                hours_verified=verified,
+                marginal_score_per_hour=marginal,
+                source_badges=[SignalBadge(source="data/curated/courses_v2.csv", date=str(row.checked_on))],
+            ))
+    if not rows:
+        matched = courses[courses.relevant_to_targets.astype(str).str.lower() == "true"].head(10)
+        for row in matched.itertuples():
+            verified = bool(row.hours_verified)
+            hours = int(row.hours) if verified and pd.notna(row.hours) else "hours not verified"
+            marginal = round(1 / (len(essentials) * row.hours), 4) if verified and row.hours else None
+            rows.append(CourseRecommendation(
+                course_id=row.course_id,
+                title=row.title,
+                provider=row.provider,
+                url=row.url,
+                cost=int(row.cost_myr),
+                hrd_corp_claimable=None if row.hrd_claimable == "unknown" else row.hrd_claimable == "true",
+                sdg_tags=sdg_tags,
+                hours=hours,
+                hours_verified=verified,
+                marginal_score_per_hour=marginal,
+                source_badges=[SignalBadge(source="data/curated/courses_v2.csv", date=str(row.checked_on))],
+            ))
+    unique = {item.course_id: item for item in rows}
+    ordered = sorted(
+        unique.values(),
+        key=lambda item: item.marginal_score_per_hour
+        if item.marginal_score_per_hour is not None else -1,
+        reverse=True,
+    )
+    return PathwayResponse(
+        target_role_id=request.target_role_id,
+        missing_skills=missing,
+        pathway=ordered,
+        best_next_hour=next(
+            (item for item in ordered if item.marginal_score_per_hour is not None),
+            None,
+        ),
+        assumption_note=engine().cfg["futures"]["assumption"],
+    )
