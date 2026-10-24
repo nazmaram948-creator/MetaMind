@@ -71,8 +71,12 @@ def test_courses_v2_hours_verified_only_from_course_pages():
 
 def test_sdg_map_v2_covers_targets(occ_ids):
     sdg = rows("sdg_map_v2.csv")
-    occ_rows = [r for r in sdg if r["key_type"] == "occupation"]
-    assert {r["occ_id"] for r in occ_rows} == occ_ids
+    ours = [r for r in sdg if r["key_type"] == "occupation" and r["occ_id"]]
+    assert sorted(r["occ_id"] for r in ours) == sorted(occ_ids), "exactly one row per target occupation"
+    assert all(r["sdg_ids"] and r["source"] and r["date_published"] for r in ours)
+    team = rows("sdg_team_v2.csv")
+    assert len([r for r in sdg if r["key_type"] == "occupation"]) == len(team) + len(occ_ids) - len(
+        {"".join(r["key"].casefold().split()) for r in team} & {"".join(r["key"].casefold().split()) for r in ours})
     for r in sdg:
         for g in filter(None, r["sdg_ids"].split(";")):
             assert 1 <= int(g) <= 17

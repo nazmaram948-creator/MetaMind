@@ -9,19 +9,28 @@ Every link has a stated basis and evidence taken from ESCO v1.2:
 2. Skill -> SDG target rules: an occupation that has one of these ESCO skills
    (essential or optional) gets the named target. Labels are checked against
    the ESCO extract; an unknown label stops the script.
+3. Team rows (data/curated/sdg_team_v2.csv, from the team's SDG list): a row whose
+   title matches one of our occupations is merged into that occupation (goals
+   combined, both reasons kept); the other team rows are kept unchanged, without
+   an occ_id, so the build ignores them for matching.
 
-The output is a seed for team review (status column), not a final judgement.
+Output columns follow the team file (incl. source, date_published). The output is
+a seed for team review (status column), not a final judgement.
 
 Usage:  python data/scripts/build_sdg_map_v2.py
 """
 from __future__ import annotations
 
 import csv
+import json
 from collections import defaultdict
 
 from _common import CURATED, EXTRACTS
 
 COLLECTION_MIN_SHARE = 0.10
+RULES_SOURCE = "SkillShift rules on ESCO v1.2 (Green/Digital collections, skill->SDG target rules)"
+COLUMNS = ["key_type", "key", "occ_id", "isco_code", "esco_uri", "sdg_ids", "targets", "reason",
+           "evidence", "basis", "status", "source", "date_published"]
 GREEN_SCHEME = "http://data.europa.eu/esco/concept-scheme/green"
 DIGITAL_SCHEME = "http://data.europa.eu/esco/concept-scheme/6c930acd-c104-4ece-acf7-f44fd7333036"
 
@@ -50,12 +59,21 @@ SKILL_TARGETS = {
 
 
 def read(path):
-    with path.open(encoding="utf-8", newline="") as f:
+    with path.open(encoding="utf-8-sig", newline="") as f:
         return list(csv.DictReader(f))
+
+
+def norm(title: str) -> str:
+    return "".join(title.casefold().split())
 
 
 def main() -> None:
     targets = read(CURATED / "target_occupations.csv")
+    team_path = CURATED / "sdg_team_v2.csv"
+    team = read(team_path) if team_path.exists() else []
+    team_by_title = {norm(r["key"]): r for r in team}
+    meta = json.loads((EXTRACTS / "esco_meta.json").read_text(encoding="utf-8"))
+    rules_date = (meta.get("fetched_at") or "")[:10]
     skills = {s["uri"]: s for s in read(EXTRACTS / "esco_skills.csv")}
     by_label = {s["preferred_label"]: u for u, s in skills.items()}
     unknown = [lbl for lbl in SKILL_TARGETS if lbl not in by_label]
@@ -71,12 +89,14 @@ def main() -> None:
          "esco_uri": GREEN_SCHEME, "sdg_ids": "7;12;13", "targets": "",
          "reason": "ESCO Green collection: skills for the green transition (project rule: green -> SDG 7/12/13)",
          "evidence": f"{sum(s['is_green'] == '1' for s in skills.values())} green skills in extract",
-         "basis": "collection_rule", "status": "seed - team to review"},
+         "basis": "collection_rule", "status": "seed - team to review",
+         "source": RULES_SOURCE, "date_published": rules_date},
         {"key_type": "skill_collection", "key": DIGITAL_SCHEME, "occ_id": "", "isco_code": "",
          "esco_uri": DIGITAL_SCHEME, "sdg_ids": "9", "targets": "",
          "reason": "ESCO Digital collection (project rule: digital -> SDG 9)",
          "evidence": f"{sum(s['is_digital'] == '1' for s in skills.values())} digital skills in extract",
-         "basis": "collection_rule", "status": "seed - team to review"},
+         "basis": "collection_rule", "status": "seed - team to review",
+         "source": RULES_SOURCE, "date_published": rules_date},
     ]
 
     for t in targets:
@@ -104,26 +124,46 @@ def main() -> None:
                 reasons.append(f"skill '{label}' -> target {target} ({text})")
                 evidence.append(f"has '{label}'")
 
-        rows.append({
-            "key_type": "occupation", "key": t["occ_id"], "occ_id": t["occ_id"],
+        row = {
+            "key_type": "occupation", "key": t["title"], "occ_id": t["occ_id"],
             "isco_code": t["isco_code"], "esco_uri": t["esco_uri"],
             "sdg_ids": ";".join(str(g) for g in sorted(goals)),
             "targets": ";".join(sorted(tgt, key=lambda x: [int(p) if p.isdigit() else p for p in x.split(".")])),
-            "reason": "; ".join(reasons) if reasons else "no SDG-linked skills found in ESCO profile",
+            "reason": "; ".join(reasons),
             "evidence": "; ".join(evidence),
-            "basis": "collection_rule+skill_rule" if reasons else "none",
+            "basis": "collection_rule+skill_rule" if reasons else "",
             "status": "seed - team to review",
-        })
+            "source": RULES_SOURCE if reasons else "",
+            "date_published": rules_date if reasons else "",
+        }
+        mate = team_by_title.pop(norm(t["title"]), None)
+        if mate:  # team row for this occupation: combine goals, keep both reasons and sources
+            goals |= {int(g) for g in mate["sdg_ids"].split(";") if g.strip().isdigit()}
+            row["sdg_ids"] = ";".join(str(g) for g in sorted(goals))
+            row["reason"] = "; ".join(filter(None, [row["reason"], f"team: {mate['reason']}"]))
+            row["evidence"] = "; ".join(filter(None, [row["evidence"], f"team: {mate['evidence']}"]))
+            row["basis"] = "+".join(filter(None, [row["basis"], mate["basis"] or "team"]))
+            row["status"] = f"team: {mate['status']}; rules: seed - team to review" if reasons else mate["status"]
+            row["source"] = "; ".join(filter(None, [row["source"], mate["source"]]))
+            row["date_published"] = mate["date_published"] or row["date_published"]
+        if not row["sdg_ids"]:
+            row["reason"] = "no SDG-linked skills found in ESCO profile and no team row"
+            row["basis"], row["status"] = "none", "needs team input"
+        rows.append(row)
+
+    # team rows for job titles outside our catalogue: kept as supplied (no occ_id)
+    rows += [{c: r.get(c, "") for c in COLUMNS} for r in team_by_title.values()]
 
     out = CURATED / "sdg_map_v2.csv"
     with out.open("w", encoding="utf-8", newline="") as f:
-        w = csv.DictWriter(f, fieldnames=list(rows[0]))
+        w = csv.DictWriter(f, fieldnames=COLUMNS)
         w.writeheader()
         w.writerows(rows)
-    linked = [r for r in rows if r["key_type"] == "occupation" and r["sdg_ids"]]
-    print(f"wrote {out.name}: {len(rows) - 2} occupations, {len(linked)} with at least one SDG")
-    for r in rows[2:]:
-        print(f"  {r['occ_id']:28} SDG {r['sdg_ids'] or '-':10} {r['targets']:16} {r['evidence'][:70]}")
+    ours = [r for r in rows if r["occ_id"]]
+    print(f"wrote {out.name}: {len(ours)} target occupations ({sum(bool(r['sdg_ids']) for r in ours)} with an SDG), "
+          f"{len(rows) - len(ours) - 2} other team rows")
+    for r in ours:
+        print(f"  {r['occ_id']:28} SDG {r['sdg_ids'] or '-':10} {r['basis']:32} {r['status'][:40]}")
 
 
 if __name__ == "__main__":

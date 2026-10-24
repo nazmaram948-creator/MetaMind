@@ -159,9 +159,11 @@ def sdg_map(cfg: dict) -> pd.DataFrame:
             for occ_id, title in occupations_frame[["occ_id", "title"]].itertuples(index=False)
             for value in [title]
         }
-        frame.loc[frame["key_type"] == "occupation", "occ_id"] = frame.loc[
-            frame["key_type"] == "occupation", "key"
-        ].map(lambda value: by_title.get("".join(str(value).casefold().split()), ""))
+        # keep a valid occ_id when the row has one; otherwise match the row's title
+        valid = set(occupations_frame.occ_id)
+        unmatched = (frame["key_type"] == "occupation") & ~frame["occ_id"].isin(valid)
+        frame.loc[unmatched, "occ_id"] = frame.loc[unmatched, "key"].map(
+            lambda value: by_title.get("".join(str(value).casefold().split()), ""))
         known = set(frame.loc[frame["key_type"] == "occupation", "occ_id"]) - {""}
         missing = occupations_frame[~occupations_frame.occ_id.isin(known)]
         fallback = pd.DataFrame({
