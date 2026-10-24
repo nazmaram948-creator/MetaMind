@@ -268,7 +268,8 @@ export default function App() {
 
         {result && (
           <div style={{ marginTop: 22 }}>
-            <Roles result={result} movements={movements} current={occTitle} sdg={sdg} skillIds={selected} />
+            <Roles result={result} movements={movements} current={occTitle} sdg={sdg} skillIds={selected}
+              scenario={scenario} currentId={current} />
           </div>
         )}
 

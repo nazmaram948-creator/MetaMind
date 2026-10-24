@@ -45,8 +45,14 @@ export function parseFile(file, occupation_id) {
   return request("/api/profile/parse_file", { method: "POST", body: form });
 }
 
-export const matchRoles = (skill_ids, current_occupation_id, scenario) =>
-  json("/api/match", { skill_ids, current_occupation_id: current_occupation_id || null, scenario });
+// sdg_preference is sent only when given, so existing callers send the same body as before
+export const matchRoles = (skill_ids, current_occupation_id, scenario, sdg_preference) =>
+  json("/api/match", {
+    skill_ids,
+    current_occupation_id: current_occupation_id || null,
+    scenario,
+    ...(sdg_preference !== undefined && { sdg_preference }),
+  });
 
 export function getSignals(skill_ids, scenario) {
   const q = new URLSearchParams({ scenario });
