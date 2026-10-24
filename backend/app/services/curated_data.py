@@ -161,8 +161,8 @@ def load_sdg_mappings() -> tuple[SdgMapping, ...]:
                 basis=row["basis"],
                 evidence=row["evidence"],
                 status=row["status"],
-                source=filename,
-                date="undated",
+                source=row["source"],
+                date=row["date_published"],
             )
             for row in rows
             if row["key_type"] == "occupation"

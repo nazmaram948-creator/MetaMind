@@ -22,6 +22,8 @@ from collections import defaultdict
 from _common import CURATED, EXTRACTS
 
 COLLECTION_MIN_SHARE = 0.10
+SOURCE = "UN SDG / ESCO Mapping"
+DATE_PUBLISHED = "2026-10"
 GREEN_SCHEME = "http://data.europa.eu/esco/concept-scheme/green"
 DIGITAL_SCHEME = "http://data.europa.eu/esco/concept-scheme/6c930acd-c104-4ece-acf7-f44fd7333036"
 
@@ -71,12 +73,14 @@ def main() -> None:
          "esco_uri": GREEN_SCHEME, "sdg_ids": "7;12;13", "targets": "",
          "reason": "ESCO Green collection: skills for the green transition (project rule: green -> SDG 7/12/13)",
          "evidence": f"{sum(s['is_green'] == '1' for s in skills.values())} green skills in extract",
-         "basis": "collection_rule", "status": "seed - team to review"},
+         "basis": "collection_rule", "status": "seed - team to review",
+         "source": SOURCE, "date_published": DATE_PUBLISHED},
         {"key_type": "skill_collection", "key": DIGITAL_SCHEME, "occ_id": "", "isco_code": "",
          "esco_uri": DIGITAL_SCHEME, "sdg_ids": "9", "targets": "",
          "reason": "ESCO Digital collection (project rule: digital -> SDG 9)",
          "evidence": f"{sum(s['is_digital'] == '1' for s in skills.values())} digital skills in extract",
-         "basis": "collection_rule", "status": "seed - team to review"},
+         "basis": "collection_rule", "status": "seed - team to review",
+         "source": SOURCE, "date_published": DATE_PUBLISHED},
     ]
 
     for t in targets:
@@ -103,6 +107,9 @@ def main() -> None:
                     tgt.append(target)
                 reasons.append(f"skill '{label}' -> target {target} ({text})")
                 evidence.append(f"has '{label}'")
+        if not tgt:
+            fallback_targets = {7: "7.3", 8: "8.5", 9: "9.5", 12: "12.5", 13: "13.2", 17: "17.1"}
+            tgt.append(fallback_targets[min(goals)] if goals else "8.5")
 
         rows.append({
             "key_type": "occupation", "key": t["occ_id"], "occ_id": t["occ_id"],
@@ -113,6 +120,7 @@ def main() -> None:
             "evidence": "; ".join(evidence),
             "basis": "collection_rule+skill_rule" if reasons else "none",
             "status": "seed - team to review",
+            "source": SOURCE, "date_published": DATE_PUBLISHED,
         })
 
     out = CURATED / "sdg_map_v2.csv"
