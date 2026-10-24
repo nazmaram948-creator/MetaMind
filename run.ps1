@@ -27,6 +27,8 @@ if ($LASTEXITCODE -ne 0) { throw "Python 3.10+ is needed (3.11 recommended). Del
 Write-Host "Installing Python packages (first run downloads ~300 MB) ..."
 & $py -m pip install -q --disable-pip-version-check -r backend\requirements.txt
 if ($LASTEXITCODE -ne 0) { throw "pip install failed" }
+& $py -m engine.build
+if ($LASTEXITCODE -ne 0) { throw "engine database build failed" }
 
 if (Get-Command npm -ErrorAction SilentlyContinue) {
   Push-Location frontend

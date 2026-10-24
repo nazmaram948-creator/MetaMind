@@ -16,6 +16,7 @@ fi
 
 echo "Installing Python packages (first run downloads ~300 MB) ..."
 "$PY" -m pip install -q --disable-pip-version-check -r backend/requirements.txt
+"$PY" -m engine.build
 
 if command -v npm >/dev/null 2>&1; then
   ( cd frontend && { [ -d node_modules ] || npm ci --no-audit --no-fund; } && npm run build )
