@@ -186,10 +186,35 @@ Same routes and response models, served from the real engine. Differences:
 - **`GET /api/context?snapshot_id=`** (new): Malaysia vs global AI-usage figures from
   the AEI snapshot, labelled as observed usage. A value is `null` where that release
   does not publish it.
-- **`POST /api/pathway`** is backed by the engine's SQLite course table. It
-  returns ordered recommendations, verified-hour ROI, and `"hours not verified"`
-  for courses whose hours are not checked. `best_next_hour` is `null` when no
-  verified-hour recommendation is available.
+- **`POST /api/pathway`** takes `skill_ids`, `target_role_id` and optionally
+  `current_occupation_id` and `scenario`. It returns the role's missing essential
+  skills in learning order (broader ESCO concepts first, then by score gain), with
+  one course per skill.
+  - Each course has `step`, `skill_id`, `skill_name`, `also_covers` (other missing
+    skills the same course teaches), `gain_points`, `sdg_tags` (the role's SDGs)
+    and `source_badges`, which point to the course page and the date it was checked.
+  - `hours` is a number only when `hours_verified` is true; otherwise it is
+    `"hours not verified"` and `marginal_score_per_hour` is `null`.
+  - `cost` is MYR, or `null` when not checked. `hrd_corp_claimable` is `null` when
+    not checked.
+  - `best_next_hour` is the verified course with the largest score gain across the
+    user's top 10 roles per hour, or `null`.
+  - The response also has `totals` (`courses`, `verified_hours`,
+    `unverified_courses`, `cost_myr`, `cost_unknown`) and `skills_without_course`.
+- **`GET /api/xray?occupation=<occ_id>&snapshot_id=`**: Task X-ray of a job.
+  - Each O*NET task has `weight_pct` (importance), `usage_share_pct` (share of all
+    Claude.ai chats), `automation_pct`, `augmentation_pct`, a `label`
+    (`automating` / `assisting` / `mostly human`) and a `note`.
+  - The response also has `summary_weight_pct`, the `thresholds` used (from
+    `engine/config.yaml`), `source_badges`, and `label: "Estimate"`.
+- **`POST /api/upgrade`** takes `{occupation_id, skill_ids, scenario}`: "upgrade in
+  place". It lists skills of the current job, most similar to its `assisting` tasks,
+  that the user lacks. Each has `supports_tasks`, `task_weight_pct`, `momentum`,
+  `momentum_status` and a `course` (or `null`).
+- **`GET /api/team`** (synthetic demo cohort) and **`POST /api/team`** (`{members:
+  [{id, name, current_occ_id, skill_ids | skills}], scenario}`, synthetic data only):
+  the HR heatmap. For each member, `task_split_pct` is the X-ray split of the current
+  job and `top_roles` are their top 3 roles.
 - **`GET /health`** and **`GET /api/health`** expose the active mode and
   `compute_provider` (`local-deterministic` or `runpod-serverless`).
 

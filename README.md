@@ -79,9 +79,10 @@ S = 100 × (w_c·C + w_o·Ô + w_t·T) + λ·SDG
 where `C` is essential-skill coverage, `Ô` is normalized role outlook,
 `T` is transferability, and `λ` is the SDG weight. The fixture adapter also
 accepts `sdg_preference ∈ [0, 1]` and blends the base role score with the
-SDG-tag score. Current engine configuration keeps `sdg_lambda: 0.0`; the
-parameter is therefore contract-compatible but disabled in the real-engine
-ranker until the SDG slider weighting is enabled.
+SDG-tag score. The engine does the same: with `sdg_preference = p` it ranks by
+`(1 − p)·S + p·100·SDG_o`, where `SDG_o` = number of SDG links of the role / 3,
+capped at 1. `sdg_lambda` in `engine/config.yaml` stays `0.0`, so without a
+preference the ranking is unchanged.
 
 ### 1,000 futures robustness estimate
 
@@ -103,10 +104,21 @@ is sensitivity analysis, not a jobs forecast.
 
 ### Pathway and “Best Next Hour”
 
-The pathway adapter computes missing skills, selects matching courses, and
-ranks verified recommendations by career-score delta per verified training
-hour. A course with `hours_verified=true` contributes to `best_next_hour` and
-ROI calculations. An unverified course is returned with:
+`Engine.pathway` (engine/service.py) works in five steps:
+
+1. Take the target role's missing essential skills.
+2. Order them with broader ESCO concepts first, then by the match-score gain each
+   skill would add.
+3. Pick one catalogue course per skill: the shortest with page-verified hours,
+   otherwise a course marked "hours not verified". A course that teaches several
+   missing skills is listed once.
+4. Compute "best next hour": the verified course with the largest score gain across
+   the user's top 10 roles, divided by its hours.
+5. Add up hours and known costs.
+
+Roles whose skills no course teaches return those skills in
+`skills_without_course`; unrelated courses are never filled in. An unverified
+course is returned with:
 
 ```json
 { "hours": "hours not verified", "marginal_score_per_hour": null }
@@ -115,6 +127,20 @@ ROI calculations. An unverified course is returned with:
 Course `skill_ids` are semicolon-delimited in the v1 catalogue and are split by
 the typed loader. Course, role, skill, cost, SDG, and source/date fields remain
 attached to each response step.
+
+### Task X-ray, upgrade in place and team view
+
+- **`GET /api/xray`** labels every O*NET task of a job from the AEI task data:
+  - `mostly human`: no measurable AI use in the sample;
+  - `automating`: at least 60% of the AI use is automation;
+  - `assisting`: the rest.
+
+  Thresholds are under `xray:` in `engine/config.yaml`.
+- **`POST /api/upgrade`** links the `assisting` tasks to the job's most similar ESCO
+  skills (MiniLM text similarity) and lists the ones the user lacks, each with momentum
+  and a course. This is the "AI-upgraded version of your current role".
+- **`/api/team`** applies the X-ray and the role match to every member of a
+  (synthetic) team for the HR heatmap.
 
 ### Snapshot diffing
 
@@ -226,7 +252,9 @@ The supported environment variables are `DEV_MODE`, `ENGINE_MODE`,
 `CORS_ORIGIN`, `SIMULATION_RUNS`, `SIMULATION_VARIATION`, `CURATED_VERSION`,
 `SIMILARITY_BACKEND`, and `SKILLSHIFT_DB`. The one-command scripts
 [`run.ps1`](run.ps1) and [`run.sh`](run.sh) install dependencies, build the
-frontend, and start engine mode by default.
+frontend, and start engine mode by default. On Windows, double-click
+[`run.cmd`](run.cmd) or type `run`: it starts `run.ps1` without changing the
+PowerShell execution policy. `run.sh` also works in Git Bash on Windows.
 
 ### Frontend
 
@@ -298,15 +326,23 @@ otherwise it reports `local-deterministic`.
   IDs.
 - Curated CSVs are point-in-time snapshots. Demand is neutral in the v2 engine
   until a checked source URL and verified figures are supplied.
-- `sdg_map_v2.csv` is generated from project mapping rules and contains 42
-  occupation rows in this checkout; treat its `status`, `basis`, and `evidence`
-  fields as reviewable provenance.
+- `sdg_map_v2.csv` (built by `data/scripts/build_sdg_map_v2.py`) has one row per
+  target occupation:
+  - 36 rows come from ESCO rules (Green/Digital collections and skill → SDG target);
+  - 6 come from the team's verified rows (`sdg_team_v2.csv`);
+  - the team's rows for job titles outside the catalogue are kept without an
+    `occ_id`.
+
+  Treat `status`, `basis`, `evidence` and `source` as reviewable provenance.
 - Synthetic CV intake is bounded and local. Scanned PDFs are not OCR'd.
 - `hours_verified` is a hard gate for pathway ROI; missing HRD Corp data is
   represented as `null`, not as a false eligibility claim.
-- The engine's `sdg_lambda` is currently `0.0`; the fixture API supports the
-  `sdg_preference` contract while real-engine SDG weighting remains a configured
-  follow-up.
+- SDG re-ranking counts how many SDGs a role links to; it does not weigh how
+  strongly a role contributes to each goal.
+- Task X-ray labels use global Claude.ai usage, not Malaysian data. "Mostly human"
+  means no measurable AI use in the sample, not that AI cannot do the task.
+- "Upgrade in place" links tasks to skills by text similarity, not by an official
+  task-skill mapping.
 
 Development tooling and provenance are explicit: Python, FastAPI, Pydantic,
 Uvicorn, React, Vite, pytest, Replit, Claude Code, ESCO, O*NET, Anthropic
