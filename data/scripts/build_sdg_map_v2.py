@@ -140,6 +140,8 @@ def main() -> None:
         if mate:  # team row for this occupation: combine goals, keep both reasons and sources
             goals |= {int(g) for g in mate["sdg_ids"].split(";") if g.strip().isdigit()}
             row["sdg_ids"] = ";".join(str(g) for g in sorted(goals))
+            tgt = list(dict.fromkeys(tgt + [x.strip() for x in mate.get("targets", "").split(";") if x.strip()]))
+            row["targets"] = ";".join(sorted(tgt, key=lambda x: [int(p) if p.isdigit() else p for p in x.split(".")]))
             row["reason"] = "; ".join(filter(None, [row["reason"], f"team: {mate['reason']}"]))
             row["evidence"] = "; ".join(filter(None, [row["evidence"], f"team: {mate['evidence']}"]))
             row["basis"] = "+".join(filter(None, [row["basis"], mate["basis"] or "team"]))
@@ -151,8 +153,11 @@ def main() -> None:
             row["basis"], row["status"] = "none", "needs team input"
         rows.append(row)
 
-    # team rows for job titles outside our catalogue: kept as supplied (no occ_id)
-    rows += [{c: r.get(c, "") for c in COLUMNS} for r in team_by_title.values()]
+    # team rows for job titles outside our catalogue: kept as supplied, but an occ_id is
+    # only kept when it is one of our occupations (unknown IDs never reach the API)
+    valid = {t["occ_id"] for t in targets}
+    rows += [{**{c: r.get(c, "") for c in COLUMNS}, "occ_id": r.get("occ_id", "") if r.get("occ_id", "") in valid else ""}
+             for r in team_by_title.values()]
 
     out = CURATED / "sdg_map_v2.csv"
     with out.open("w", encoding="utf-8", newline="") as f:
