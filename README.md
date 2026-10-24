@@ -24,7 +24,7 @@
 | Live Demo         | https://meta-mind-1.replit.app                 |
 | RunPod Endpoint   | Not used                                       |
 | Slide Deck        |     https://youtu.be/1kMzCF_wz0c?si=hbxXNfgMu73Osx-C                                           |
-| Demo Video        |                                                |
+| Demo Video        |    https://youtu.be/XwCsKCKKPy8?si=UTeNto21tiAul57m                                            |
 
 ---
 
