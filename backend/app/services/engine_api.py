@@ -36,8 +36,6 @@ from ..schemas import (
     PathwayResponse,
     SignalBadge,
 )
-from . import runpod_client
-
 log = logging.getLogger("skillshift.api")
 MAX_UPLOAD_BYTES = 2_000_000
 
@@ -89,23 +87,6 @@ def _bad_request(error: KeyError) -> HTTPException:
 
 def parse_profile(request: ProfileParseRequest) -> ProfileParseResponse:
     _check_occupation(request.occupation_id)
-    remote_ids = runpod_client.extract_skill_ids(request.text)
-    if remote_ids:
-        valid_ids = [skill_id for skill_id in remote_ids if skill_id in engine().store.skill_ids]
-        if valid_ids:
-            return ProfileParseResponse(
-                skills=[
-                    MatchedSkill(
-                        skill_id=skill_id,
-                        skill_name=engine().store.skill_label[skill_id],
-                        extracted_phrase="RunPod extraction",
-                        confidence=0.8,
-                        status="suggested",
-                    )
-                    for skill_id in dict.fromkeys(valid_ids)
-                ],
-                assumption_note=engine().cfg["futures"]["assumption"],
-            )
     found = engine().parse(request.text)
     return ProfileParseResponse(skills=[MatchedSkill(**f) for f in found],
                                 assumption_note=engine().cfg["futures"]["assumption"])
@@ -268,7 +249,8 @@ def pathway(request: PathwayRequest) -> PathwayResponse:
                 marginal_score_per_hour=marginal,
                 source_badges=[SignalBadge(source="data/curated/courses_v2.csv", date=str(row.checked_on))],
             ))
-    if not rows:
+    fallback = not bool(rows)
+    if fallback:
         matched = courses[courses.relevant_to_targets.astype(str).str.lower() == "true"].head(10)
         for row in matched.itertuples():
             verified = bool(row.hours_verified)
@@ -301,6 +283,7 @@ def pathway(request: PathwayRequest) -> PathwayResponse:
         best_next_hour=next(
             (item for item in ordered if item.marginal_score_per_hour is not None),
             None,
-        ),
+        ) if not fallback else None,
+        fallback=fallback,
         assumption_note=engine().cfg["futures"]["assumption"],
     )

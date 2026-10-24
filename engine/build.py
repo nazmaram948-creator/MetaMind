@@ -154,6 +154,7 @@ def sdg_map(cfg: dict) -> pd.DataFrame:
         else:
             frame["date_published"] = frame["date_published"].fillna("").replace("", "2026-10")
         occupations_frame = occupations()
+        known_ids = set(occupations_frame["occ_id"])
         by_title = {
             "".join(str(value).casefold().split()): occ_id
             for occ_id, title in occupations_frame[["occ_id", "title"]].itertuples(index=False)
@@ -161,7 +162,11 @@ def sdg_map(cfg: dict) -> pd.DataFrame:
         }
         frame.loc[frame["key_type"] == "occupation", "occ_id"] = frame.loc[
             frame["key_type"] == "occupation", "key"
-        ].map(lambda value: by_title.get("".join(str(value).casefold().split()), ""))
+        ].map(
+            lambda value: value
+            if value in known_ids
+            else by_title.get("".join(str(value).casefold().split()), "")
+        )
         known = set(frame.loc[frame["key_type"] == "occupation", "occ_id"]) - {""}
         missing = occupations_frame[~occupations_frame.occ_id.isin(known)]
         fallback = pd.DataFrame({

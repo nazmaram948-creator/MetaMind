@@ -2,7 +2,7 @@ import { useState } from "react";
 import Icon from "./components/Icon";
 import { Estimate, Source } from "./components/Badge";
 import { SdgReason, SdgTags } from "./components/Sdg";
-import { SDG_NOTE } from "./components/sdgData";
+import { SDG_NOTE, goalsOf } from "./components/sdgData";
 import Pathway from "./components/Pathway";
 
 const PART = [
@@ -11,11 +11,11 @@ const PART = [
   ["transferability", "Transferable", "var(--sky)"],
 ];
 
-export function Movement({ value }) {
+export function Movement({ value, title = "Rank change with the newer data" }) {
   if (value == null || value === 0) return null;
   const up = value > 0;
   return (
-    <span className={`mv ${up ? "up" : "down"}`} title="Rank change with the newer data">
+    <span className={`mv ${up ? "up" : "down"}`} title={title}>
       <Icon name={up ? "arrowUp" : "arrowDown"} size={13} stroke={2.2} />{Math.abs(value)}
     </span>
   );
@@ -38,7 +38,14 @@ function SdgBlock({ sdg, rec }) {
   );
 }
 
-export default function RoleCard({ role, movement, note, sdg, skillIds }) {
+/** Goals from the /api/match role itself; null when the response has no SDG fields at all. */
+function matchGoals(role) {
+  if (!Array.isArray(role.sdg_ids) && !Array.isArray(role.sdg_tags)) return null;
+  const ids = (role.sdg_ids || []).map(Number).filter((g) => g >= 1 && g <= 17);
+  return ids.length ? ids : goalsOf((role.sdg_tags || []).join(";"));
+}
+
+export default function RoleCard({ role, movement, note, sdg, skillIds, sdgPref = 0, sdgDelta }) {
   const [open, setOpen] = useState(false);
   const [allGaps, setAllGaps] = useState(false);
   const r = role.robustness;
@@ -47,6 +54,9 @@ export default function RoleCard({ role, movement, note, sdg, skillIds }) {
   const shown = allGaps ? gaps : gaps.slice(0, 8);
   const exposure = role.ai_exposure;
   const sdgRec = sdg?.index[role.role_title.toLowerCase()];
+  const goals = matchGoals(role);
+  // above 0 the API blends the total, so the parts no longer add up to it
+  const blended = sdgPref > 0;
 
   return (
     <div className={`role${open ? " open" : ""}`}>
@@ -60,7 +70,14 @@ export default function RoleCard({ role, movement, note, sdg, skillIds }) {
               you have {role.matched_skills.length} of {role.essential_skills_total} skills this role needs
             </span>
             <Movement value={movement} />
-            {sdgRec && <SdgTags goals={sdgRec.goals} compact />}
+            {sdgDelta ? (
+              <span className="sdg-mv"><span className="faint">SDG</span>
+                <Movement value={sdgDelta} title="Rank change vs SDG slider 0" /></span>
+            ) : null}
+            {goals ? (
+              goals.length ? <SdgTags goals={goals} compact />
+                : <span className="faint" style={{ fontSize: 12 }}>No SDG link in the data</span>
+            ) : sdgRec && <SdgTags goals={sdgRec.goals} compact />}
           </span>
         </span>
         <span className="c-score score">{role.total_match_score.toFixed(0)}</span>
@@ -75,7 +92,11 @@ export default function RoleCard({ role, movement, note, sdg, skillIds }) {
           </div>
           <div className="range-n">{r.p90 - r.p10 < 1 ? `steady at ${r.median_score.toFixed(0)}` : `${r.p10.toFixed(0)}–${r.p90.toFixed(0)}`}</div>
         </span>
-        <Icon name="chevron" className="chev" />
+        {/* visual hint only: aria-expanded on the button already tells assistive tech the state */}
+        <span className="c-more" aria-hidden="true">
+          <span className="more-label">{open ? "Hide" : "Details"}</span>
+          <Icon name="chevron" size={22} stroke={2} className="chev" />
+        </span>
       </button>
 
       {/* outside the button: badges can be links. The open body repeats them in full. */}
@@ -96,8 +117,16 @@ export default function RoleCard({ role, movement, note, sdg, skillIds }) {
               {PART.map(([k, label, c]) => (
                 <span key={k}><i className="dot" style={{ background: c }} />{label} {(pts[k] || 0).toFixed(1)}</span>
               ))}
-              <span className="faint">of {role.total_match_score.toFixed(1)}</span>
+              <span className="faint">
+                {blended ? `before blending · total ${role.total_match_score.toFixed(1)}` : `of ${role.total_match_score.toFixed(1)}`}
+              </span>
             </div>
+            {pts.sdg != null && (
+              <p className="faint sdg-part">
+                SDG link {pts.sdg.toFixed(1)} points
+                {blended && " · parts shown before blending, so they do not add up to the total"}
+              </p>
+            )}
           </div>
 
           <div className="facts">
@@ -134,7 +163,8 @@ export default function RoleCard({ role, movement, note, sdg, skillIds }) {
 
           {sdg && <SdgBlock sdg={sdg} rec={sdgRec} />}
 
-          <Pathway skillIds={skillIds} roleId={role.role_id} />
+          <Pathway skillIds={skillIds} roleId={role.role_id} missingIds={role.missing_skills}
+            missingNames={role.missing_skill_names} note={note} />
 
           <div className="sources">
             {role.source_badges.map((b) => <Source key={b.source} badge={b} />)}

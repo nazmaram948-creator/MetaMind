@@ -126,6 +126,9 @@ Response fields:
   `hours_verified`, and `source_badges`.
 - `best_next_hour`: the highest marginal score improvement divided by exact
   verified course hours.
+- `fallback`: `false` when the pathway contains courses matched to missing
+  skills; `true` when the response uses generic catalogue recommendations
+  instead. A fallback response always has `best_next_hour: null`.
 
 Only courses with `hours_verified: true` participate in `best_next_hour` and
 `marginal_score_per_hour`. Courses with `hours_verified: false` or `null`
@@ -191,7 +194,7 @@ Same routes and response models, served from the real engine. Differences:
   for courses whose hours are not checked. `best_next_hour` is `null` when no
   verified-hour recommendation is available.
 - **`GET /health`** and **`GET /api/health`** expose the active mode and
-  `compute_provider` (`local-deterministic` or `runpod-serverless`).
+  the active mode and engine readiness when engine mode is enabled.
 
 Frontend note: `frontend/src/api.js` calls `http://localhost:8000`. For single-port
 hosting (FastAPI serves `frontend/dist` when it exists) the base URL should be

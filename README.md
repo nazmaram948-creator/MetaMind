@@ -190,6 +190,7 @@ pytest data/tests/check_curated_v2.py -q
 
 ## Challenges & Learnings
 
+
 - **Keeping AI output grounded.** Our first design let a language model help with skill extraction and explanations, and included a RunPod GPU hook. We found that a generative model adds the risk of invented skills and courses, which breaks the rule that every recommendation must come from a real source. We switched to a small embedding model for matching and a database ID allowlist (guardrail) for everything the API returns, kept the LLM interface optional and disabled, and removed the RunPod hook. We learned that for a grounded recommender, retrieval plus validation beats free-form generation.
 - **Data format mismatches hid real gaps.** A mismatch between how the build matched SDG rows (by occupation title) and how a data file keyed them (by ID) silently replaced 36 real SDG mappings with generic "SDG 8" fallback tags. All automated tests still passed. We fixed the matching, wrote a data checker, and learned to test data coverage as well as code.
 - **Stale builds.** The database is generated from the CSV files, so changing a file does nothing until it is rebuilt. We moved the build into the deployment build step and documented `python -m engine.build`.
@@ -239,6 +240,30 @@ pytest data/tests/check_curated_v2.py -q
 - [ ] Submission files renamed with your team name (replace `TeamName`)
 - [x] "How to Run" steps verified
 - [x] No API keys or secrets committed to the repository
+---
+## Known limitations and tooling declaration
+
+- The fixture extractor is deterministic phrase/alias matching. It is not a
+  general semantic parser and unknown phrases are not converted into invented
+  IDs.
+- Curated CSVs are point-in-time snapshots. Demand is neutral in the v2 engine
+  until a checked source URL and verified figures are supplied.
+- `sdg_map_v2.csv` is generated from project mapping rules and contains 42
+  occupation rows in this checkout; treat its `status`, `basis`, and `evidence`
+  fields as reviewable provenance.
+- Synthetic CV intake is bounded and local. Scanned PDFs are not OCR'd.
+- `hours_verified` is a hard gate for pathway ROI; missing HRD Corp data is
+  represented as `null`, not as a false eligibility claim.
+- The engine's `sdg_lambda` is currently `0.0`; the fixture API supports the
+  `sdg_preference` contract while real-engine SDG weighting remains a configured
+  follow-up.
+
+Development tooling and provenance are explicit: Python, FastAPI, Pydantic,
+Uvicorn, React, Vite, pytest, Replit, Claude Code, ESCO, O*NET, Anthropic
+Economic Index extracts, Malaysian public demand records, and UN SDG mapping
+rules are used as documented above. No hardcoded credentials or secrets are
+stored in the repository.
+
 
 ## License
 

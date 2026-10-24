@@ -112,6 +112,7 @@ class PathwayResponse(BaseModel):
     missing_skills: list[str]
     pathway: list[CourseRecommendation]
     best_next_hour: CourseRecommendation | None
+    fallback: bool = False
     label: Literal["Estimate"] = "Estimate"
     assumption_note: str
 

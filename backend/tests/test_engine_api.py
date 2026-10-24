@@ -130,11 +130,32 @@ def test_occupations_context_personas_sdg(client):
 
 
 def test_pathway_is_not_faked_in_engine_mode(client):
-    r = client.post("/api/pathway", json={"skill_ids": [], "target_role_id": "bookkeeper"})
+    r = client.post("/api/pathway", json={"skill_ids": [], "target_role_id": "data_analyst"})
     assert r.status_code == 200
     payload = r.json()
     assert payload["pathway"]
+    assert payload["fallback"] is False
     assert payload["best_next_hour"]["hours_verified"] is True
+
+
+def test_pathway_flags_generic_fallback_and_clears_best_next_hour(client):
+    eng = engine_api.engine()
+    original_courses = eng.store["courses"]
+    fallback_courses = original_courses.copy()
+    fallback_courses["esco_skill_uris"] = ""
+    eng.store.tables["courses"] = fallback_courses
+    try:
+        response = client.post(
+            "/api/pathway",
+            json={"skill_ids": [], "target_role_id": "bookkeeper"},
+        )
+        assert response.status_code == 200
+        payload = response.json()
+        assert payload["fallback"] is True
+        assert payload["pathway"]
+        assert payload["best_next_hour"] is None
+    finally:
+        eng.store.tables["courses"] = original_courses
 
 
 def test_engine_only_routes_are_gated_without_engine_mode(monkeypatch):
