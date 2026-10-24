@@ -77,12 +77,23 @@ S = 100 × (w_c·C + w_o·Ô + w_t·T) + λ·SDG
 ```
 
 where `C` is essential-skill coverage, `Ô` is normalized role outlook,
-`T` is transferability, and `λ` is the SDG weight. The fixture adapter also
-accepts `sdg_preference ∈ [0, 1]` and blends the base role score with the
-SDG-tag score. The engine does the same: with `sdg_preference = p` it ranks by
-`(1 − p)·S + p·100·SDG_o`, where `SDG_o` = number of SDG links of the role / 3,
-capped at 1. `sdg_lambda` in `engine/config.yaml` stays `0.0`, so without a
-preference the ranking is unchanged.
+`T` is transferability, and `λ` is the SDG weight.
+
+**SDG term (engine).** The slider value `sdg_preference = p ∈ [0, 1]` sets
+`λ = p · sdg_lambda_max` (20 points; the brief's 10 is one line in
+`engine/config.yaml`). The SDG part is added on top of the other parts, so
+`score_points` always add up to the total, and skills still decide the top of the list.
+
+`SDG_o ∈ [0, 1]` measures how much of the role's ESCO skill profile serves an SDG,
+not how many goals it is tagged with:
+
+- a skill in the ESCO Green collection, or mapped to an SDG target, counts 1;
+- a skill only in the Digital collection counts 0.25;
+- skills are weighted 1 if essential, 0.5 if optional, and the result is scaled so the
+  most SDG-aligned role scores 1.
+
+Without a preference `λ = sdg_lambda = 0`. The fixture adapter keeps its own
+blended `sdg_preference_score`.
 
 ### 1,000 futures robustness estimate
 
@@ -337,8 +348,9 @@ otherwise it reports `local-deterministic`.
 - Synthetic CV intake is bounded and local. Scanned PDFs are not OCR'd.
 - `hours_verified` is a hard gate for pathway ROI; missing HRD Corp data is
   represented as `null`, not as a false eligibility claim.
-- SDG re-ranking counts how many SDGs a role links to; it does not weigh how
-  strongly a role contributes to each goal.
+- SDG strength comes from the ESCO skill profile. The team's SDG rows add goals and
+  reasons, but no strength unless the role's skills back them; roles without SDG-linked
+  skills get little SDG weight.
 - Task X-ray labels use global Claude.ai usage, not Malaysian data. "Mostly human"
   means no measurable AI use in the sample, not that AI cannot do the task.
 - "Upgrade in place" links tasks to skills by text similarity, not by an official

@@ -165,16 +165,22 @@ Same routes and response models, served from the real engine. Differences:
   (`rising`, `stable` or `declining`), `is_green`, `is_digital`, `label: "Estimate"`
   and `source`. Without `skill` it returns the strongest rising and declining skills.
 - **`POST /api/match`** accepts `current_occupation_id: null` for fresh graduates and
-  switchers; otherwise that occupation is left out. Each role adds:
-  - `rank`, `essential_skills_total`, `matched_skill_names`, `missing_skill_names`;
-  - `score_points`: the points from coverage, outlook and transferability, which sum
-    to `total_match_score`;
-  - `score_breakdown`: what the user reads. `skills_covered_score` is the raw share of
-    essential skills held, `role_trend_score` the outlook index from 0 to 100,
-    `transferability_score` the raw similarity of missing skills to held ones;
-  - `ai_exposure`: `automation_share_pct` of the role's observed tasks, with source;
-  - `robustness`: `top5_frequency`, `median_score`, `p10`, `p90`, `worst_rank`,
-    `safest_pick` and `assumption_note`.
+  switchers; otherwise that occupation is left out.
+  - `sdg_preference` (0–1) adds up to `sdg_lambda_max` points (20 by default) of SDG
+    strength. `score_points.sdg` shows those points, and all `score_points` add up to
+    `total_match_score` at any preference.
+  - `score_breakdown.sdg_score` is the role's SDG strength from 0 to 100 (share of its
+    ESCO skills with SDG evidence). `weights.sdg_lambda` is the λ used.
+  - Each role adds:
+    - `rank`, `essential_skills_total`, `matched_skill_names`, `missing_skill_names`;
+    - `score_points`: the points from coverage, outlook, transferability and SDG,
+      which sum to `total_match_score`;
+    - `score_breakdown`: what the user reads. `skills_covered_score` is the raw share of
+      essential skills held, `role_trend_score` the outlook index from 0 to 100,
+      `transferability_score` the raw similarity of missing skills to held ones;
+    - `ai_exposure`: `automation_share_pct` of the role's observed tasks, with source;
+    - `robustness`: `top5_frequency`, `median_score`, `p10`, `p90`, `worst_rank`,
+      `safest_pick` and `assumption_note`.
 
   `source_badges` list the AEI snapshot, ESCO and O*NET with dates and URLs.
 - **`POST /api/snapshot/load`**: `baseline_snapshot` = AEI Nov 2025 (`aei_2025_11`),
