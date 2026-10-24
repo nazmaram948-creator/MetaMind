@@ -122,7 +122,8 @@ def match(
     df["pts_coverage"] = 100 * weights["coverage"] * df.C
     df["pts_outlook"] = 100 * weights["outlook"] * df.O_hat
     df["pts_transferability"] = 100 * weights["transferability"] * df["T"]
-    df["S"] = df.pts_coverage + df.pts_outlook + df.pts_transferability + sdg_lambda * df.SDG
+    df["pts_sdg"] = sdg_lambda * df.SDG
+    df["S"] = df.pts_coverage + df.pts_outlook + df.pts_transferability + df.pts_sdg
     df = df.sort_values(["S", "occ_id"], ascending=[False, True]).reset_index(drop=True)
     df["rank"] = np.arange(1, len(df) + 1)
     return df

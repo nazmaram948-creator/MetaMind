@@ -139,3 +139,16 @@ def test_team_uses_free_text_skills_and_xray(engine):
     m = t["members"][0]
     assert m["skills_matched"] > 0 and m["task_split_pct"] is not None
     assert len(m["top_roles"]) == 3 and all(r["role_id"] != "customer_service_rep" for r in m["top_roles"])
+
+
+def test_sdg_term_is_additive_and_measures_evidence(engine):
+    skills = [f["skill_id"] for f in engine.parse(CV)]
+    lam_max = engine.cfg["match"]["sdg_lambda_max"]
+    for p in (None, 0.0, 0.5, 1.0):
+        for r in engine.match(skills, current_occ="accounts_clerk", sdg_preference=p)["roles"]:
+            assert r["total_match_score"] == pytest.approx(sum(r["score_points"].values()), abs=0.25)
+            assert 0 <= r["score_points"]["sdg"] <= lam_max * (p or 0) + 0.05
+    s = engine.sdg_strength()
+    assert s.between(0, 1).all() and s.max() == pytest.approx(1.0)
+    assert s.round(2).nunique() > 3, "SDG_o must not be a goal count (only 3 distinct values)"
+    assert s["environmental_policy_officer"] > s["accounts_clerk"]

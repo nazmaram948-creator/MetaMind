@@ -8,6 +8,7 @@ from __future__ import annotations
 import importlib.util
 import json
 import logging
+import re
 from functools import lru_cache
 
 import pandas as pd
@@ -139,30 +140,50 @@ class Engine:
                 "label": ESTIMATE, "source": badge} for k in dict.fromkeys(ids)]
         return self._guard(out)
 
+    def sdg_strength(self) -> pd.Series:
+        """SDG_o per occupation (0..1): how much of the role's ESCO skill profile carries SDG evidence.
+
+        Skill evidence e_k: 1 if the skill is in ESCO's Green collection or is one of the role's
+        skills mapped to an SDG target in sdg_map ("has '<label>'" in evidence); sdg_digital_weight
+        if it is only in the Digital collection; else 0. SDG_o = sum(r_ok * e_k) / sum(r_ok), with
+        r = 1 essential / 0.5 optional, divided by the maximum over roles.
+        """
+        if "sdg_strength" not in self._cache:
+            sk = self.store["skills"].set_index("skill_uri")
+            by_label = dict(zip(sk.label, sk.index))
+            dw = self.cfg["match"]["sdg_digital_weight"]
+            sm = self.store["sdg_map"]
+            targets: dict[str, set[str]] = {}
+            for occ, ev in zip(sm.occ_id.fillna(""), sm.evidence.fillna("")):
+                if occ:
+                    labels = re.findall(r"has '([^']+)'", str(ev))
+                    targets.setdefault(occ, set()).update(by_label[x] for x in labels if x in by_label)
+            share = {}
+            for occ, g in self.store["occ_skill"].groupby("occ_id"):
+                tgt = targets.get(occ, set())
+                e = [1.0 if (sk.is_green.get(u, 0) or u in tgt) else dw if sk.is_digital.get(u, 0) else 0.0
+                     for u in g.skill_uri]
+                share[occ] = float((g.r.to_numpy() * e).sum() / g.r.sum()) if g.r.sum() else 0.0
+            s = pd.Series(share)
+            self._cache["sdg_strength"] = s / s.max() if s.max() > 0 else s
+        return self._cache["sdg_strength"]
+
+    def sdg_lambda(self, sdg_preference: float | None) -> float:
+        mc = self.cfg["match"]
+        if sdg_preference is None:
+            return float(mc["sdg_lambda"])
+        return float(mc["sdg_lambda_max"]) * min(max(float(sdg_preference), 0.0), 1.0)
+
     def rank(self, skill_ids: list[str], current_occ: str | None, scenario: str, snapshot_id: str,
              sdg_preference: float | None = None) -> pd.DataFrame:
+        """S = 100 (wc C + wo O_hat + wt T) + lambda SDG_o; lambda comes from the SDG slider."""
         st = self.state(snapshot_id, scenario)
         mc = self.cfg["match"]
-        lam = mc["sdg_lambda"]
         exclude = [current_occ] if (current_occ and mc["exclude_current"]) else []
-        ranked = model.match(skill_ids, self.essentials, st["outlook"].O_hat, st["m"], self.sim.skills,
-                           weights=mc["weights"], kappa=mc["momentum_kappa"], sdg_lambda=lam, exclude=exclude,
+        return model.match(skill_ids, self.essentials, st["outlook"].O_hat, st["m"], self.sim.skills,
+                           weights=mc["weights"], kappa=mc["momentum_kappa"], sdg=self.sdg_strength(),
+                           sdg_lambda=self.sdg_lambda(sdg_preference), exclude=exclude,
                            normalise=mc["normalise_components"])
-        sdg_rows = self.store["sdg_map"]
-        sdg_by_role = {
-            row.occ_id: min(len(str(row.sdg_ids).split(";")) / 3.0, 1.0)
-            for row in sdg_rows.itertuples()
-            if getattr(row, "key_type", "") == "occupation" and getattr(row, "occ_id", "")
-        }
-        ranked["SDG"] = ranked.occ_id.map(sdg_by_role).fillna(0.0)
-        if sdg_preference is not None:
-            ranked["S"] = (
-                ranked["S"] * (1.0 - sdg_preference)
-                + ranked["SDG"] * 100.0 * sdg_preference
-            )
-            ranked = ranked.sort_values(["S", "occ_id"], ascending=[False, True]).reset_index(drop=True)
-            ranked["rank"] = range(1, len(ranked) + 1)
-        return ranked
 
     def match(self, skill_ids: list[str], current_occ: str | None = None, scenario: str = "moderate",
               snapshot_id: str | None = None, sdg_preference: float | None = None) -> dict:
@@ -173,7 +194,7 @@ class Engine:
         f = self.cfg["futures"]
         fut = model.futures(ranked, self.essentials, st["m"], skill_ids, weights=self.cfg["match"]["weights"],
                             kappa=self.cfg["match"]["momentum_kappa"], runs=f["runs"], r=f["momentum_noise_r"],
-                            seed=f["seed"], top_n=f["top_n"],
+                            seed=f["seed"], top_n=f["top_n"], sdg_lambda=self.sdg_lambda(sdg_preference),
                             normalise=self.cfg["match"]["normalise_components"]).set_index("occ_id")
         safest = fut.loc[ranked.occ_id[:10]].sort_values(["worst_rank", "p_top"], ascending=[True, False]).index[0]
         exp = st["exp"]
@@ -189,13 +210,13 @@ class Engine:
                 "score_breakdown": {"skills_covered_score": round(100 * r.C_raw, 1),
                                     "role_trend_score": round(100 * r.O_hat, 1),
                                     "transferability_score": round(100 * r.T_raw, 1),
-                                    "sdg_score": round(r.SDG, 1)},
+                                    "sdg_score": round(100 * r.SDG, 1)},
                 # points each part adds to total_match_score (they sum to it)
                 "score_points": {"coverage": round(r.pts_coverage, 1), "outlook": round(r.pts_outlook, 1),
                                  "transferability": round(r.pts_transferability, 1),
-                                 "sdg": round(float(r.SDG) * 100 * (sdg_preference or 0), 1)},
+                                 "sdg": round(float(r.pts_sdg), 1)},
                 "essential_skills_total": int(r.n_essential),
-                "weights": self.cfg["match"]["weights"],
+                "weights": {**self.cfg["match"]["weights"], "sdg_lambda": self.sdg_lambda(sdg_preference)},
                 "matched_skills": r.matched, "missing_skills": r.missing,
                 "sdg_tags": [
                     f"SDG {value}" for value in str(

@@ -44,7 +44,19 @@ match:
   # roles list 10-25 essential skills). false = use raw C and T in the formula.
   # Raw coverage ("you have 5 of 18") is always reported as well.
   normalise_components: true
-  sdg_lambda: 0.0            # SDG slider (P3); 0 = off
+  # SDG term: lambda * SDG_o points are added to S, so the parts always add up.
+  # SDG_o (0..1) = share of the role's ESCO skill weight that carries SDG evidence
+  # (Green collection or a skill mapped to an SDG target = 1, Digital collection only =
+  # sdg_digital_weight), scaled so the most SDG-aligned role = 1. It measures how much
+  # of the job serves an SDG, not how many goals it is tagged with.
+  sdg_lambda: 0.0            # lambda when the request sends no sdg_preference
+  # lambda at sdg_preference = 1. The brief says 0-10; at 10 the slider does not change an
+  # admin CV's top 5 at all (clerical roles carry little SDG evidence), at 20 green roles rise
+  # 15-30 places while skills still decide the top. Set 10.0 to follow the brief exactly.
+  sdg_lambda_max: 20.0
+  # 'digital -> SDG 9' is a broad link: at 0.5, data entry clerk (89% digital skills) entered
+  # the top 5 for SDG reasons although it is the most automatable role.
+  sdg_digital_weight: 0.25
   exclude_current: true      # do not recommend the user's current occupation
 
 parse:
