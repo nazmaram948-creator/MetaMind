@@ -148,6 +148,7 @@ def load_sdg_mappings() -> tuple[SdgMapping, ...]:
         expected_v2 = {
             "key_type", "key", "occ_id", "isco_code", "esco_uri", "sdg_ids",
             "targets", "reason", "evidence", "basis", "status",
+            "source", "date_published",
         }
         rows = _rows(filename, expected_v2)
         return tuple(

@@ -16,6 +16,10 @@ class Settings:
     )
     simulation_runs: int = int(os.getenv("SIMULATION_RUNS", "1000"))
     simulation_variation: float = float(os.getenv("SIMULATION_VARIATION", "0.2"))
+    runpod_api_key: str | None = os.getenv("RUNPOD_API_KEY")
+    runpod_endpoint_id: str | None = os.getenv("RUNPOD_ENDPOINT_ID")
+    runpod_base_url: str | None = os.getenv("RUNPOD_BASE_URL")
+    runpod_timeout_seconds: float = float(os.getenv("RUNPOD_TIMEOUT_SECONDS", "8"))
 
 
 settings = Settings()

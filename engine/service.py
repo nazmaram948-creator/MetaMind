@@ -143,12 +143,26 @@ class Engine:
              sdg_preference: float | None = None) -> pd.DataFrame:
         st = self.state(snapshot_id, scenario)
         mc = self.cfg["match"]
-        # SDG term (P3) stays at lambda = 0 until the SDG slider is built; sdg_preference is accepted but unused.
         lam = mc["sdg_lambda"]
         exclude = [current_occ] if (current_occ and mc["exclude_current"]) else []
-        return model.match(skill_ids, self.essentials, st["outlook"].O_hat, st["m"], self.sim.skills,
+        ranked = model.match(skill_ids, self.essentials, st["outlook"].O_hat, st["m"], self.sim.skills,
                            weights=mc["weights"], kappa=mc["momentum_kappa"], sdg_lambda=lam, exclude=exclude,
                            normalise=mc["normalise_components"])
+        sdg_rows = self.store["sdg_map"]
+        sdg_by_role = {
+            row.occ_id: min(len(str(row.sdg_ids).split(";")) / 3.0, 1.0)
+            for row in sdg_rows.itertuples()
+            if getattr(row, "key_type", "") == "occupation" and getattr(row, "occ_id", "")
+        }
+        ranked["SDG"] = ranked.occ_id.map(sdg_by_role).fillna(0.0)
+        if sdg_preference is not None:
+            ranked["S"] = (
+                ranked["S"] * (1.0 - sdg_preference)
+                + ranked["SDG"] * 100.0 * sdg_preference
+            )
+            ranked = ranked.sort_values(["S", "occ_id"], ascending=[False, True]).reset_index(drop=True)
+            ranked["rank"] = range(1, len(ranked) + 1)
+        return ranked
 
     def match(self, skill_ids: list[str], current_occ: str | None = None, scenario: str = "moderate",
               snapshot_id: str | None = None, sdg_preference: float | None = None) -> dict:
@@ -178,10 +192,33 @@ class Engine:
                                     "sdg_score": round(r.SDG, 1)},
                 # points each part adds to total_match_score (they sum to it)
                 "score_points": {"coverage": round(r.pts_coverage, 1), "outlook": round(r.pts_outlook, 1),
-                                 "transferability": round(r.pts_transferability, 1), "sdg": 0.0},
+                                 "transferability": round(r.pts_transferability, 1),
+                                 "sdg": round(float(r.SDG) * 100 * (sdg_preference or 0), 1)},
                 "essential_skills_total": int(r.n_essential),
                 "weights": self.cfg["match"]["weights"],
                 "matched_skills": r.matched, "missing_skills": r.missing,
+                "sdg_tags": [
+                    f"SDG {value}" for value in str(
+                        next(
+                            (
+                                row.sdg_ids for row in self.store["sdg_map"].itertuples()
+                                if getattr(row, "occ_id", "") == r.occ_id
+                            ),
+                            "",
+                        )
+                    ).split(";") if value
+                ],
+                "sdg_ids": [
+                    value for value in str(
+                        next(
+                            (
+                                row.sdg_ids for row in self.store["sdg_map"].itertuples()
+                                if getattr(row, "occ_id", "") == r.occ_id
+                            ),
+                            "",
+                        )
+                    ).split(";") if value
+                ],
                 "matched_skill_names": [self.store.skill_label[k] for k in r.matched],
                 "missing_skill_names": [self.store.skill_label[k] for k in r.missing],
                 "ai_exposure": {"automation_share_pct": None if pd.isna(auto) else round(100 * auto, 1),

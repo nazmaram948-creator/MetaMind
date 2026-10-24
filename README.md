@@ -262,6 +262,8 @@ is 53 backend tests and 29 engine/data tests.
 
 The root [.replit](.replit) selects Python 3.11 and Node.js 20, sets
 `ENGINE_MODE=true`, exposes port 8000 as external port 80, and runs `bash run.sh`.
+`run.sh` rebuilds `data/skillshift_v2.db` with `python -m engine.build` before
+Uvicorn starts, so curated CSV changes are applied on every deploy.
 To reproduce the runtime locally:
 
 ```bash
@@ -269,6 +271,25 @@ ENGINE_MODE=true PORT=8000 bash run.sh
 ```
 
 Replit sets `REPL_ID`; `run.sh` responds by binding Uvicorn to `0.0.0.0`.
+
+### RunPod inference hook
+
+Set `RUNPOD_API_KEY` and either `RUNPOD_ENDPOINT_ID` for a Serverless endpoint
+or `RUNPOD_BASE_URL` for a vLLM/Ollama-compatible endpoint. When configured,
+engine-mode profile parsing tries RunPod first, validates returned IDs against
+the ESCO store, and falls back to deterministic local extraction on timeout,
+invalid output, or missing configuration.
+
+```powershell
+$env:RUNPOD_API_KEY="<key>"
+$env:RUNPOD_ENDPOINT_ID="<endpoint-id>"
+& .venv\Scripts\python.exe scripts\verify_runpod.py
+```
+
+The verification proof is written to
+`data/runpod_verification_proof.json` without recording the API key. `/health`
+reports `compute_provider` as `runpod-serverless` when the hook is configured;
+otherwise it reports `local-deterministic`.
 
 ## Known limitations and tooling declaration
 

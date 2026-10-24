@@ -65,6 +65,7 @@ class RoleMatch(BaseModel):
     matched_skills: list[str]
     missing_skills: list[str]
     sdg_tags: list[str] = Field(default_factory=list)
+    sdg_ids: list[str] = Field(default_factory=list)
     robustness_estimate: str
     robustness: dict[str, object]
     source_badges: list[SignalBadge] = Field(default_factory=list)
