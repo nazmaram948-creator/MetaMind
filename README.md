@@ -23,7 +23,7 @@
 | GitHub Repository | https://github.com/nazmaram948-creator/MetaMind/tree/dc22bc7743d20d1c0467a601fd88aa2b7edd5785  |
 | Live Demo         | https://meta-mind-1.replit.app                 |
 | RunPod Endpoint   | Not used                                       |
-| Slide Deck        |                                                |
+| Slide Deck        |     https://youtu.be/1kMzCF_wz0c?si=hbxXNfgMu73Osx-C                                           |
 | Demo Video        |                                                |
 
 ---
