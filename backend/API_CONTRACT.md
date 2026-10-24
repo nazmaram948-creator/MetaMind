@@ -191,7 +191,7 @@ Same routes and response models, served from the real engine. Differences:
   for courses whose hours are not checked. `best_next_hour` is `null` when no
   verified-hour recommendation is available.
 - **`GET /health`** and **`GET /api/health`** expose the active mode and
-  `compute_provider` (`local-deterministic` or `runpod-serverless`).
+  the active mode and engine readiness when engine mode is enabled.
 
 Frontend note: `frontend/src/api.js` calls `http://localhost:8000`. For single-port
 hosting (FastAPI serves `frontend/dist` when it exists) the base URL should be

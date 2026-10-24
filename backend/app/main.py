@@ -31,7 +31,6 @@ from .schemas import (
     ContextResponse,
 )
 from .services import engine_api
-from .services import runpod_client
 from .services.extraction import extract_skills, normalize_skill_phrases
 from .services.guardrails import validate_db_ids
 from .services.repository import (
@@ -83,7 +82,6 @@ def health() -> dict[str, object]:
     return {
         "status": "ok",
         "mode": mode,
-        **runpod_client.provider_status(),
         **(engine_api.status() if settings.engine_mode else {}),
     }
 
