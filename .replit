@@ -1,9 +1,62 @@
-modules = ["python-3.11", "nodejs-20"]
-run = "bash run.sh"
+modules = ["python-3.12", "nodejs-20", "web", "bash"]
+run = "bash -c 'set -e; python -m engine.build; (cd frontend && npm run build); exec env ENGINE_MODE=true python -m uvicorn backend.app.main:app --host 0.0.0.0 --port 5000'"
 
 [env]
 ENGINE_MODE = "true"
 
 [[ports]]
-localPort = 8000
+localPort = 5000
 externalPort = 80
+
+[nix]
+channel = "stable-25_05"
+
+[workflows]
+runButton = "Project"
+
+[[workflows.workflow]]
+name = "Project"
+mode = "parallel"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Start application"
+
+[[workflows.workflow]]
+name = "Start application"
+author = "agent"
+
+[workflows.workflow.metadata]
+outputType = "webview"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "bash -c 'set -e; python -m engine.build; (cd frontend && npm run build); exec env ENGINE_MODE=true python -m uvicorn backend.app.main:app --host 0.0.0.0 --port 5000'"
+waitForPort = 5000
+
+[deployment]
+deploymentTarget = "autoscale"
+run = ["env", "ENGINE_MODE=true", "HF_HOME=.deployment-models/huggingface", "HF_HUB_OFFLINE=1", "python", "-m", "uvicorn", "backend.app.main:app", "--host", "0.0.0.0", "--port", "5000"]
+build = ["bash", "-c", """
+set -euo pipefail
+
+pip install --disable-pip-version-check -r backend/requirements.txt
+if [ -f engine/requirements.txt ]; then
+  pip install --disable-pip-version-check -r engine/requirements.txt
+fi
+
+(cd frontend && npm install && npm run build)
+python -m engine.build
+
+export HF_HOME=.deployment-models/huggingface
+python - <<'PY'
+from engine.config import load_config
+from sentence_transformers import SentenceTransformer
+
+SentenceTransformer(load_config()[\"parse\"][\"model\"], device=\"cpu\")
+
+from engine.service import Engine
+Engine().parse(\"use spreadsheets software\")
+PY
+"""]
