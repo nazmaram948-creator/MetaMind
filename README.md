@@ -1,320 +1,246 @@
-# Future Skills Compass
+# SkillShift MY
 
-[![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-3776AB?logo=python&logoColor=white)](https://www.python.org/)
-[![FastAPI](https://img.shields.io/badge/FastAPI-0.115%2B-009688?logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
-[![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=20232A)](https://react.dev/)
-[![Vite](https://img.shields.io/badge/Vite-8-646CFF?logo=vite&logoColor=white)](https://vite.dev/)
-[![License](https://img.shields.io/badge/license-Apache--2.0-green.svg)](LICENSE)
-[![Guardrail verification](https://img.shields.io/badge/guardrail-50%2F50%20passed-2ea44f)](backend/tests/guardrail_50run_report.json)
+> SkillShift MY (Future Skills Compass) is an AI-powered, deterministic career-transition analysis platform that guides Malaysian workers and students from their current skill sets to sustainable, future-ready roles in the AI era.
 
-> Deterministic career-transition analysis for Malaysian workers and SMEs.
+---
 
-Future Skills Compass combines skill-momentum modelling, Monte Carlo career-robustness simulation, and SDG-weighted upskilling recommendations for workers exposed to AI task automation. It returns ranked roles, evidence badges, snapshot deltas, and verified-hour learning pathways without inventing database identifiers or course facts.
+## Team Information
 
-**Quick links:** [Architecture](#system-architecture-and-data-pipeline) · [Algorithms](#core-algorithmic-mechanics) · [API](#api-reference) · [Runbook](#local-development-testing-and-replit-deployment) · [Limitations](#known-limitations-and-tooling-declaration)
+| Field                  | Details                                     |
+| ---------------------- | ------------------------------------------- |
+| **Team Name**          | MetaMind                                    |
+| **Team Domain**        | Domain 1                                    |
+| **SDG Track (1–17)**   | SDG 4 - Quality Education &                 |
+                         | SDG 8 - Decent Work and Economic Growth     |
+| **Team Leader**        | Sallam Maram Niyazi Abdulmawla              |
+| **University**         | XMUM / UniKL MIIT                           |
+| **Number of Members**  | 5                                           |
 
-## System architecture and data pipeline
+## Links
 
-```text
-┌─────────────────────────────────────────────────────────────────────────┐
-│ Data ingestion and signal layer: data/curated/ + data/extracts/          │
-│ AEI · ESCO v1.2 · O*NET/ISCO · DOSM/PERKESO · SDG maps · course catalog │
-└──────────────────────────────┬──────────────────────────────────────────┘
-                               │ validated CSV/JSON → SQLite
-                               ▼
-┌─────────────────────────────────────────────────────────────────────────┐
-│ Core engine: engine/service.py                                           │
-│ exposure/outlook → skill momentum → match ranking → snapshot diff       │
-│ 1,000-run momentum perturbation and top-5 survival frequency              │
-└──────────────────────────────┬──────────────────────────────────────────┘
-                               │ typed response models
-                               ▼
-┌─────────────────────────────────────────────────────────────────────────┐
-│ FastAPI gateway: backend/app/                                             │
-│ deterministic phrase extraction · curated adapters · strict ID allowlist │
-│ provenance badges · DEV_MODE fixture path · ENGINE_MODE real-data path   │
-└──────────────────────────────┬──────────────────────────────────────────┘
-                               │ REST /api/*
-                               ▼
-┌─────────────────────────────────────────────────────────────────────────┐
-│ React/Vite client: frontend/ · http://localhost:5173                     │
-│ Skills Radar · Role Cards · SDG trade-off slider · pathway ROI           │
-└─────────────────────────────────────────────────────────────────────────┘
+| Resource          | Link                                           |
+| ----------------- | ---------------------------------------------- |
+| GitHub Repository | https://github.com/nazmaram948-creator/MetaMind/tree/dc22bc7743d20d1c0467a601fd88aa2b7edd5785  |
+| Live Demo         | https://meta-mind-1.replit.app                 |
+| RunPod Endpoint   | Not used                                       |
+| Slide Deck        |                                                |
+| Demo Video        |                                                |
+
+---
+
+## Overview
+
+### Problem
+
+In Malaysia, 56% of professionals already utilize AI tools at work, yet only 26% have received formal training, while over 600,000 workers require reskilling within three to five years. This challenge severely impacts displaced working adults, fresh graduates, career switchers, and HR leaders seeking actionable upskilling pathways. Traditional career guidance relies on static lists that become obsolete as AI capabilities evolve, leaving workers unable to identify resilient skills and failing to align career growth with global sustainability goals.
+
+### Solution
+
+SkillShift MY turns public, dated data into a transparent career path. A person uploads a synthetic CV (PDF or text), pastes text, or picks a demo profile. A small pre-trained embedding model matches the CV phrases to ESCO skills, and the person confirms or removes each one. The engine then ranks 42 occupations with an explainable score built from skill coverage, role outlook (from Anthropic Economic Index snapshots) and transferability, and tests how stable each ranking is across 1,000 simulated futures. Every role is linked to the SDGs it supports, and a learning pathway lists catalogue courses for the person's skill gaps. Every forecast is labelled "Estimate" with its source and date, and anything that is not in the database is blocked, so the system cannot invent jobs, courses or statistics.
+
+### Key Features
+
+- **Skills intake & verification** —  Upload a CV (PDF/text), paste text, or use a synthetic profile; skills map to ESCO for user confirmation or removal.
+- **Future Skills Radar** — Displays rising, stable, and declining skills via Anthropic Economic Index data, complete with source/date badges and a Moderate/Fast AI-adoption toggle.
+- **Explainable role matching** — Simulates 1,000 runs varying skill momentum by ±20% to identify "Safest picks" (frequency in top 5), clearly marked as an estimate with visible assumptions.
+- **1,000-futures robustness estimate** — Generates personalized "Best Next Hour" upskilling recommendations linked to verified HRD Corp courses, explicitly mapping every skill and role to UN SDG targets (SDG 4 & SDG 8) with an interactive SDG trade-off slider.
+- **Live data refresh** — Load newer data" updates the AEI snapshot from Nov 2025 to May 2026, explaining rank shifts.
+- **SDG explorer & slider** — Links each role to justified SDGs, using an interactive slider to re-rank roles by blending skill fit with SDG alignment.
+- **Learning pathway** — Suggests curated courses for skill gaps; displays only verified hours, labels cost/HRD Corp status as unverified/unknown, and flags when gaps lack matching courses.
+- **Guardrails & privacy** — Blocks unknown skill, role, or course IDs (validated via 50-run testing), omits age and gender collection, and restricts usage to synthetic profiles.
+
+### Tech Stack
+
+| Layer         | Technology                   |
+| ------------- | ---------------------------- |
+| Frontend      | React 19, Vite, Recharts (plain CSS)    |
+| Backend       | Python 3.12, FastAPI, Uvicorn, Pydantic, pdfplumber (PDF text, capped at 20,000 characters)  |
+| Database      | SQLite, built from curated CSV files and data extracts with pandas (`python -m engine.build`) |
+| AI / Compute  | Pre-trained sentence-transformers model `all-MiniLM-L6-v2` on CPU for skill matching; NumPy for scoring and the 1,000-run Monte Carlo estimate.                                        |
+| Hosting / Dev | **Replit** (deployment, secrets), GitHub (version control), Claude Code and the Replit Agent (AI-assisted development, declared in the Technical Declaration)                           |
+
+---
+
+## Project Structure
+
+The tree below shows the real layout of this repository.
+
+```
+MetaMind/
+├── .replit                    # Replit run workflow and [deployment] build/run commands
+├── .gitignore
+├── LICENSE                    # Apache License 2.0
+├── README.md
+├── docs/                      # Project documentation
+├── backend/
+│   ├── app/
+│   │   ├── main.py            # FastAPI app and /api/* routes (also serves the built frontend)
+│   │   ├── schemas.py         # Request/response models
+│   │   ├── config.py          # Environment-backed settings
+│   │   └── services/          # Engine adapter, curated-data loader, CV text extraction
+│   ├── tests/                 # API, curated-data and 50-run guardrail tests
+│   ├── API_CONTRACT.md        # API contract used by the frontend
+│   ├── pytest.ini
+│   ├── requirements.txt
+│   └── .env.example           # Environment template (no secrets)
+├── engine/
+│   ├── build.py               # Builds data/skillshift_v2.db from the curated data
+│   ├── config.yaml            # Weights, simulation settings
+│   ├── service.py             # Ranking, scenarios, snapshot diff, robustness
+│   ├── model.py, parse.py, similarity.py, store.py
+│   ├── guardrail.py           # Blocks IDs that are not in the database
+│   ├── llm.py                 # Optional LLM interface, disabled by default
+│   └── tests/
+├── data/
+│   ├── curated/               # Team-curated courses, SDG map, personas
+│   ├── extracts/              # ESCO, O*NET and AEI extracts
+│   ├── scripts/               # Scripts that build and check the curated files
+│   └── tests/
+├── frontend/
+│   ├── src/                   # React app (components/, api.js)
+│   ├── public/samples/        # Synthetic sample CVs (PDF)
+│   └── package.json
+└── submission/
+    ├── SDC2026_Metamind_Preliminary.pdf
+    ├── SDC2026_Metamind_TechDeclaration.pdf
+    └── SDC2026_Metamind_Replit_POU.pdf
 ```
 
-The project keeps two curated generations side by side. The current fixture
-adapter reads the v1 files (`courses.csv`, `sdg_mapping.csv`, and related
-persona/demand files). The engine build is configured for v2 ESCO-keyed files;
-see [data/curated/README.md](data/curated/README.md) before changing the active
-curated version.
+The generated database `data/skillshift_v2.db` is not committed. It is built with `python -m engine.build`.
 
-## Core algorithmic mechanics
+### Architecture
 
-### Skill momentum and outlook
-
-For occupation \(o\), the engine derives an outlook from demand and exposure:
-
-```text
-O_o = α·D_o + β·z(augmentation_o) − γ·z(automation_o)
+```
+User ──► Replit (React UI + FastAPI API, one app)
+                │
+                ├──► Engine (Python): skill matching, momentum, scoring, 1,000-run estimate
+                │        └──► Embedding model on CPU (all-MiniLM-L6-v2)
+                │
+                ├──► SQLite database (ESCO, O*NET, AEI snapshots, course and SDG tables)
+                │
+                └──► Response returned to user
 ```
 
-`moderate` uses `γ = 1`; `fast` uses `γ = 2`. Demand is neutral when source
-verification is disabled in `engine/config.yaml`. Skill momentum is the
-weighted outlook of occupations requiring the skill:
+## How to Run
 
-```text
-M_k = Σ_o r_ok·O_o / Σ_o r_ok
-```
+### Option 1 — Run on Replit (Recommended)
 
-`r_ok` is `1.0` for essential and `0.5` for optional skill relations.
+1. On Replit, choose **Import from GitHub** and select `nazmaram948-creator/MetaMind`.
+2. Open the **Secrets** tab and add `ENGINE_MODE` = `true`. No RunPod keys are needed because RunPod is not used.
+3. Click **Run**. The workflow builds the database (`python -m engine.build`), builds the frontend, and starts the backend on port 5000 serving the app. The first start takes a few minutes because the embedding model (about 90 MB) is downloaded.
 
-### Match score
+To publish, use the **Publish** tab. The deployment build installs dependencies, builds the frontend, builds the database and downloads the model; the run command only starts the backend.
 
-The configured engine decomposition is:
+### Option 2 — Run Locally
 
-```text
-S = 100 × (w_c·C + w_o·Ô + w_t·T) + λ·SDG
-```
-
-where `C` is essential-skill coverage, `Ô` is normalized role outlook,
-`T` is transferability, and `λ` is the SDG weight. The fixture adapter also
-accepts `sdg_preference ∈ [0, 1]` and blends the base role score with the
-SDG-tag score. Current engine configuration keeps `sdg_lambda: 0.0`; the
-parameter is therefore contract-compatible but disabled in the real-engine
-ranker until the SDG slider weighting is enabled.
-
-### 1,000 futures robustness estimate
-
-For each run, each role's skill-momentum contribution is perturbed:
-
-```text
-M'_k = M_k × (1 + U(-r, r)),   r = 0.2
-```
-
-The default fixture configuration executes `1,000` seeded runs, re-ranks roles
-on each run, and reports:
-
-```text
-top5_frequency(role) = top5_count(role) / 1000
-```
-
-Responses carry `label: "Estimate"` and the configured assumption text. This
-is sensitivity analysis, not a jobs forecast.
-
-### Pathway and “Best Next Hour”
-
-The pathway adapter computes missing skills, selects matching courses, and
-ranks verified recommendations by career-score delta per verified training
-hour. A course with `hours_verified=true` contributes to `best_next_hour` and
-ROI calculations. An unverified course is returned with:
-
-```json
-{ "hours": "hours not verified", "marginal_score_per_hour": null }
-```
-
-Course `skill_ids` are semicolon-delimited in the v1 catalogue and are split by
-the typed loader. Course, role, skill, cost, SDG, and source/date fields remain
-attached to each response step.
-
-### Snapshot diffing
-
-The engine compares deterministic state vectors between `baseline_snapshot`
-(`aei_2025_11`) and `latest_snapshot` (`aei_2026_05`). Each metric carries
-source and publication-date metadata; aliases are resolved through the engine
-store rather than through client-side string conventions.
-
-## Zero-hallucination guardrails and security posture
-
-`backend/app/services/guardrails.py` validates response identifiers against
-verified repository sets. Unknown skill, role, and course identifiers are
-blocked before serialization; engine responses pass through the corresponding
-store guardrail. SDG records are loaded from curated tables rather than
-created from free text.
-
-The demo personas are synthetic-only: Aina, Danial (fresh graduate), Sarah
-(career switcher), and the HR cohort. The repository does not collect or ship
-NRIC numbers, phone numbers, email addresses, or production user records.
-Uploaded CV parsing is an engine-mode local feature and is bounded to 2 MB and
-20,000 characters.
-
-### 50-run adversarial verification
-
-| Check | Result |
-|---|---:|
-| Test | `backend/tests/test_guardrails_50runs.py` |
-| Runs | 50 |
-| Unverified IDs passed | 0 |
-| Invalid values blocked | 150 |
-| Report | [guardrail_50run_report.json](backend/tests/guardrail_50run_report.json) |
-
-## API reference
-
-The canonical request/response contract is
-[backend/API_CONTRACT.md](backend/API_CONTRACT.md). Interactive OpenAPI
-documentation is available at [http://localhost:8000/docs](http://localhost:8000/docs).
-
-| Method | Endpoint | Purpose | Key request / response fields |
-|---|---|---|---|
-| `POST` | `/api/profile/parse` | Extract and normalize skills | `text`, `current_skills` → `skills[]` |
-| `GET` | `/api/signals` | Skills Radar or demand signals | `skill`, `scenario`, `snapshot_id` → dated badges |
-| `POST` | `/api/match` | Rank target occupations | `skill_ids`, `current_occupation_id`, `scenario`, `sdg_preference` |
-| `POST` | `/api/snapshot/load` | Select a market snapshot | `snapshot_id` → active snapshot metadata |
-| `POST` | `/api/snapshot/diff` | Compare baseline and latest state | `skill_ids`, snapshot IDs → role changes |
-| `POST` | `/api/pathway` | Generate pathway and best next hour | `skill_ids`, `target_role_id`, `sdg_filter` |
-| `GET` | `/api/sdg` | Read curated SDG mappings | → occupation, SDG, evidence, status, source/date |
-
-Additional engine-only endpoints are `/api/profile/parse_file`,
-`/api/occupations`, `/api/context`, and `/api/personas`. Health is exposed at
-`/health`.
-
-## Data sources, provenance, and licensing
-
-The repository stores source snapshots and transformation scripts. Dates below
-refer to the committed snapshot or source period, not a claim of live data.
-External dataset redistribution remains subject to each upstream provider's
-terms.
-
-| Dataset | Repository path | Scope / role | Snapshot or update | License / provenance |
-|---|---|---|---|---|
-| Anthropic Economic Index | `data/extracts/aei_*` | Task usage, automation, augmentation, country signals | Nov 2025 baseline; May 2026 latest | Anthropic source data; retain upstream terms |
-| ESCO v1.2 | `data/extracts/esco_*` | Occupations, skills, broader-skill links | ESCO v1.2 extract | European Commission / ESCO terms |
-| O*NET 31.0 | `data/extracts/onet_*` | Task importance and occupation task evidence | O*NET 31.0 | O*NET data notice |
-| DOSM/PERKESO demand | `data/curated/malaysian_job_demand_real.csv`, `demand_*` | Malaysian vacancies and occupation mapping | 2025–2026 fields in committed CSVs | Curated public-source records; verify source terms |
-| Course catalogue / HRD Corp fields | `data/curated/courses*.csv`, `course_*` | Course IDs, providers, hours, cost, URL, verification | Curated project snapshot | Provider pages and project curation; no HRD claim is inferred when absent |
-| UN SDG mapping | `data/curated/sdg_mapping.csv`, `sdg_map_v2.csv` | Occupation/skill evidence mapped to SDG targets | Curated build; v2 covers 42 occupations in this checkout | UN SDG taxonomy plus project mapping rules |
-
-## Local development, testing, and Replit deployment
-
-### Requirements
-
-- Python 3.10+; Python 3.11 is the recommended runtime.
-- Node.js 20+ and npm for the Vite client.
-- PowerShell on Windows, Bash on macOS/Linux/Replit.
-
-### Backend fixture mode
-
-`DEV_MODE=true` enables the deterministic synthetic adapter for frontend
-integration. It is not the real engine.
-
-```powershell
-cd D:\Coding_Proj\Hackathon\MetaMind
-python -m venv .venv
-.venv\Scripts\python -m pip install -r backend\requirements.txt
-$env:DEV_MODE="true"
-$env:ENGINE_MODE="false"
-.venv\Scripts\python -m uvicorn backend.app.main:app --reload --port 8000
-```
-
-Open [http://localhost:8000/docs](http://localhost:8000/docs). CORS defaults to
-`http://localhost:5173`; override it with `CORS_ORIGIN`.
-
-### Engine mode
-
-`ENGINE_MODE=true` routes API work to `engine/`, builds the local SQLite store
-from committed extracts/curated data, and may download the configured MiniLM
-model. Use lexical matching to avoid the model download:
-
-```powershell
-cd D:\Coding_Proj\Hackathon\MetaMind
-$env:DEV_MODE="false"
-$env:ENGINE_MODE="true"
-$env:SIMILARITY_BACKEND="lexical"
-.venv\Scripts\python -m uvicorn backend.app.main:app --reload --port 8000
-```
-
-The supported environment variables are `DEV_MODE`, `ENGINE_MODE`,
-`CORS_ORIGIN`, `SIMULATION_RUNS`, `SIMULATION_VARIATION`, `CURATED_VERSION`,
-`SIMILARITY_BACKEND`, and `SKILLSHIFT_DB`. The one-command scripts
-[`run.ps1`](run.ps1) and [`run.sh`](run.sh) install dependencies, build the
-frontend, and start engine mode by default.
-
-### Frontend
-
-```powershell
-cd D:\Coding_Proj\Hackathon\MetaMind\frontend
-npm ci
-npm run dev
-```
-
-Open [http://localhost:5173](http://localhost:5173). The Vite proxy forwards
-`/api` to port 8000. For a production bundle:
-
-```powershell
-npm run build
-```
-
-### Tests and report generation
-
-From the repository root:
-
-```powershell
-pytest -c backend\pytest.ini -q
-$env:PYTHONPATH="."
-pytest -q engine\tests data\tests
-pytest -c backend\pytest.ini -q backend\tests\test_guardrails_50runs.py
-```
-
-The guardrail test regenerates
-`backend/tests/guardrail_50run_report.json`. The full current validation baseline
-is 53 backend tests and 29 engine/data tests.
-
-### Replit
-
-The root [.replit](.replit) selects Python 3.11 and Node.js 20, sets
-`ENGINE_MODE=true`, exposes port 8000 as external port 80, and runs `bash run.sh`.
-`run.sh` rebuilds `data/skillshift_v2.db` with `python -m engine.build` before
-Uvicorn starts, so curated CSV changes are applied on every deploy.
-To reproduce the runtime locally:
+Requirements: Python 3.12 or newer, Node.js 20 or newer.
 
 ```bash
-ENGINE_MODE=true PORT=8000 bash run.sh
+git clone https://github.com/nazmaram948-creator/MetaMind.git
+cd MetaMind
+
+python3 -m venv .venv
+source .venv/bin/activate          # Windows PowerShell: .venv\Scripts\Activate.ps1
+
+pip install -r backend/requirements.txt
+
+cp backend/.env.example backend/.env   # optional; leave the API key lines empty
+
+python -m engine.build                 # builds data/skillshift_v2.db
+
+cd frontend && npm install && npm run build && cd ..
+
+ENGINE_MODE=true python -m uvicorn backend.app.main:app --host 0.0.0.0 --port 5000
 ```
 
-Replit sets `REPL_ID`; `run.sh` responds by binding Uvicorn to `0.0.0.0`.
+Open http://localhost:5000. The API documentation is at http://localhost:5000/docs.
 
-### RunPod inference hook
+On Windows PowerShell, set the variable with `$env:ENGINE_MODE="true"` before the last command.
 
-Set `RUNPOD_API_KEY` and either `RUNPOD_ENDPOINT_ID` for a Serverless endpoint
-or `RUNPOD_BASE_URL` for a vLLM/Ollama-compatible endpoint. When configured,
-engine-mode profile parsing tries RunPod first, validates returned IDs against
-the ESCO store, and falls back to deterministic local extraction on timeout,
-invalid output, or missing configuration.
+For frontend development, run the backend on port 8000 (`--port 8000`) and, in another terminal, `cd frontend && npm run dev`, then open http://localhost:5173.
 
-```powershell
-$env:RUNPOD_API_KEY="<key>"
-$env:RUNPOD_ENDPOINT_ID="<endpoint-id>"
-& .venv\Scripts\python.exe scripts\verify_runpod.py
+### Run Tests
+
+```bash
+pytest -c backend/pytest.ini -q
 ```
 
-The verification proof is written to
-`data/runpod_verification_proof.json` without recording the API key. `/health`
-reports `compute_provider` as `runpod-serverless` when the hook is configured;
-otherwise it reports `local-deterministic`.
+This runs the API, curated-data and guardrail tests, including the 50-run guardrail check, which writes `backend/tests/guardrail_50run_report.json`. The curated data files can be checked with:
 
-## Known limitations and tooling declaration
+```bash
+pytest data/tests/check_curated_v2.py -q
+```
 
-- The fixture extractor is deterministic phrase/alias matching. It is not a
-  general semantic parser and unknown phrases are not converted into invented
-  IDs.
-- Curated CSVs are point-in-time snapshots. Demand is neutral in the v2 engine
-  until a checked source URL and verified figures are supplied.
-- `sdg_map_v2.csv` is generated from project mapping rules and contains 42
-  occupation rows in this checkout; treat its `status`, `basis`, and `evidence`
-  fields as reviewable provenance.
-- Synthetic CV intake is bounded and local. Scanned PDFs are not OCR'd.
-- `hours_verified` is a hard gate for pathway ROI; missing HRD Corp data is
-  represented as `null`, not as a false eligibility claim.
-- The engine's `sdg_lambda` is currently `0.0`; the fixture API supports the
-  `sdg_preference` contract while real-engine SDG weighting remains a configured
-  follow-up.
+---
 
-Development tooling and provenance are explicit: Python, FastAPI, Pydantic,
-Uvicorn, React, Vite, pytest, Replit, Claude Code, ESCO, O*NET, Anthropic
-Economic Index extracts, Malaysian public demand records, and UN SDG mapping
-rules are used as documented above. No hardcoded credentials or secrets are
-stored in the repository.
+## How We Use Replit *(Required)*
+
+- **Development:** the repository lives on GitHub. Replit was used to import the repository, configure the run workflow and the deployment (`.replit`), and test the production build.
+- **Hosting (Deployments):** the live prototype is published with Replit Deployments (Autoscale) at https://meta-mind-1.replit.app. One Replit app serves both the FastAPI backend and the built React frontend.
+- **Secrets:** configuration is kept in Replit Secrets (`ENGINE_MODE`) and is also set as a deployment secret. No keys or passwords are stored in the repository.
+- **Proof of use:** see `submission/SDC2026_Metamind_Replit_POU.pdf`.
+
+## How We Use RunPod *(Required)*
+
+**RunPod is not used.**
+
+- **AI workload:** SkillShift MY needs no model training and no large-model inference. Its only model is the pre-trained `all-MiniLM-L6-v2` sentence-embedding model (about 90 MB), which matches CV phrases to ESCO skills and runs on CPU inside the Replit app. Ranking and the 1,000-run robustness estimate are NumPy calculations.
+
+---
+
+## Challenges & Learnings
+
+- **Keeping AI output grounded.** Our first design let a language model help with skill extraction and explanations, and included a RunPod GPU hook. We found that a generative model adds the risk of invented skills and courses, which breaks the rule that every recommendation must come from a real source. We switched to a small embedding model for matching and a database ID allowlist (guardrail) for everything the API returns, kept the LLM interface optional and disabled, and removed the RunPod hook. We learned that for a grounded recommender, retrieval plus validation beats free-form generation.
+- **Data format mismatches hid real gaps.** A mismatch between how the build matched SDG rows (by occupation title) and how a data file keyed them (by ID) silently replaced 36 real SDG mappings with generic "SDG 8" fallback tags. All automated tests still passed. We fixed the matching, wrote a data checker, and learned to test data coverage as well as code.
+- **Stale builds.** The database is generated from the CSV files, so changing a file does nothing until it is rebuilt. We moved the build into the deployment build step and documented `python -m engine.build`.
+- **Deploying on Replit.** A published app starts from a fresh machine with no installed packages and a reset file system, so the deployment build must install dependencies, build the frontend and database, and pre-download the model.
+
+## Future Improvements
+
+- [ ] Replace the SDG count with a score that measures how well a role fits each SDG target, and have every SDG link reviewed by a human.
+- [ ] Verify course costs and HRD Corp claimability, and expand the course-to-skill mapping so more roles get a real pathway and a trustworthy "best next hour".
+- [ ] Use DOSM/PERKESO demand data in the role outlook once it is entered with sources.
+- [ ] Add a task-level "Task X-ray" and "Upgrade in place" view based on AEI task data.
+- [ ] Add an HR team view with a workforce skills-gap heatmap.
+- [ ] Add English, Bahasa Malaysia and Chinese language support and fairness checks.
+- [ ] Offer optional LLM-written explanations behind the same ID allowlist, with a GPU endpoint (for example RunPod) only if a larger model is needed.
+
+## Team
+
+| Name                   | Role                                                          | GitHub                                   |
+| ---------------------- | ------------------------------------------------------------- | ---------------------------------------- |
+| Sallam Maram Niyazi    | Team leader, Frontend and deployment; React frontend          | nazmaram948-creator                      |  
+                         |(CV intake, Skills Radar, role cards,                          |                                          |
+                         |SDG explorer and slider, learning pathway), Replit             |                                          |
+                         |deployment and publishing, repository and data-file checks.    |                                          |
+| Maxim Morozov          | Data and engine; Linking ESCO, O*NET and Anthropic Economic   | vindigomakster2-hub                      |
+                         |Index data, skill momentum and role outlook, match score,      |                                          |          
+                         |snapshot comparison, 1,000-run robustness estimate.            |                                          |
+| Mohammad Azri          | Backend and API; FastAPI endpoints, database ID guardrail     | mohammadazri                             |
+                         |and the 50-run guardrail test, pathway and SDG data fixes,     |                                          |
+                         |pathway fallback flag.                                         |                                          |
+| Al-Asbahi Fatima Khaled| Documentation and submission; Project proposal, technical     | fatima-khaled                            |
+                         |declaration, README, slide deck, demo video and the final      |                                          |
+                         |submission.                                                    |                                          |
+| Walid Abdalla Awadh    | Data and content; Course catalogue, SDG mapping, synthetic    | wirleed                                  |
+                         |personas and testing.                                          |                                          |
+
+---
+
+## Submission Checklist
+
+- [x] Team name, domain (Domain 1 / Domain 2) and SDG track filled in
+- [ ] Slide deck link added
+- [ ] Demo video link added
+- [ ] Replit used, with proof of use in `submission/`
+- [ ] RunPod used, with proof of use in `submission/`
+- [ ] Preliminary submission completed (`SDC2026_TeamName_Preliminary.pdf`)
+- [ ] Technology declaration completed (`SDC2026_TeamName_TechDeclaration.pdf`)
+- [ ] Submission files renamed with your team name (replace `TeamName`)
+- [x] "How to Run" steps verified
+- [x] No API keys or secrets committed to the repository
 
 ## License
 
-This project is licensed under the [Apache License 2.0](LICENSE). Upstream data
-and provider content remain subject to their respective licenses and terms.
+This project is licensed under the Apache License 2.0.
+
