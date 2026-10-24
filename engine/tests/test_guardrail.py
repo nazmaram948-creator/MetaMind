@@ -25,7 +25,13 @@ def all_ids(x, out):
 
 
 def known(store):
-    return store.skill_ids | store.occupation_ids | store.course_ids | set(store.snapshots)
+    sdg_ids = {
+        value
+        for raw in store["sdg_map"].sdg_ids.dropna()
+        for value in str(raw).split(";")
+        if value
+    }
+    return store.skill_ids | store.occupation_ids | store.course_ids | set(store.snapshots) | sdg_ids
 
 
 def test_validate_ids_drops_unknown(store):
