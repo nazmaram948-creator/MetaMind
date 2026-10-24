@@ -205,6 +205,57 @@ class OccupationResponse(BaseModel):
     onet_soc: str
 
 
+class XrayTask(BaseModel):
+    task_id: int
+    task: str
+    weight_pct: float
+    usage_share_pct: float | None
+    automation_pct: float | None
+    augmentation_pct: float | None
+    label: Literal["automating", "assisting", "mostly human"]
+    note: str
+
+
+class XrayResponse(BaseModel):
+    occupation_id: str
+    occupation_title: str
+    snapshot_id: str
+    tasks: list[XrayTask]
+    summary_weight_pct: dict[str, float]
+    thresholds: dict[str, float]
+    source_badges: list[SignalBadge]
+    label: Literal["Estimate"] = "Estimate"
+    assumption_note: str
+
+
+class UpgradeRequest(BaseModel):
+    occupation_id: str
+    skill_ids: list[str] = Field(default_factory=list)
+    scenario: Scenario = "moderate"
+
+
+class UpgradeSkill(BaseModel):
+    skill_id: str
+    skill_name: str
+    supports_tasks: list[dict[str, object]]
+    task_weight_pct: float
+    similarity: float
+    momentum: float
+    momentum_status: Literal["rising", "stable", "declining"]
+    course: dict[str, object] | None
+
+
+class UpgradeResponse(BaseModel):
+    occupation_id: str
+    occupation_title: str
+    snapshot_id: str
+    assisting_tasks: int
+    skills: list[UpgradeSkill]
+    source_badges: list[SignalBadge]
+    label: Literal["Estimate"] = "Estimate"
+    assumption_note: str
+
+
 class ContextResponse(BaseModel):
     snapshot_id: str
     label: str

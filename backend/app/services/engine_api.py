@@ -25,6 +25,9 @@ from ..schemas import (
     ProfileParseResponse,
     RoleMatch,
     SdgMappingResponse,
+    UpgradeRequest,
+    UpgradeResponse,
+    XrayResponse,
     Signal,
     SnapshotDiffRequest,
     SnapshotDiffResponse,
@@ -258,3 +261,22 @@ def pathway(request: PathwayRequest) -> PathwayResponse:
         skills_without_course=out["skills_without_course"], totals=out["totals"],
         assumption_note=out["assumption_note"],
     )
+
+
+def xray(occupation: str, snapshot_id: str | None) -> XrayResponse:
+    """H1 Task X-ray of an occupation (engine/service.py: Engine.xray)."""
+    _check_occupation(occupation)
+    try:
+        return XrayResponse(**engine().xray(occupation, snapshot_id))
+    except KeyError as error:
+        raise _bad_request(error) from error
+
+
+def upgrade(request: UpgradeRequest) -> UpgradeResponse:
+    """H2 upgrade in place (engine/service.py: Engine.upgrade)."""
+    _check_occupation(request.occupation_id)
+    try:
+        return UpgradeResponse(**engine().upgrade(request.occupation_id, request.skill_ids,
+                                                  scenario=request.scenario))
+    except KeyError as error:
+        raise _bad_request(error) from error

@@ -29,6 +29,9 @@ from .schemas import (
     HrPersonaResponse,
     OccupationResponse,
     ContextResponse,
+    UpgradeRequest,
+    UpgradeResponse,
+    XrayResponse,
 )
 from .services import engine_api
 from .services import runpod_client
@@ -388,6 +391,22 @@ def context(snapshot_id: str | None = None) -> ContextResponse:
     if not settings.engine_mode:
         raise HTTPException(status_code=503, detail="Needs ENGINE_MODE=true.")
     return engine_api.context(snapshot_id)
+
+
+@app.get("/api/xray", response_model=XrayResponse)
+def xray(occupation: str, snapshot_id: str | None = None) -> XrayResponse:
+    """Task X-ray of a job: each O*NET task labelled automating / assisting / mostly human. Engine mode only."""
+    if not settings.engine_mode:
+        raise HTTPException(status_code=503, detail="Needs ENGINE_MODE=true.")
+    return engine_api.xray(occupation, snapshot_id)
+
+
+@app.post("/api/upgrade", response_model=UpgradeResponse)
+def upgrade(request: UpgradeRequest) -> UpgradeResponse:
+    """Upgrade in place: skills of the current job behind its AI-assisted tasks. Engine mode only."""
+    if not settings.engine_mode:
+        raise HTTPException(status_code=503, detail="Needs ENGINE_MODE=true.")
+    return engine_api.upgrade(request)
 
 
 # Serve the built frontend (frontend/dist) from the same process and port, e.g. on

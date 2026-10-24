@@ -188,3 +188,23 @@ def test_pathway_orders_skills_and_ranks_only_verified_hours(client):
     assert p["totals"]["verified_hours"] == pytest.approx(
         sum(c["hours"] for c in p["pathway"] if c["hours_verified"]), abs=0.11)
     assert client.post("/api/pathway", json={"skill_ids": [], "target_role_id": "astronaut"}).status_code == 422
+
+
+def test_xray_and_upgrade_endpoints(client):
+    x = client.get("/api/xray", params={"occupation": "accounts_clerk"})
+    assert x.status_code == 200, x.text
+    body = x.json()
+    assert body["tasks"] and body["source_badges"][0]["date"]
+    assert {t["label"] for t in body["tasks"]} <= {"automating", "assisting", "mostly human"}
+    assert client.get("/api/xray", params={"occupation": "astronaut"}).status_code == 422
+    u = client.post("/api/upgrade", json={"occupation_id": "accounts_clerk", "skill_ids": []})
+    assert u.status_code == 200, u.text
+    assert u.json()["label"] == "Estimate"
+    assert client.post("/api/upgrade", json={"occupation_id": "astronaut"}).status_code == 422
+
+
+def test_xray_needs_engine_mode(monkeypatch):
+    from backend.app import config
+    monkeypatch.setattr(config.settings, "engine_mode", False)
+    c = TestClient(app)
+    assert c.get("/api/xray", params={"occupation": "accounts_clerk"}).status_code == 503
