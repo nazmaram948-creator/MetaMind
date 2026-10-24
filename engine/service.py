@@ -505,6 +505,40 @@ class Engine:
         }
         return self._guard(out)
 
+    def team(self, members: list[dict] | None = None, scenario: str = "moderate",
+             snapshot_id: str | None = None, top: int = 3) -> dict:
+        """HR heatmap: per member, the current job's X-ray split and their top roles.
+
+        members: [{"id", "name", "current_occ_id", "skill_ids" | "skills" or "current_skills" (free text)}];
+        default = the synthetic HR cohort of the active personas file.
+        """
+        sid = self.resolve_snapshot(snapshot_id)
+        if members is None:
+            members = self.personas().get("hr_team_cohort", [])
+        rows = []
+        for mbr in members:
+            occ = mbr.get("current_occ_id")
+            if occ not in self.store.occupation_ids:
+                occ = None
+            ids = [k for k in mbr.get("skill_ids") or [] if k in self.store.skill_ids]
+            text_skills = mbr.get("skills") or mbr.get("current_skills") or []
+            if not ids and text_skills:  # free-text skills (e.g. "CRM Software") -> ESCO matches
+                ids = [f["skill_id"] for f in self.parse("\n".join(text_skills))]
+            split = self.xray(occ, sid)["summary_weight_pct"] if occ else None
+            ranked = self.rank(ids, occ, scenario, sid)
+            rows.append({
+                "id": str(mbr.get("id", "")), "name": mbr.get("name", ""), "current_occ_id": occ,
+                "current_title": self.store.occ_title.get(occ) if occ else None,
+                "skills_matched": len(ids), "task_split_pct": split,
+                "top_roles": [{"role_id": r.occ_id, "role_title": self.store.occ_title[r.occ_id],
+                               "score": round(float(r.S), 1)} for r in ranked.head(top).itertuples()],
+            })
+        return self._guard({"snapshot_id": sid, "scenario": scenario, "members": rows,
+                            "source_badges": [self.store.badge(sid), *self.store.static_badges()],
+                            "label": ESTIMATE,
+                            "assumption_note": "Synthetic cohort. Task split = Task X-ray of each member's "
+                                               "current job; roles = the same match model as for individuals."})
+
 
 @lru_cache(maxsize=1)
 def get_engine() -> Engine:

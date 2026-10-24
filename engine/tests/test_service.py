@@ -131,3 +131,11 @@ def test_upgrade_lists_only_missing_skills_of_the_current_job(engine, store):
     for s in u["skills"]:
         assert s["skill_id"] in own and s["skill_id"] not in skills
         assert s["supports_tasks"]
+
+
+def test_team_uses_free_text_skills_and_xray(engine):
+    t = engine.team([{"id": "A", "name": "A", "current_occ_id": "customer_service_rep",
+                      "skills": ["handle customer complaints", "customer service"]}])
+    m = t["members"][0]
+    assert m["skills_matched"] > 0 and m["task_split_pct"] is not None
+    assert len(m["top_roles"]) == 3 and all(r["role_id"] != "customer_service_rep" for r in m["top_roles"])
